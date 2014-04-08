@@ -56,7 +56,7 @@ if (config_item('deny_access') > 0) {
             <div class="form-row">
 
                 <?php
-                // IP ADDRESS ***********************************
+                // season ***********************************
                 echo form_label('term season', 'term_season', array('class' => 'form_label'));
 
                 echo input_requirement('*');
@@ -78,7 +78,7 @@ if (config_item('deny_access') > 0) {
 
                 <?php
                 // DENIAL REASON SELECTION ***************************************
-                echo form_label('Denial Reason', 'reason_code', array('class' => 'form_label'));
+          /*      echo form_label('Denial Reason', 'reason_code', array('class' => 'form_label'));
 
                 echo input_requirement();
 
@@ -87,6 +87,21 @@ if (config_item('deny_access') > 0) {
                 }
 
                 echo form_dropdown('reason_code', $options, set_value('reason_code', '0'), 'id="reason_code" class="form_select"');
+          */
+                // year ***********************************
+                echo form_label('term year', 'term_year', array('class' => 'form_label'));
+
+                echo input_requirement('*');
+
+                $input_data = array(
+                    'name' => 'term_year',
+                    'id' => 'term_year',
+                    // 'class' => 'form_input ip_address_format',
+                    'value' => set_value('term_year'),
+                    'maxlength' => '39'
+                );
+
+                echo form_input($input_data);
                 ?>
 
             </div>
@@ -115,8 +130,8 @@ if (config_item('deny_access') > 0) {
                 <thead>
                 <tr>
                     <th></th>
-                    <th>IP Address</th>
-                    <th>Reason Denied</th>
+                    <th>Season</th>
+                    <th>Year</th>
                     <th>Date Denied</th>
                 </tr>
                 </thead>
@@ -125,7 +140,7 @@ if (config_item('deny_access') > 0) {
                 <?php
 
                 if (!empty($term_list)) {
-                    $denial_reasons = config_item('denied_access_reason');
+                    //$denial_reasons = config_item('denied_access_reason');
 
                     foreach ($term_list as $row) {
                         echo '
@@ -137,7 +152,7 @@ if (config_item('deny_access') > 0) {
 						' . $row->term_season . '
 					</td>
 					<td>'
-                            . $denial_reasons[$row->reason_code] .
+                            . $row->term_year .
                             '</td>
                             <td>'
                             . date("M j, Y", $row->time) .

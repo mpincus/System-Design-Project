@@ -622,7 +622,7 @@ class Auth_model extends MY_Model
             // If form submission is adding to deny list
             if ($this->input->post('add_term')) {
                 $season = set_value('term_season');
-                $year = set_value('reason_code');
+                $year = set_value('term_year');
 
                 // Make sure that the values we need were posted
                 if (!empty($season) && is_numeric($year)) {
@@ -694,9 +694,9 @@ class Auth_model extends MY_Model
 
         foreach ($ips as $season) {
             if ($i == 0) {
-                $this->db->where('IP_address', $season);
+                $this->db->where('term_season', $season);
             } else {
-                $this->db->or_where('IP_address', $season);
+                $this->db->or_where('term_season', $season);
             }
 
             $i++;

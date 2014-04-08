@@ -19,15 +19,15 @@ $config['term_rules'] = array(
         'rules' => 'trim|string'
     ),
     array(
-        'field' => 'reason_code',
+        'field' => 'term_year',
         'label' => 'term year',
-        'rules' => 'trim|integer'
+        'rules' => 'trim|string'
     ),
     // Validation of any IP addresses being removed from deny list
     array(
         'field' => 'ip_removals[]',
         'label' => 'IP ADDRESSES TO REMOVE',
-        'rules' => 'trim|valid_ip'
+        'rules' => 'trim|string'
     )
 );
 
