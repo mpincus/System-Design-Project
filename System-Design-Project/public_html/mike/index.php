@@ -1,6 +1,16 @@
 <?php
 
 /*
+| -----------------------------------------------------------------
+| DEFAULT TIMEZONE
+| -----------------------------------------------------------------
+| Set to your local timezone
+| 
+*/
+
+date_default_timezone_set('America/New_York');
+
+/*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
  *---------------------------------------------------------------
@@ -18,7 +28,53 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+/**
+ * Maintenance Mode is a custom Community Auth feature.
+ * If you enable maintenance mode, site visitors will
+ * see the maintenance-mode.php page. It is served with
+ * a 503 HTTP status header and Retry-After header.
+ */
+$ca_maintenance_mode = FALSE;
+
+if ($ca_maintenance_mode) {
+    /**
+     * When in maintenance mode, the IPs listed here will have
+     * normal access to the website, so that developers can be
+     * working on it while regular site visitors get a 503 page.
+     */
+    $ca_developer_ips = array(
+        $_SERVER['SERVER_ADDR'],
+        '127.0.0.1',
+        'etc...'
+    );
+
+    if (!in_array($_SERVER['REMOTE_ADDR'], $ca_developer_ips)) {
+        /**
+         * If you have CodeIgniter installed in a sub-directory,
+         * you might need to change the value of public root.
+         * Site visitors will not see a styled maintenance mode
+         * page if this value is not correct.
+         */
+        $public_root = $_SERVER['SERVER_NAME'];
+
+        define('ENVIRONMENT', 'maintenance');
+    } /**
+     * Set the environment you want to be able to work in
+     * while site visitors are in maintenance mode. Remember
+     * that the database connection is determined by
+     * the value of the ENIVONRMENT constant.
+     */
+    else {
+        define('ENVIRONMENT', 'production');
+    }
+} /**
+ * Normal environment when not in maintenance mode.
+ * This is where you would normally set ENVIRONMENT in
+ * a standard CodeIgniter install.
+ */
+else {
+    define('ENVIRONMENT', 'development');
+}
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -28,22 +84,25 @@
  * By default development will show errors but testing and live will hide them.
  */
 
-if (defined('ENVIRONMENT'))
-{
-	switch (ENVIRONMENT)
-	{
-		case 'development':
-			error_reporting(E_ALL);
-		break;
-	
-		case 'testing':
-		case 'production':
-			error_reporting(0);
-		break;
+if (defined('ENVIRONMENT')) {
+    switch (ENVIRONMENT) {
+        case 'development':
+        case 'testing':
+            error_reporting(-1);
+            break;
 
-		default:
-			exit('The application environment is not set correctly.');
-	}
+        case 'production':
+            error_reporting(0);
+            break;
+
+        case 'maintenance':
+            include 'maintenance-mode.php';
+            exit;
+            break;
+
+        default:
+            exit('The application environment is not set correctly.');
+    }
 }
 
 /*
@@ -56,7 +115,7 @@ if (defined('ENVIRONMENT'))
  * as this file.
  *
  */
-	$system_path = 'system';
+$system_path = 'system';
 
 /*
  *---------------------------------------------------------------
@@ -72,7 +131,7 @@ if (defined('ENVIRONMENT'))
  * NO TRAILING SLASH!
  *
  */
-	$application_folder = 'application';
+$application_folder = 'application';
 
 /*
  * --------------------------------------------------------------------
@@ -94,15 +153,15 @@ if (defined('ENVIRONMENT'))
  * Un-comment the $routing array below to use this feature
  *
  */
-	// The directory name, relative to the "controllers" folder.  Leave blank
-	// if your controller is not in a sub-folder within the "controllers" folder
-	// $routing['directory'] = '';
+// The directory name, relative to the "controllers" folder.  Leave blank
+// if your controller is not in a sub-folder within the "controllers" folder
+// $routing['directory'] = '';
 
-	// The controller class file name.  Example:  Mycontroller
-	// $routing['controller'] = '';
+// The controller class file name.  Example:  Mycontroller
+// $routing['controller'] = '';
 
-	// The controller function you wish to be called.
-	// $routing['function']	= '';
+// The controller function you wish to be called.
+// $routing['function']	= '';
 
 
 /*
@@ -120,8 +179,7 @@ if (defined('ENVIRONMENT'))
  * Un-comment the $assign_to_config array below to use this feature
  *
  */
-	// $assign_to_config['name_of_config_item'] = 'value of config item';
-
+// $assign_to_config['name_of_config_item'] = 'value of config item';
 
 
 // --------------------------------------------------------------------
@@ -134,62 +192,55 @@ if (defined('ENVIRONMENT'))
  * ---------------------------------------------------------------
  */
 
-	// Set the current directory correctly for CLI requests
-	if (defined('STDIN'))
-	{
-		chdir(dirname(__FILE__));
-	}
+// Set the current directory correctly for CLI requests
+if (defined('STDIN')) {
+    chdir(dirname(__FILE__));
+}
 
-	if (realpath($system_path) !== FALSE)
-	{
-		$system_path = realpath($system_path).'/';
-	}
+if (realpath($system_path) !== FALSE) {
+    $system_path = realpath($system_path) . '/';
+}
 
-	// ensure there's a trailing slash
-	$system_path = rtrim($system_path, '/').'/';
+// ensure there's a trailing slash
+$system_path = rtrim($system_path, '/') . '/';
 
-	// Is the system path correct?
-	if ( ! is_dir($system_path))
-	{
-		exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
-	}
+// Is the system path correct?
+if (!is_dir($system_path)) {
+    exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: " . pathinfo(__FILE__, PATHINFO_BASENAME));
+}
 
 /*
  * -------------------------------------------------------------------
  *  Now that we know the path, set the main path constants
  * -------------------------------------------------------------------
  */
-	// The name of THIS file
-	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+// The name of THIS file
+define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
-	// The PHP file extension
-	// this global constant is deprecated.
-	define('EXT', '.php');
+// The PHP file extension
+// this global constant is deprecated.
+define('EXT', '.php');
 
-	// Path to the system folder
-	define('BASEPATH', str_replace("\\", "/", $system_path));
+// Path to the system folder
+define('BASEPATH', str_replace("\\", "/", $system_path));
 
-	// Path to the front controller (this file)
-	define('FCPATH', str_replace(SELF, '', __FILE__));
+// Path to the front controller (this file)
+define('FCPATH', str_replace(SELF, '', __FILE__));
 
-	// Name of the "system folder"
-	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
+// Name of the "system folder"
+define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
 
-	// The path to the "application" folder
-	if (is_dir($application_folder))
-	{
-		define('APPPATH', $application_folder.'/');
-	}
-	else
-	{
-		if ( ! is_dir(BASEPATH.$application_folder.'/'))
-		{
-			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
-		}
+// The path to the "application" folder
+if (is_dir($application_folder)) {
+    define('APPPATH', $application_folder . '/');
+} else {
+    if (!is_dir(BASEPATH . $application_folder . '/')) {
+        exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: " . SELF);
+    }
 
-		define('APPPATH', BASEPATH.$application_folder.'/');
-	}
+    define('APPPATH', BASEPATH . $application_folder . '/');
+}
 
 /*
  * --------------------------------------------------------------------
@@ -199,7 +250,7 @@ if (defined('ENVIRONMENT'))
  * And away we go...
  *
  */
-require_once BASEPATH.'core/CodeIgniter.php';
+require_once BASEPATH . 'core/CodeIgniter.php';
 
 /* End of file index.php */
 /* Location: ./index.php */
