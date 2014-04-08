@@ -1,0 +1,6 @@
+controllers/administration              //main function
+config/db_tables                        //use variable name for table
+views/templates/main_template           //change menu display
+form_validation/administration          //error checking
+models/auth_model                       //all other functions and query commands
+views/administration/                   //page display
