@@ -736,16 +736,16 @@ class Auth_model extends MY_Model
         if ($this->validate()) {
             // If form submission is adding to deny list
             if ($this->input->post('add_course')) {
-                $courseName = set_value('course_name');
-                $courseDesc = set_value('course_description');
-                $dept = set_value('dept_id');
+                $courseName = set_value('courseName');
+                $courseDesc = set_value('courseDesc');
+                $dept = set_value('DeptID');
                 $credit = set_value('credit');
 
                 // Make sure that the values we need were posted
                 if (!empty($courseName)) {
                     $insert_data = array(
                         'courseName' => $courseName,
-                        'courseDescription' => $courseDesc,
+                        'courseDesc' => $courseDesc,
                         'DeptID' => $dept,
                         'credit' => $credit
                        // 'time' => time()
@@ -811,11 +811,11 @@ class Auth_model extends MY_Model
     {
         $i = 0;
 
-        foreach ($ips as $season) {
+        foreach ($ips as $cname) {
             if ($i == 0) {
-                $this->db->where('courseName', $season);
+                $this->db->where('courseNum', $cname);
             } else {
-                $this->db->or_where('courseName', $season);
+                $this->db->or_where('courseNum', $cname);
             }
 
             $i++;

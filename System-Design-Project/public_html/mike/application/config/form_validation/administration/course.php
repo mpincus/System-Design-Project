@@ -24,8 +24,8 @@ $config['course_rules'] = array(
         'rules' => 'trim|string'
     ),
     array(
-        'field' => 'deptid',
-        'label' => 'deptid',
+        'field' => 'DeptID',
+        'label' => 'DeptID',
         'rules' => 'trim|string'
     ), array(
         'field' => 'credit',

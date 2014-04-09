@@ -98,10 +98,52 @@ if (config_item('deny_access') > 0) {
                     'id' => 'courseDesc',
                     // 'class' => 'form_input ip_address_format',
                     'value' => set_value('courseDesc'),
+                    //'maxlength' => '39'
+                );
+
+                echo form_input($input_data);
+                ?>
+
+            </div>
+            <div class="form-row">
+
+                <?php
+                // season ***********************************
+                echo form_label('DeptID', 'DeptID', array('class' => 'form_label'));
+
+                echo input_requirement('*');
+
+                $input_data = array(
+                    'name' => 'DeptID',
+                    'id' => 'DeptID',
+                    // 'class' => 'form_input ip_address_format',
+                    'value' => set_value('DeptID'),
                     'maxlength' => '39'
                 );
 
                 echo form_input($input_data);
+
+                ?>
+
+            </div>
+            <div class="form-row">
+
+                <?php
+                // season ***********************************
+                echo form_label('credit', 'credit', array('class' => 'form_label'));
+
+                echo input_requirement('*');
+
+                $input_data = array(
+                    'name' => 'credit',
+                    'id' => 'credit',
+                    // 'class' => 'form_input ip_address_format',
+                    'value' => set_value('credit'),
+                    'maxlength' => '39'
+                );
+
+                echo form_input($input_data);
+
                 ?>
 
             </div>
@@ -132,7 +174,8 @@ if (config_item('deny_access') > 0) {
                     <th></th>
                     <th>Course Name</th>
                     <th>Course Description</th>
-                    <th>Date Denied</th>
+                    <th>DeptID</th>
+                    <th>Credit</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -146,18 +189,21 @@ if (config_item('deny_access') > 0) {
                         echo '
 				<tr>
 					<td>
-						<input type="checkbox" name="ip_removals[]" value="' . $row->courseName . '" />
+						<input type="checkbox" name="ip_removals[]" value="' . $row->courseNum . '" />
+					</td>
+					<td>
+						' . $row->courseName . '
 					</td>
 					<td>
 						' . $row->courseDesc . '
 					</td>
-					<td>'
-                            . $row->deptID .
-                            '</td>
-                            <td>'
-                            . $row->credit .
-                            '</td>
-                        </tr>
+					<td>
+                        ' . $row->DeptID . '
+                    </td>
+                    <td>
+                        ' . $row->credit . '
+                    </td>
+                </tr>
                     ';
                     }
                 }
