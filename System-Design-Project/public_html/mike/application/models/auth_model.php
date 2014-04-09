@@ -609,7 +609,7 @@ class Auth_model extends MY_Model
     // --------------------------------------------------------------
 
     /**
-     * Validate and process the denial or removal of IP addresses
+     * Validate and process the add or removal of term
      * in the denied access table.
      */
     public function process_term()
@@ -705,6 +705,125 @@ class Auth_model extends MY_Model
         $this->db->delete(config_item('term_table'));
 
        // $this->_rebuild_deny_list();
+    }
+
+    // --------------------------------------------------------------
+
+    /**
+     * Validate and process the add or removal of course
+     * in the denied access table.
+     */
+    public function get_course_list($field = FALSE)
+    {
+        if ($field !== FALSE) {
+            $this->db->select($field);
+        }
+
+        $query = $this->db->from(config_item('course_table'))->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return FALSE;
+    }
+    public function process_course()
+    {
+        // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
+        $this->config->load('form_validation/administration/course');
+        $this->validation_rules = config_item('course_rules');
+
+        if ($this->validate()) {
+            // If form submission is adding to deny list
+            if ($this->input->post('add_course')) {
+                $courseName = set_value('course_name');
+                $courseDesc = set_value('course_description');
+                $dept = set_value('dept_id');
+                $credit = set_value('credit');
+
+                // Make sure that the values we need were posted
+                if (!empty($courseName)) {
+                    $insert_data = array(
+                        'courseName' => $courseName,
+                        'courseDescription' => $courseDesc,
+                        'DeptID' => $dept,
+                        'credit' => $credit
+                       // 'time' => time()
+                    );
+
+                    // Insert the denial
+                    $this->_insert_course($insert_data);
+
+                    // Show confirmation that denial was added
+                    $this->load->vars(array('confirm_add_course' => 1));
+
+                    // Kill set_value() since we won't need it
+                    $this->kill_set_value();
+                } // Necessary values were not available
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
+                }
+            } // If form submission is removing from deny list
+            else if ($this->input->post('remove_selected')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    // Remove the IPs
+                    $this->_remove_course($ips);
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
+            }
+        }
+    }
+
+    // --------------------------------------------------------------
+
+    /**
+     * Add a record to the denied access table
+     */
+    protected function _insert_course($data)
+    {
+        //if ($data['IP_address'] == '0.0.0.0') {
+        //    return FALSE;
+        //}
+
+        $this->db->set($data)
+            ->insert(config_item('course_table'));
+
+        // $this->_rebuild_deny_list();
+    }
+
+    // --------------------------------------------------------------
+
+    /**
+     * Remove a record from the denied access table
+     */
+    protected function _remove_course($ips)
+    {
+        $i = 0;
+
+        foreach ($ips as $season) {
+            if ($i == 0) {
+                $this->db->where('courseName', $season);
+            } else {
+                $this->db->or_where('courseName', $season);
+            }
+
+            $i++;
+        }
+
+        $this->db->delete(config_item('course_table'));
+
+        // $this->_rebuild_deny_list();
     }
 
 }

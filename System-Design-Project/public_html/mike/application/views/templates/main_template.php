@@ -165,6 +165,10 @@
                         echo '<li>';
                         echo ($this->uri->segment(2) == 'term') ? secure_anchor('administration/term', 'Add/Drop Term', array('id' => 'active')) : secure_anchor('administration/term', 'Add/Drop Term');
                         echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'course') ? secure_anchor('administration/course', 'Add/Drop Course', array('id' => 'active')) : secure_anchor('administration/course', 'Add/Drop Course');
+                        echo '</li>';
                     }
 
                     // If any user is logged in

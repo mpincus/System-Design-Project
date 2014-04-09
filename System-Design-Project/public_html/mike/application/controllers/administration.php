@@ -403,6 +403,32 @@ class Administration extends MY_Controller
         }
     }
 
+    public function course()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_course();
+                }
+
+                // Get the current deny list
+                $view_data['course_list'] = $this->auth_model->get_course_list();
+            }
+
+            $data = array(
+                'content' => $this->load->view('administration/course', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
     // --------------------------------------------------------------
 }
 

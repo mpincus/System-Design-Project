@@ -33,6 +33,7 @@ $config['auto_populate_table'] = 'auto_populate';
 $config['category_menu_table'] = 'category_menu';
 
 $config['term_table'] = 'term';
+$config['course_table'] =    'course';
 
 /* End of file db_tables.php */
 /* Location: /application/config/db_tables.php */
