@@ -7,12 +7,13 @@
     <![endif]-->
 </head>
 <body>
-<div id="leftMain"> <a href="index.php"><img src="images/logo.gif" alt="School Website" border="0" /></a>
+<div id="leftMain"> <a href="/"><img src="images/logo.gif" alt="School Website" border="0" /></a>
     <div id="navbar">
         <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index.php/news">News</a></li>
-            <li><a href="index.php/contact">Contact Us</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/news">News</a></li>
+            <li><a href="/cost"> Cost & Aid</a></li>
+            <li><a href="/contact">Contact Us</a></li>
         </ul>
     </div>
     <div id="navbarAlt">

@@ -1,54 +1,46 @@
-<?PHP
+<?php
+class Login extends Controller {
 
-function Login()
-{
-    if(empty($_POST['username']))
-    {
-        $this->HandleError("UserName is empty!");
-        return false;
+    public function __construct() {
+        parent::Controller();
+
+        $this->load->helper(array('form','url'));
+        $this->load->library('form_validation');
     }
 
-    if(empty($_POST['password']))
-    {
-        $this->HandleError("Password is empty!");
-        return false;
+    public function index() {
+        $this->load->view('login_form');
     }
 
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+    public function submit() {
 
-    if(!$this->CheckLoginInDB($username,$password))
-    {
-        return false;
+        if ($this->_submit_validate() === FALSE) {
+            $this->index();
+            return;
+        }
+
+        redirect('/');
+
     }
 
-    session_start();
+    private function _submit_validate() {
 
-    $_SESSION[$this->GetLoginSessionVar()] = $username;
+        $this->form_validation->set_rules('username', 'Username',
+            'trim|required|callback_authenticate');
 
-    return true;
-}
+        $this->form_validation->set_rules('password', 'Password',
+            'trim|required');
 
-function CheckLoginInDB($username,$password)
-{
-    if(!$this->DBLogin())
-    {
-        $this->HandleError("Database login failed!");
-        return false;
+        $this->form_validation->set_message('authenticate','Invalid login. Please try again.');
+
+        return $this->form_validation->run();
+
     }
-    $username = $this->SanitizeForSQL($username);
-    $pwdmd5 = md5($password);
-    $qry = "Select name, email from $this->tablename ".
-        " where username='$username' and password='$pwdmd5' ".
-        " and confirmcode='y'";
 
-    $result = mysql_query($qry,$this->connection);
+    public function authenticate() {
 
-    if(!$result || mysql_num_rows($result) <= 0)
-    {
-        $this->HandleError("Error logging in. ".
-            "The username or password does not match");
-        return false;
+        return Current_User::login($this->input->post('username'),
+            $this->input->post('password'));
+
     }
-    return true;
 }

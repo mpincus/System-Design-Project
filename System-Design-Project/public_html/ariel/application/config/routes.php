@@ -44,9 +44,5 @@ $route['news'] = 'news';
 $route['(:any)'] = 'pages/view/$1';
 $route['default_controller'] = 'pages/view';
 
-/*test login databse*/
-//$route['default_controller'] = "login";
-/*end test*/
-
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
