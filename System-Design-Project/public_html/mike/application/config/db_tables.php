@@ -34,6 +34,10 @@ $config['category_menu_table'] = 'category_menu';
 
 $config['term_table'] = 'term';
 $config['course_table'] =    'course';
+$config['section_table'] =    'section';
+$config['timeslot_table'] =    'timeslot';
+$config['building_table'] =     'building';
+$config['room_table'] =         'room';
 
 /* End of file db_tables.php */
 /* Location: /application/config/db_tables.php */

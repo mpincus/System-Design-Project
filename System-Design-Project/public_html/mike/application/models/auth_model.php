@@ -727,6 +727,7 @@ class Auth_model extends MY_Model
 
         return FALSE;
     }
+
     public function process_course()
     {
         // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
@@ -822,6 +823,250 @@ class Auth_model extends MY_Model
         }
 
         $this->db->delete(config_item('course_table'));
+
+        // $this->_rebuild_deny_list();
+    }
+    /**
+     * Validate and process the add or removal of course
+     * in the denied access table.
+     */
+    public function get_section_list($field = FALSE)
+    {
+        if ($field !== FALSE) {
+            $this->db->select($field);
+        }
+
+        $query = $this->db->from(config_item('section_table'))->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return FALSE;
+    }
+
+    public function process_section()
+    {
+        // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
+        $this->config->load('form_validation/administration/course');
+        //$this->validation_rules = config_item('course_rules');
+
+        if ($this->validate()) {
+            // If form submission is adding to deny list
+            if ($this->input->post('add_course')) {
+                $courseName = set_value('courseName');
+                $courseDesc = set_value('courseDesc');
+                $dept = set_value('DeptID');
+                $credit = set_value('credit');
+
+                // Make sure that the values we need were posted
+                if (!empty($courseName)) {
+                    $insert_data = array(
+                        'courseName' => $courseName,
+                        'courseDesc' => $courseDesc,
+                        'DeptID' => $dept,
+                        'credit' => $credit
+                        // 'time' => time()
+                    );
+
+                    // Insert the denial
+                    $this->_insert_section($insert_data);
+
+                    // Show confirmation that denial was added
+                    $this->load->vars(array('confirm_add_section' => 1));
+
+                    // Kill set_value() since we won't need it
+                    $this->kill_set_value();
+                } // Necessary values were not available
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
+                }
+            } // If form submission is removing from deny list
+            else if ($this->input->post('remove_selected')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    // Remove the IPs
+                    $this->_remove_section($ips);
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
+            }
+        }
+    }
+
+    // --------------------------------------------------------------
+
+    /**
+     * Add a record to the denied access table
+     */
+    protected function _insert_section($data)
+    {
+        //if ($data['IP_address'] == '0.0.0.0') {
+        //    return FALSE;
+        //}
+
+        $this->db->set($data)
+            ->insert(config_item('section_table'));
+
+        // $this->_rebuild_deny_list();
+    }
+
+    // --------------------------------------------------------------
+
+    /**
+     * Remove a record from the denied access table
+     */
+    protected function _remove_section($ips)
+    {
+        $i = 0;
+
+        foreach ($ips as $cname) {
+            if ($i == 0) {
+                $this->db->where('courseNum', $cname);
+            } else {
+                $this->db->or_where('courseNum', $cname);
+            }
+
+            $i++;
+        }
+
+        $this->db->delete(config_item('section_table'));
+
+        // $this->_rebuild_deny_list();
+    }
+
+    public function get_course_name()
+    {
+        $query = $this->db->distinct()
+            ->select('courseName')
+            ->get(config_item('course_table'));
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return FALSE;
+    }
+
+
+
+
+    public function get_stuff_list($stuff_table)
+    {
+        $query = $this->db->from($stuff_table)->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return FALSE;
+    }
+
+    public function process_stuff($stuff_table, $table_field)
+    {
+        // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
+        $this->config->load('form_validation/administration/stuff');
+        $this->validation_rules = config_item('stuff_rules');
+
+        if ($this->validate()) {
+            // If form submission is adding to deny list
+            if ($this->input->post('add_stuff')) {
+                $stuffName = set_value('stuffName');
+                echo "<script>console.log($stuffName);</script>";
+                //echo "<script>console.log('Testing console');</script>";
+
+
+                // Make sure that the values we need were posted
+                if (!empty($stuffName)) {
+                    $insert_data = array(
+                            $table_field => $stuffName,
+
+                        // 'time' => time()
+
+                    );
+                    // Insert the denial
+
+                    $this->_insert_stuff($insert_data, $stuff_table);
+
+
+                    // Show confirmation that denial was added
+                    $this->load->vars(array('confirm_add_stuff' => 1));
+
+                    // Kill set_value() since we won't need it
+                    $this->kill_set_value();
+                } // Necessary values were not available
+                else {
+
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
+                }
+            } // If form submission is removing from deny list
+            else if ($this->input->post('remove_selected')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    // Remove the IPs
+                    $this->_remove_stuff($ips,$stuff_table);
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
+            }
+        }
+    }
+
+    // --------------------------------------------------------------
+
+    /**
+     * Add a record to the denied access table
+     */
+    protected function _insert_stuff($data, $stuff_table)
+    {
+        //if ($data['IP_address'] == '0.0.0.0') {
+        //    return FALSE;
+        //}
+        echo "<script>console.log('1');</script>";
+        $this->db->set($data)
+            ->insert($stuff_table);
+
+        // $this->_rebuild_deny_list();
+    }
+
+    // --------------------------------------------------------------
+
+    /**
+     * Remove a record from the denied access table
+     */
+    protected function _remove_stuff($ips,$stuff_table)
+    {
+        $i = 0;
+
+        foreach ($ips as $cname) {
+            if ($i == 0) {
+                $this->db->where('ID', $cname);
+            } else {
+                $this->db->or_where('ID', $cname);
+            }
+
+            $i++;
+        }
+
+        $this->db->delete($stuff_table);
 
         // $this->_rebuild_deny_list();
     }

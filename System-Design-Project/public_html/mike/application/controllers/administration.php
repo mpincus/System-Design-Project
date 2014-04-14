@@ -430,6 +430,121 @@ class Administration extends MY_Controller
     }
 
     // --------------------------------------------------------------
+    public function timeslot()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_stuff(config_item('timeslot_table'), 'timeslot');
+                }
+
+
+                // Get the current deny list
+                $view_data['stuff_list'] = $this->auth_model->get_stuff_list(config_item('timeslot_table'));
+
+            }
+
+            $data = array(
+                'content' => $this->load->view('administration/timeslot', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
+    // --------------------------------------------------------------
+    public function building()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_stuff(config_item('building_table'),'building');
+                }
+
+                // Get the current deny list
+                $view_data['stuff_list'] = $this->auth_model->get_stuff_list(config_item('building_table'));
+            }
+
+            $data = array(
+                'content' => $this->load->view('administration/building', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
+    // --------------------------------------------------------------
+    public function room()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_stuff(config_item('room_table'),'room');
+                }
+
+                // Get the current deny list
+                $view_data['stuff_list'] = $this->auth_model->get_stuff_list(config_item('room_table'));
+            }
+
+            $data = array(
+                'content' => $this->load->view('administration/room', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
+    // --------------------------------------------------------------
+    public function section()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_section();
+                }
+
+                // Get the current deny list
+                $view_data['course_name_list'] = $this->auth_model->get_course_name();
+                $view_data['term_list'] = $this->auth_model->get_term_list();
+                $view_data['timeslot_list'] = $this->auth_model->get_stuff_list(config_item('timeslot_table'));
+                $view_data['building_list'] = $this->auth_model->get_stuff_list(config_item('building_table'));
+                $view_data['room_list'] = $this->auth_model->get_stuff_list(config_item('room_table'));
+
+            }
+
+            $data = array(
+                'content' => $this->load->view('administration/section', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
+    // --------------------------------------------------------------
 }
 
 /* End of file administration.php */

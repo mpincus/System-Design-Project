@@ -169,6 +169,22 @@
                         echo '<li>';
                         echo ($this->uri->segment(2) == 'course') ? secure_anchor('administration/course', 'Add/Drop Course', array('id' => 'active')) : secure_anchor('administration/course', 'Add/Drop Course');
                         echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'timeslot') ? secure_anchor('administration/timeslot', 'Add/Remove timeslot', array('id' => 'active')) : secure_anchor('administration/timeslot', 'Add/Remove timeslot');
+                        echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'building') ? secure_anchor('administration/building', 'Add/Remove building', array('id' => 'active')) : secure_anchor('administration/building', 'Add/Remove building');
+                        echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'room') ? secure_anchor('administration/room', 'Add/Remove room', array('id' => 'active')) : secure_anchor('administration/room', 'Add/Remove room');
+                        echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'section') ? secure_anchor('administration/section', 'Add/Drop Section', array('id' => 'active')) : secure_anchor('administration/section', 'Add/Drop Section');
+                        echo '</li>';
                     }
 
                     // If any user is logged in

@@ -5,7 +5,7 @@
 Options -Indexes
 
 RewriteEngine On
-RewriteBase /
+RewriteBase /public_html/mike
 
 # Remove WWW
 #RewriteCond %{HTTP_HOST} !^your-domain\.com$ [NC]
