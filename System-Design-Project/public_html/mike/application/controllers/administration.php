@@ -525,10 +525,12 @@ class Administration extends MY_Controller
 
                 // Get the current deny list
                 $view_data['course_name_list'] = $this->auth_model->get_course_name();
+                $view_data['course_list']=$this->auth_model->get_course_list();
                 $view_data['term_list'] = $this->auth_model->get_term_list();
                 $view_data['timeslot_list'] = $this->auth_model->get_stuff_list(config_item('timeslot_table'));
                 $view_data['building_list'] = $this->auth_model->get_stuff_list(config_item('building_table'));
                 $view_data['room_list'] = $this->auth_model->get_stuff_list(config_item('room_table'));
+                $view_data['sect_list'] = $this->auth_model->get_section_list();
 
             }
 

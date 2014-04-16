@@ -189,7 +189,7 @@ if (config_item('deny_access') > 0) {
                         echo '
 				<tr>
 					<td>
-						<input type="checkbox" name="ip_removals[]" value="' . $row->courseNum . '" />
+						<input type="checkbox" name="ip_removals[]" value="' . $row->ID . '" />
 					</td>
 					<td>
 						' . $row->courseName . '

@@ -625,11 +625,11 @@ class Auth_model extends MY_Model
                 $year = set_value('term_year');
 
                 // Make sure that the values we need were posted
-                if (!empty($season) && is_numeric($year)) {
+                if (!empty($season)) {
                     $insert_data = array(
                         'term_season' => $season,
-                        'term_year' => $year,
-                        'time' => time()
+                        'term_year' => $year
+                    //    'time' => time()
                     );
 
                     // Insert the denial
@@ -814,9 +814,9 @@ class Auth_model extends MY_Model
 
         foreach ($ips as $cname) {
             if ($i == 0) {
-                $this->db->where('courseNum', $cname);
+                $this->db->where('ID', $cname);
             } else {
-                $this->db->or_where('courseNum', $cname);
+                $this->db->or_where('ID', $cname);
             }
 
             $i++;
@@ -844,30 +844,88 @@ class Auth_model extends MY_Model
 
         return FALSE;
     }
+    public function getTrueVal($field, $fieldVal, $table){
+        $this->db->select($field);
+        $this->db->where('ID',$fieldVal);
+        $query = $this->db->get($table);
 
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        }
+    }
+    public function createSectionID($trueTermSeason,$trueTermYear,$trueCourseName){
+        $this->db->select_max('sectionID');
+        $this->db->where('term',$trueTermSeason);
+        $this->db->where('year',$trueTermYear);
+        $this->db->where('courseName',$trueCourseName);
+        $query = $this->db->get(config_item('section_table'));
+        if(!empty($query)){
+            if ($query->num_rows() > 0) {
+                return $query->row();
+            }
+        }
+        echo "<script>console.log('god i had this shit');</script>";
+        return false;
+    }
     public function process_section()
     {
         // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
-        $this->config->load('form_validation/administration/course');
-        //$this->validation_rules = config_item('course_rules');
+        $this->config->load('form_validation/administration/section');
+        $this->validation_rules = config_item('section_rules');
 
         if ($this->validate()) {
             // If form submission is adding to deny list
-            if ($this->input->post('add_course')) {
-                $courseName = set_value('courseName');
-                $courseDesc = set_value('courseDesc');
-                $dept = set_value('DeptID');
-                $credit = set_value('credit');
+            if ($this->input->post('add_section')) {
+                $termYear = set_value('year');
+                $trueTermYear=$this->getTrueVal('term_year',$termYear,config_item('term_table'));
+                $termSeason = set_value('term');
+                $trueTermSeason=$this->getTrueVal('term_season',$termSeason,config_item('term_table'));
+                $courseName = set_value('course_name');
+                $trueCourseName=$this->getTrueVal('courseName',$courseName,config_item('course_table'));
+                $timeslot = set_value('timeslot');
+                $trueTimeslot=$this->getTrueVal('timeslot',$timeslot,config_item('timeslot_table'));
+                $building = set_value('building');
+                $trueBuilding=$this->getTrueVal('building',$building,config_item('building_table'));
+                $room = set_value('room');
+                $trueRoom=$this->getTrueVal('room',$room, config_item('room_table'));
+
+               // print_r($x);
+             //   $i = $trueRoom->room;
+             //   echo $i;
+
+            //   echo "<script>console.log($i);</script>";
+               // echo "<script>document.getElementById('room');";
+
+               // echo "<script>console.log($rooms);</script>";
+               // $courseName = set_value('courseName');
+                //$courseDesc = set_value('courseDesc');
+                //$dept = set_value('DeptID');
+                //$credit = set_value('credit');
 
                 // Make sure that the values we need were posted
-                if (!empty($courseName)) {
+                if (!empty($termYear))
+                {
+                    $query = $this->createSectionID($trueTermSeason->term_season,$trueTermYear->term_year,$trueCourseName->courseName);
+                    if(empty($query)){
+                        $i='1';
+                    }
+                    else{
+                        $i=$query->sectionID;
+                        $i++;
+                    }
+                    //$x=print_r($trueCourseName);
                     $insert_data = array(
-                        'courseName' => $courseName,
-                        'courseDesc' => $courseDesc,
-                        'DeptID' => $dept,
-                        'credit' => $credit
+                        'year' => $trueTermYear->term_year,
+                        'term' => $trueTermSeason->term_season,
+                        'courseName' => $trueCourseName->courseName,
+                        'timeslot' => $trueTimeslot->timeslot,
+                        'building' => $trueBuilding->building,
+                        'room' => $trueRoom->room,
+                        'sectionID' => $i
+
                         // 'time' => time()
                     );
+
 
                     // Insert the denial
                     $this->_insert_section($insert_data);
@@ -901,6 +959,9 @@ class Auth_model extends MY_Model
                 }
             }
         }
+        else{
+        $this->load->vars(array('validation_errors' => '<li><span class="redfield">check validation files </span></li>'));
+        }
     }
 
     // --------------------------------------------------------------
@@ -931,9 +992,9 @@ class Auth_model extends MY_Model
 
         foreach ($ips as $cname) {
             if ($i == 0) {
-                $this->db->where('courseNum', $cname);
+                $this->db->where('ID', $cname);
             } else {
-                $this->db->or_where('courseNum', $cname);
+                $this->db->or_where('ID', $cname);
             }
 
             $i++;
@@ -949,6 +1010,18 @@ class Auth_model extends MY_Model
         $query = $this->db->distinct()
             ->select('courseName')
             ->get(config_item('course_table'));
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return FALSE;
+    }
+    public function get_sect_list()
+    {
+        $query = $this->db->distinct()
+            ->select('courseName', 'sectionID', 'termID')
+            ->get(config_item('section_table'));
 
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -1040,7 +1113,7 @@ class Auth_model extends MY_Model
         //if ($data['IP_address'] == '0.0.0.0') {
         //    return FALSE;
         //}
-        echo "<script>console.log('1');</script>";
+
         $this->db->set($data)
             ->insert($stuff_table);
 
