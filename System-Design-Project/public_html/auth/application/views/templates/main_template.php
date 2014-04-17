@@ -74,16 +74,48 @@
 				// Show the login / logout ...
 				echo ( isset( $_user_first_name ) ) ? 'Welcome, ' . $_user_first_name . ' &bull; ' . secure_anchor('user','User Index') . ' &bull; ' . secure_anchor('user/logout','Logout') : secure_anchor('register','Register') . ' &bull; ' . secure_anchor('user','Login');
 			?>
+            <!-- HTML for SEARCH BAR -->
+            <div id="tfheader">
+                <form id="tfnewsearch" method="get" action="http://www.google.com">
+                    <input type="text" class="tftextinput" name="q" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
+                </form>
+                <div class="tfclear"></div>
+            </div>
 		</div>
 	</div>
 	<div class="width-limiter">
 		<div id="logo">
-			<?php echo anchor('', img( array( 'src' => 'img/logo1.gif', 'alt' => WEBSITE_NAME ) ) )  . "\n"; ?>
+			<?php echo anchor('', img( array( 'src' => 'img/indi.jpg', 'alt' => WEBSITE_NAME ) ) )  . "\n"; ?>
 		</div>
+
 		<div id="two-left" class="content">
-			<?php echo ( isset( $content ) ) ? $content : ''; ?>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Print Design</a>
+                    </li>
+                    <li>
+                        <a href="#">Web Design</a>
+                    </li>
+                    <li>
+                        <a href="#">Bio</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+
+
+            <?php echo ( isset( $content ) ) ? $content : ''; ?>
 		</div>
 		<div id="two-right">
+
 			<?php
 				if( ! $this->uri->segment(1) )
 				{
@@ -184,6 +216,30 @@
 							echo '<li>';
 							echo ( $this->uri->segment(2) == 'deny_access' ) ? secure_anchor('administration/deny_access', 'Deny Access', array( 'id' => 'active' ) ) : secure_anchor('administration/deny_access', 'Deny Access');
 							echo '</li>';
+							
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'term') ? secure_anchor('administration/term', 'Add/Drop Term', array('id' => 'active')) : secure_anchor('administration/term', 'Add/Drop Term');
+                        echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'course') ? secure_anchor('administration/course', 'Add/Drop Course', array('id' => 'active')) : secure_anchor('administration/course', 'Add/Drop Course');
+                        echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'timeslot') ? secure_anchor('administration/timeslot', 'Add/Remove timeslot', array('id' => 'active')) : secure_anchor('administration/timeslot', 'Add/Remove timeslot');
+                        echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'building') ? secure_anchor('administration/building', 'Add/Remove building', array('id' => 'active')) : secure_anchor('administration/building', 'Add/Remove building');
+                        echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'room') ? secure_anchor('administration/room', 'Add/Remove room', array('id' => 'active')) : secure_anchor('administration/room', 'Add/Remove room');
+                        echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(2) == 'section') ? secure_anchor('administration/section', 'Add/Drop Section', array('id' => 'active')) : secure_anchor('administration/section', 'Add/Drop Section');
+                        echo '</li>';
 						}
 
 						// If any user is logged in
@@ -209,9 +265,78 @@
 	</div>
 </div>
 <div class="footer">
-	<p>Copyright (c) 2011 - <?php echo date('Y') . ' &bull; Robert B. Gottier &bull; ' . anchor('http://brianswebdesign.com','Brian\'s Web Design - Temecula, CA') . ' &bull; ' . anchor('privacy','Privacy Policy'); ?></p>
 
-</div>
+    <div id="wrapper">
+        <div id="footer">
+            <div class="footerFloat">
+
+                <h4>Welcome</h4>
+                <ul>
+                    <li>  <?php
+                        echo ( $this->uri->segment(1) == 'studentlife' ) ? anchor('Studentlife', 'Student Life', array( 'id' => 'active' ) ) : anchor('studentlife', 'Student Life');
+                        ?></li>
+                    <li><?php
+                        echo ( $this->uri->segment(1) == 'apply' ) ? anchor('apply', 'Apply Now', array( 'id' => 'active' ) ) : anchor('apply', 'Apply Now');
+                        ?></li>
+                    <li> <?php
+                        echo ( $this->uri->segment(1) == 'academics' ) ? anchor('academics', 'Academics', array( 'id' => 'active' ) ) : anchor('academics', 'Academics');
+                        ?></li>
+                    <li><?php
+                        echo ( $this->uri->segment(1) == 'contact' ) ? secure_anchor('contact', 'Contact', array( 'id' => 'active' ) ) : secure_anchor('contact', 'Contact');
+                        ?></li>
+                </ul>
+
+
+            </div>
+            <div class="footerFloat">
+                <h4>SUNY TECH </h4>
+                <ul>
+                    <p>Welcome to SUNY TECH explore our website
+                    and if you have any question contact us or meet up with one
+                    of our counselor and ask away! </p>
+                </ul>
+            </div>
+            <div class="footerFloat">
+
+                <h4>Contact us</h4>
+
+                1 old westbury Parkway
+                |
+                NY, NY 11568<br>
+                |
+                123-456-3500
+            </div>
+            <div class="footerFloat">
+
+                <div class="content">
+                    <p><a href="" onClick="javascript: pageTracker._trackPageview('/outbound/footer/connectwithoneonta');">Connect With SUNY TECH:</a></p>
+                    <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/facebook');"><img src="http://www.oneonta.edu/home/images/facebook-icon.png" alt="Facebook" title="Facebook"  class="image image-thumbnail " width="24" height="24" /></a>
+                    <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/youtube');"><img src="http://www.oneonta.edu/home/images/youtube-icon.png" alt="YouTube" title="YouTube"  class="image image-thumbnail " width="24" height="24" /></a>
+                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/twitter');"><img src="http://www.oneonta.edu/home/images/twitter-icon.png" alt="Twitter" title="Twitter"  class="image image-thumbnail " width="24" height="24" /></a>
+                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/instagram');"><img src="http://www.oneonta.edu/home/images/instagram-icon.png" alt="Instagram" title="Instagram"  class="image image-thumbnail " width="24" height="24" /></a>
+                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/tumblr');"><img src="http://www.oneonta.edu/home/images/tumblr-icon.png" alt="Tumblr" title="Tumblr"  class="image image-thumbnail " width="24" height="24" /></a>
+                    <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/linkedin');"><img src="http://www.oneonta.edu/home/images/linkedin-icon.png" alt="LinkedIn" title="LinkedIn"  class="image image-thumbnail " width="24" height="24" /></a>
+                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/App-AndroidMarket');"><img src="http://www.oneonta.edu/home/images/android_market_icon.png" alt="Android Market" title="Android Market"  class="image image-thumbnail " width="24" height="24" /></a>
+                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/App-AppStore');"><img src="http://www.oneonta.edu/home/images/iphone_icon.png" alt="iPhone App Store" title="iPhone App Store"  class="image image-thumbnail " width="24" height="24" /></a>
+                    <div class="clear">&nbsp;</div>
+            </div>
+
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+            <p>Copyright (c) 2011 - <?php echo date('Y') . ' &bull; Robert B. Gottier &bull; ' . anchor('http://brianswebdesign.com','Brian\'s Web Design - Temecula, CA') . ' &bull; ' . anchor('privacy','Privacy Policy'); ?></p>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
 
 <?php
 	// Insert any HTML before the closing body tag if desired

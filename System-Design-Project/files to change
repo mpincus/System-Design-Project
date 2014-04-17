@@ -4,3 +4,9 @@ views/templates/main_template           //change menu display
 form_validation/administration          //error checking
 models/auth_model                       //all other functions and query commands
 views/administration/                   //page display
+
+
+TODO:
+fix display names on all pages
+condense code and reuse model functions
+create faculty function, consider using prebuilt functions for users

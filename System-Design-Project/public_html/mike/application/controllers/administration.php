@@ -531,6 +531,7 @@ class Administration extends MY_Controller
                 $view_data['building_list'] = $this->auth_model->get_stuff_list(config_item('building_table'));
                 $view_data['room_list'] = $this->auth_model->get_stuff_list(config_item('room_table'));
                 $view_data['sect_list'] = $this->auth_model->get_section_list();
+                $view_data['instructor_list'] = $this->auth_model->get_instructor_list(config_item('manager_profiles_table'));
 
             }
 

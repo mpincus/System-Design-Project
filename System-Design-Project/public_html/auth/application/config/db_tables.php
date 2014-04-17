@@ -1,4 +1,4 @@
-<?php if( ! defined('BASEPATH') ) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Community Auth - Database Tables Config
  *
@@ -12,25 +12,32 @@
  */
 
 // USER RELATED TABLES
-$config['user_table']                   = 'users';
-$config['customer_profiles_table']      = 'customer_profiles';
-$config['manager_profiles_table']       = 'manager_profiles';
-$config['admin_profiles_table']         = 'admin_profiles';
+$config['user_table'] = 'users';
+$config['customer_profiles_table'] = 'customer_profiles';
+$config['manager_profiles_table'] = 'manager_profiles';
+$config['admin_profiles_table'] = 'admin_profiles';
 
 // LOGIN ERROR RELATED TABLES
-$config['errors_table']                 = 'login_errors';
-$config['IP_hold_table']                = 'ips_on_hold';
+$config['errors_table'] = 'login_errors';
+$config['IP_hold_table'] = 'ips_on_hold';
 $config['username_or_email_hold_table'] = 'username_or_email_on_hold';
-$config['denied_access_table']          = 'denied_access';
+$config['denied_access_table'] = 'denied_access';
 
 // REGISTRATION RELATED TABLES
-$config['registration_table']           = 'registration';
-$config['temp_reg_data_table']          = 'temp_registration_data';
+$config['registration_table'] = 'registration';
+$config['temp_reg_data_table'] = 'temp_registration_data';
 
 // MISC TABLES
-$config['custom_uploader_table']        = 'custom_uploader_table';
-$config['auto_populate_table']          = 'auto_populate';
-$config['category_menu_table']          = 'category_menu';
+$config['custom_uploader_table'] = 'custom_uploader_table';
+$config['auto_populate_table'] = 'auto_populate';
+$config['category_menu_table'] = 'category_menu';
+
+$config['term_table'] = 'term';
+$config['course_table'] =    'course';
+$config['section_table'] =    'section';
+$config['timeslot_table'] =    'timeslot';
+$config['building_table'] =     'building';
+$config['room_table'] =         'room';
 
 /* End of file db_tables.php */
 /* Location: /application/config/db_tables.php */

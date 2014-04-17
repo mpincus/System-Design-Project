@@ -842,11 +842,24 @@ class Auth_model extends MY_Model
             return $query->result();
         }
 
+
+
+
+
         return FALSE;
     }
     public function getTrueVal($field, $fieldVal, $table){
         $this->db->select($field);
         $this->db->where('ID',$fieldVal);
+        $query = $this->db->get($table);
+
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        }
+    }
+    public function getInstructorVal($field, $fieldVal, $table){
+        $this->db->select($field);
+        $this->db->where('user_id',$fieldVal);
         $query = $this->db->get($table);
 
         if ($query->num_rows() > 0) {
@@ -866,6 +879,15 @@ class Auth_model extends MY_Model
         }
         echo "<script>console.log('god i had this shit');</script>";
         return false;
+    }
+    public function get_instructor_list($table){
+        $query = $this->db->from($table)->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return FALSE;
     }
     public function process_section()
     {
@@ -888,7 +910,11 @@ class Auth_model extends MY_Model
                 $trueBuilding=$this->getTrueVal('building',$building,config_item('building_table'));
                 $room = set_value('room');
                 $trueRoom=$this->getTrueVal('room',$room, config_item('room_table'));
-
+                $instructor = set_value('instructor_name');
+                $trueInstructor = $this->getInstructorVal('first_name, last_name',$instructor,config_item('manager_profiles_table'));
+                print_r($instructor);
+               // echo $instructor;
+                print_r($trueInstructor);
                // print_r($x);
              //   $i = $trueRoom->room;
              //   echo $i;
@@ -913,6 +939,9 @@ class Auth_model extends MY_Model
                         $i=$query->sectionID;
                         $i++;
                     }
+                 //   if($instructor == 0){
+                   //     $trueInstructor='To Be Determined';
+                    //}
                     //$x=print_r($trueCourseName);
                     $insert_data = array(
                         'year' => $trueTermYear->term_year,
@@ -921,7 +950,8 @@ class Auth_model extends MY_Model
                         'timeslot' => $trueTimeslot->timeslot,
                         'building' => $trueBuilding->building,
                         'room' => $trueRoom->room,
-                        'sectionID' => $i
+                        'sectionID' => $i,
+                        'teacher' => $trueInstructor->first_name." ".$trueInstructor->last_name
 
                         // 'time' => time()
                     );

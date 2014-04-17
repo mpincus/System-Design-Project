@@ -11,41 +11,16 @@
  * @link        http://community-auth.com
  */
 
-$config['section_rules'] = array(
+$config['term_rules'] = array(
     // Validation of IP address added to deny list
     array(
-        'field' => 'term',
-        'label' => 'Term',
+        'field' => 'term_season',
+        'label' => 'term season',
         'rules' => 'trim|string'
     ),
     array(
-        'field' => 'year',
-        'label' => 'Year',
-        'rules' => 'trim|string'
-    ),
-    array(
-        'field' => 'course_name',
-        'label' => 'Course Name',
-        'rules' => 'trim|string'
-    ),
-    array(
-        'field' => 'timeslot',
-        'label' => 'Time Slot',
-        'rules' => 'trim|string'
-    ),
-    array(
-        'field' => 'building',
-        'label' => 'Building',
-        'rules' => 'trim|string'
-    ),
-    array(
-        'field' => 'room',
-        'label' => 'Room',
-        'rules' => 'trim|string'
-    ),
-    array(
-        'field' => 'instructor_name',
-        'label' => 'Instructor Name',
+        'field' => 'term_year',
+        'label' => 'term year',
         'rules' => 'trim|string'
     ),
     // Validation of any IP addresses being removed from deny list
