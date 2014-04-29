@@ -962,7 +962,7 @@ class Auth_model extends MY_Model
                 // Make sure that the values we need were posted
                 print_r($trueTermSeason);
                 print_r($trueTermSeason->term_season);
-                ecxit();
+                exit();
                 if (!empty($termYear)) {
                     $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->term_year, $trueCourseName->courseName);
                     if (empty($query)) {
