@@ -963,7 +963,7 @@ class Auth_model extends MY_Model
                 echo "<script>console.log(".print_r($trueTermSeason).")</script>";
                 echo "<script>console.log(".$_POST['term'].")</script>";
                 echo "<script>console.log(".$trueTermSeason->term_season.")</script>";
-                exit();
+               // exit();
                 if (!empty($termYear)) {
                     $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->term_year, $trueCourseName->courseName);
                     //$query = $this->createSectionID($_POST['term'], $_POST['year'], $_POST['course_name']);
