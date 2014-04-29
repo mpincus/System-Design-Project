@@ -1570,6 +1570,8 @@ class Auth_model extends MY_Model
     {
         $teacherfname =  config_item('first_name');
         $teacherlname = config_item('last_name');
+        print_r($teacherfname);
+        print_r($teacherlname);
         $this->db->where('teacher',$teacherfname.' '.$teacherlname);
 
         $query = $this->db->get($table);
