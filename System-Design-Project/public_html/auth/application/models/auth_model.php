@@ -960,7 +960,7 @@ class Auth_model extends MY_Model
                 $trueInstructor = $this->getInstructorVal('first_name, last_name', $instructor, config_item('manager_profiles_table'));
 
                 // Make sure that the values we need were posted
-                print_r($trueTermSeason);
+                echo "<script>console.log(".print_r($trueTermSeason).")</script>";
                 print_r($trueTermSeason->term_season);
                 exit();
                 if (!empty($termYear)) {
