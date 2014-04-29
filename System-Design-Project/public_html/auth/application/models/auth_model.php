@@ -984,7 +984,7 @@ class Auth_model extends MY_Model
                         'timeslot' => $trueTimeslot->timeslot,
                         'building' => $trueBuilding->building,
                         'room' => $trueRoom->room,
-                        'ID' => $i
+                        'section' => $i
                   //      'teacher' => $trueInstructor->first_name . " " . $trueInstructor->last_name
 
                        /* 'year' => $_POST['year'],
