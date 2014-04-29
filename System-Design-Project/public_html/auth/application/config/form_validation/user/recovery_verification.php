@@ -1,4 +1,4 @@
-<?php if( ! defined('BASEPATH') ) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Community Auth - Form Validation Rules for Recovery Verification
  *
@@ -12,25 +12,25 @@
  */
 
 $config['recovery_verification'] = array(
-	array(
-		'field' => 'user_pass',
-		'label' => 'NEW PASSWORD',
-		'rules' => 'trim|required|matches[user_pass_confirm]|external_callbacks[model,formval_callbacks,_check_password_strength,TRUE]'
-	),
-	array(
-		'field' => 'user_pass_confirm',
-		'label' => 'CONFIRM NEW PASSWORD',
-		'rules' => 'trim|required'
-	),
-	array(
-		'field' => 'user_name'
-	),
-	array(
-		'field' => 'recovery_code'
-	),
-	array(
-		'field' => 'user_identification'
-	)
+    array(
+        'field' => 'user_pass',
+        'label' => 'NEW PASSWORD',
+        'rules' => 'trim|required|matches[user_pass_confirm]|external_callbacks[model,formval_callbacks,_check_password_strength,TRUE]'
+    ),
+    array(
+        'field' => 'user_pass_confirm',
+        'label' => 'CONFIRM NEW PASSWORD',
+        'rules' => 'trim|required'
+    ),
+    array(
+        'field' => 'user_name'
+    ),
+    array(
+        'field' => 'recovery_code'
+    ),
+    array(
+        'field' => 'user_identification'
+    )
 );
 
 /* End of file recovery_verification.php */

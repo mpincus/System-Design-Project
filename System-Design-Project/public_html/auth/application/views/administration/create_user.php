@@ -1,4 +1,4 @@
-<?php if( ! defined('BASEPATH') ) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Community Auth - Create User View
  *
@@ -11,55 +11,47 @@
  * @link        http://community-auth.com
  */
 
-echo '<h1>' . ( isset( $type ) ? ucfirst( $type ) . ' Creation' : 'User Creation' ) . '</h1>';
+echo '<h1>' . (isset($type) ? ucfirst($type) . ' Creation' : 'User Creation') . '</h1>';
 
-if( isset( $validation_passed, $user_created ) )
-{
-	echo '
+if (isset($validation_passed, $user_created)) {
+    echo '
 		<div class="feedback confirmation">
 			<p class="feedback_header">
 				The new ' . $type . ' has been successfully created.
 			</p>
 		</div>
 	';
-}
-else if( isset( $validation_errors ) )
-{
-	echo '
+} else if (isset($validation_errors)) {
+    echo '
 		<div class="feedback error_message">
 			<p class="feedback_header">
-				' . ucfirst( $type ) . ' Creation Contained The Following Errors:
+				' . ucfirst($type) . ' Creation Contained The Following Errors:
 			</p>
 			<ul>
 				' . $validation_errors . '
 			</ul>
 			<p>
-				' . strtoupper( $type ) . ' NOT CREATED
+				' . strtoupper($type) . ' NOT CREATED
 			</p>
 		</div>
 	';
 }
 
-if( isset( $level, $type ) )
-{
-	echo $user_creation_form;
-}
-else
-{
-	echo '
+if (isset($level, $type)) {
+    echo $user_creation_form;
+} else {
+    echo '
 		<p>Please choose a user type to create:</p>
 		<ul class="std-list">
 	';
 
-	foreach( $roles as $k => $v )
-	{
-		if( $k < $auth_level )
-		{
-			echo '<li>' . secure_anchor( 'administration/create_user/' . $v, $v ) . '</li>';
-		}
-	}
+    foreach ($roles as $k => $v) {
+        if ($k < $auth_level) {
+            echo '<li>' . secure_anchor('administration/create_user/' . $v, $v) . '</li>';
+        }
+    }
 
-	echo '</ul>';
+    echo '</ul>';
 }
 
 /* End of file create_user.php */

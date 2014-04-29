@@ -1,4 +1,4 @@
-<?php if( ! defined('BASEPATH') ) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Community Auth - Form Validation Rules for Manager Creation
  *
@@ -12,41 +12,41 @@
  */
 
 $config['manager_creation_rules'] = array(
-	array(
-		'field' => 'user_name',
-		'label' => 'USERNAME',
-		'rules' => 'trim|required|alpha_numeric|max_length['. MAX_CHARS_4_USERNAME .']|min_length['. MIN_CHARS_4_USERNAME .']|external_callbacks[model,formval_callbacks,_username_check]'
-	),
-	array(
-		'field' => 'user_pass',
-		'label' => 'PASSWORD',
-		'rules' => 'trim|required|external_callbacks[model,formval_callbacks,_check_password_strength,TRUE]'
-	),
-	array(
-		'field' => 'user_email',
-		'label' => 'EMAIL ADDRESS',
-		'rules' => 'trim|required|max_length[255]|valid_email|external_callbacks[model,formval_callbacks,_email_exists_check]'
-	),
-	array(
-		'field' => 'last_name',
-		'label' => 'LAST NAME',
-		'rules' => 'trim|required|xss_clean'
-	),
-	array(
-		'field' => 'first_name',
-		'label' => 'FIRST NAME',
-		'rules' => 'trim|required|xss_clean'
-	),
-	array(
-		'field' => 'license_number',
-		'label' => 'LICENSE NUMBER',
-		'rules' => 'trim|required|alpha_numeric|max_length[8]'
-	),
-	array(
-		'field' => 'phone_number',
-		'label' => 'PHONE NUMBER',
-		'rules' => 'trim|required|xss_clean|max_length[20]'
-	)
+    array(
+        'field' => 'user_name',
+        'label' => 'USERNAME',
+        'rules' => 'trim|required|alpha_numeric|max_length[' . MAX_CHARS_4_USERNAME . ']|min_length[' . MIN_CHARS_4_USERNAME . ']|external_callbacks[model,formval_callbacks,_username_check]'
+    ),
+    array(
+        'field' => 'user_pass',
+        'label' => 'PASSWORD',
+        'rules' => 'trim|required|external_callbacks[model,formval_callbacks,_check_password_strength,TRUE]'
+    ),
+    array(
+        'field' => 'user_email',
+        'label' => 'EMAIL ADDRESS',
+        'rules' => 'trim|required|max_length[255]|valid_email|external_callbacks[model,formval_callbacks,_email_exists_check]'
+    ),
+    array(
+        'field' => 'last_name',
+        'label' => 'LAST NAME',
+        'rules' => 'trim|required|xss_clean'
+    ),
+    array(
+        'field' => 'first_name',
+        'label' => 'FIRST NAME',
+        'rules' => 'trim|required|xss_clean'
+    ),
+    array(
+        'field' => 'license_number',
+        'label' => 'LICENSE NUMBER',
+        'rules' => 'trim|required|alpha_numeric|max_length[8]'
+    ),
+    array(
+        'field' => 'phone_number',
+        'label' => 'PHONE NUMBER',
+        'rules' => 'trim|required|xss_clean|max_length[20]'
+    )
 );
 
 /* End of file create_manager.php */

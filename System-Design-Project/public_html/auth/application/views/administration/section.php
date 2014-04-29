@@ -57,6 +57,27 @@ if (config_item('deny_access') > 0) {
 
                 <?php
                 // VEHICLE TYPE LABEL AND INPUT ***********************************
+                echo form_label('Year', 'year', array('class' => 'form_label'));
+
+                echo input_requirement();
+
+                // Default option
+                $years[] = '-- Select --';
+
+                // Options from query
+                foreach ($term_list as $row) {
+                    $years[$row->ID] = $row->term_year ;
+                }
+
+                echo form_dropdown('year', $years, set_value('years'), 'id="year" class="form_select"');
+
+                ?>
+
+            </div>
+            <div class="form-row">
+
+                <?php
+                // VEHICLE TYPE LABEL AND INPUT ***********************************
                 echo form_label('Term', 'term', array('class' => 'form_label'));
 
                 echo input_requirement();
@@ -66,10 +87,10 @@ if (config_item('deny_access') > 0) {
 
                 // Options from query
                 foreach ($term_list as $row) {
-                    $term1[$row->termID] = $row->term_season . " " . $row->term_year ;
+                    $term1[$row->ID] = $row->term_season;
                 }
 
-                echo form_dropdown('type', $term1, set_value('term1'), 'id="term" class="form_select"');
+                echo form_dropdown('term', $term1, set_value('term1'), 'id="term" class="form_select"');
 
                 ?>
 
@@ -84,13 +105,16 @@ if (config_item('deny_access') > 0) {
 
                 // Default option
                 $course_names[] = '-- Select --';
-
-                // Options from query
-                foreach ($course_name_list as $row) {
-                    $course_names[$row->courseName] = $row->courseName;
+                foreach($course_list as $row){
+                    $course_names[$row->ID]=$row->courseName;
                 }
 
-                echo form_dropdown('type', $course_names, set_value('course_name'), 'id="course_name" class="form_select"');
+                // Options from query
+               // foreach ($course_name_list as $row) {
+               //     $course_names[$row->courseName] = $row->courseName;
+               // }
+
+                echo form_dropdown('course_name', $course_names, set_value('course_names'), 'id="course_name" class="form_select"');
 
                 ?>
 
@@ -111,7 +135,7 @@ if (config_item('deny_access') > 0) {
                     $timeslot[$row->ID] = $row->timeslot;
                 }
 
-                echo form_dropdown('type', $timeslot, set_value('timeslot'), 'id="timeslot" class="form_select"');
+                echo form_dropdown('timeslot', $timeslot, set_value('timeslot'), 'id="timeslot" class="form_select"');
 
                 ?>
 
@@ -132,7 +156,7 @@ if (config_item('deny_access') > 0) {
                     $building[$row->ID] = $row->building;
                 }
 
-                echo form_dropdown('type', $building, set_value('building'), 'id="building" class="form_select"');
+                echo form_dropdown('building', $building, set_value('building'), 'id="building" class="form_select"');
 
                 ?>
 
@@ -149,22 +173,43 @@ if (config_item('deny_access') > 0) {
                 $room[] = '-- Select --';
 
                 // Options from query
-                foreach ($room_list as $row) {
-                    $room[$row->ID] = $row->room;
+                foreach ($room_list as $num => $text) {
+                    $room[$text->ID] = $text->room;
                 }
 
-                echo form_dropdown('type', $room, set_value('room'), 'id="room" class="form_select"');
+                echo form_dropdown('room', $room, set_value('room'), 'id="room" class="form_select"');
+                ?>
+
+            </div>
+            <div class="form-row">
+
+                <?php
+                // VEHICLE TYPE LABEL AND INPUT ***********************************
+                echo form_label('Instructor Name', 'instructor_name', array('class' => 'form_label'));
+
+                echo input_requirement();
+
+ //               Default option
+                $instructor_names[] = '-- To be determined --';
+                foreach($instructor_list as $row){
+                    $instructor_names[$row->user_id]=$row->first_name.$row->last_name;
+                }
+
+
+
+                echo form_dropdown('instructor_name', $instructor_names, set_value('instructor_names'), 'id="course_name" class="form_select"');
 
                 ?>
 
             </div>
+
             <div class="form-row">
                 <div id="submit_box">
 
                     <?php
                     // SUBMIT BUTTON **************************************************************
                     $input_data = array(
-                        'name' => 'add_denial',
+                        'name' => 'add_section',
                         'id' => 'submit_button',
                         'value' => 'Deny'
                     );
@@ -183,35 +228,57 @@ if (config_item('deny_access') > 0) {
                 <thead>
                 <tr>
                     <th></th>
-                    <th>IP Address</th>
-                    <th>Reason Denied</th>
-                    <th>Date Denied</th>
+                    <th>term</th>
+                    <th>year</th>
+                    <th>course</th>
+                    <th>section</th>
+                    <th>instructor</th>
+                    <th>timeslot</th>
+                    <th>room</th>
+                    <th>building</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <?php
 
-                if (!empty($course_list)) {
+                if (!empty($sect_list)) {
                     //$denial_reasons = config_item('denied_access_reason');
 
-                    foreach ($course_list as $row) {
+                    foreach ($sect_list as $row) {
                         echo '
 				<tr>
 					<td>
-						<input type="checkbox" name="ip_removals[]" value="' . $row->courseName . '" />
+						<input type="checkbox" name="ip_removals[]" value="' . $row->ID . '" />
 					</td>
+					<td>'
+                            .$row->term.
+
+					'</td>
+					<td>'
+                            .$row->year.
+                    '</td>
 					<td>'
                             .$row->courseName.
 
-					'</td>
-					<td>
+                    '</td>
+                     <td>'
+                            .$row->sectionID.
+                    '</td>
+                    <td>'
+                            .$row->teacher.
+                    '</td>
+                    <td>'
+                            .$row->timeslot.
+                    '</td>
+                    <td>'
+                            .$row->room.
+                    '</td>
+                    <td>'
+                            .$row->building.
+                    '</td>
 
-                           </td>
-                            <td>
-
-                            </td>
-                        </tr>
+                </tr>
                     ';
                     }
                 }

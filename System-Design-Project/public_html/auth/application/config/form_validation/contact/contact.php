@@ -1,4 +1,4 @@
-<?php if( ! defined('BASEPATH') ) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Community Auth - Form Validation Rules for Contact Form
  *
@@ -12,26 +12,26 @@
  */
 
 $config['contact'] = array(
-	array(
-		'field' => 'first_name',
-		'label' => 'FIRST NAME',
-		'rules' => 'trim|required|max_length[20]|xss_clean'
-	),
-	array(
-		'field' => 'last_name',
-		'label' => 'LAST NAME',
-		'rules' => 'trim|required|max_length[20]|xss_clean'
-	),
-	array(
-		'field' => 'email',
-		'label' => 'EMAIL ADDRESS',
-		'rules' => 'trim|required|max_length[255]|valid_email'
-	),
-	array(
-		'field' => 'message',
-		'label' => 'MESSAGE',
-		'rules' => 'trim|required|xss_clean'
-	)
+    array(
+        'field' => 'first_name',
+        'label' => 'FIRST NAME',
+        'rules' => 'trim|required|max_length[20]|xss_clean'
+    ),
+    array(
+        'field' => 'last_name',
+        'label' => 'LAST NAME',
+        'rules' => 'trim|required|max_length[20]|xss_clean'
+    ),
+    array(
+        'field' => 'email',
+        'label' => 'EMAIL ADDRESS',
+        'rules' => 'trim|required|max_length[255]|valid_email'
+    ),
+    array(
+        'field' => 'message',
+        'label' => 'MESSAGE',
+        'rules' => 'trim|required|xss_clean'
+    )
 );
 
 /* End of file contact.php */
