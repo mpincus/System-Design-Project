@@ -120,7 +120,7 @@
 
                         </ul>
                     </li>
-                    <li><a href="apply.php">Student</a>
+                    <li><a href=""></a>
                         <ul>
                             <li><?php
                                 echo ( $this->uri->segment(1) == 'freshman' ) ? anchor('freshman', 'freshman', array( 'id' => 'active' ) ) : anchor('freshman', 'freshman');
@@ -128,18 +128,19 @@
                             <li><?php
                                 echo ( $this->uri->segment(1) == 'cost' ) ? anchor('cost', 'Cost', array( 'id' => 'active' ) ) : anchor('cost', 'Cost');
                                 ?></li>
-                            <li class="last"><a href="#">Praesent et eros</a></li>
+                            <li class=""><a href="#"></a></li>
                         </ul>
                     </li>
-                    <li><a href="full-width.html">Full Width</a>
+
+                    <li><a href=""></a>
                         <ul>
-                            <li><a href="#">Lorem ipsum dolor</a></li>
-                            <li><a href="#">Suspendisse in neque</a></li>
-                            <li class="last"><a href="#">Praesent et eros</a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li class="last"><a href="#"></a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Our Services</a></li>
-                    <li class="last"><a href="#">Long Link Text</a></li>
+                    <li><a href="#"></a></li>
+                    <li class="last"><a href="#"></a></li>
                 </ul>
             </div>
         </div>
@@ -330,11 +331,20 @@
         <div class="footbox">
             <h2>Social Network</h2>
             <ul>
-                <li><a href="#">Praesent et eros</a></li>
-                <li><a href="#">Praesent et eros</a></li>
-                <li><a href="#">Lorem ipsum dolor</a></li>
-                <li><a href="#">Suspendisse in neque</a></li>
-                <li class="last"><a href="#">Praesent et eros</a></li>
+
+                    <div class="content">
+                        <p><a href="" onClick="javascript: pageTracker._trackPageview('/outbound/footer/connectwithoneonta');">Connect With Oneonta:</a></p>
+                        <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/facebook');"><img src="http://www.oneonta.edu/home/images/facebook-icon.png" alt="Facebook" title="Facebook"  class="image image-thumbnail " width="24" height="24" />
+                        <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/youtube');"><img src="http://www.oneonta.edu/home/images/youtube-icon.png" alt="YouTube" title="YouTube"  class="image image-thumbnail " width="24" height="24" />
+                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/twitter');"><img src="http://www.oneonta.edu/home/images/twitter-icon.png" alt="Twitter" title="Twitter"  class="image image-thumbnail " width="24" height="24" /></a>
+                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/instagram');"><img src="http://www.oneonta.edu/home/images/instagram-icon.png" alt="Instagram" title="Instagram"  class="image image-thumbnail " width="24" height="24" /></a>
+                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/tumblr');"><img src="http://www.oneonta.edu/home/images/tumblr-icon.png" alt="Tumblr" title="Tumblr"  class="image image-thumbnail " width="24" height="24" /></a>
+                        <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/linkedin');"><img src="http://www.oneonta.edu/home/images/linkedin-icon.png" alt="LinkedIn" title="LinkedIn"  class="image image-thumbnail " width="24" height="24" /></a>
+                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/App-AndroidMarket');"><img src="http://www.oneonta.edu/home/images/android_market_icon.png" alt="Android Market" title="Android Market"  class="image image-thumbnail " width="24" height="24" /></a>
+                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/App-AppStore');"><img src="http://www.oneonta.edu/home/images/iphone_icon.png" alt="iPhone App Store" title="iPhone App Store"  class="image image-thumbnail " width="24" height="24" /></a>
+                        <div class="clear">&nbsp;</div>
+                    </div><!-- end content -->
+
             </ul>
         </div>
         <div class="footbox">

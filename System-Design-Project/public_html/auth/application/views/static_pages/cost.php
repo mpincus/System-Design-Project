@@ -1,11 +1,11 @@
 <h1>Cost & Aid</h1>
-<div class="wrapper col8">
+<div class="wrapper col10">
     <div id="stulink">
         <div id="stulink1">
             <img src="img/cost.jpg" alt="" />
 
         </div>
-        <div class="stulink2">
+        <div class="stulink4">
 
             <p> SUNY TECH has a growing reputation for providing an exceptional educational experience at
                 an affordable cost. In addition to frequent recognition by national organizations for our
