@@ -635,7 +635,7 @@ class Administration extends MY_Controller
                 // If POST, do delete or addition of IP
             }
             //$view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
-            $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'), config_item('auth_first_name'), config_item('auth_last_name'));
+            $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'));
 
             $data = array(
                 'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
@@ -644,7 +644,10 @@ class Administration extends MY_Controller
                     'js/default-char-limiters.js'
                 )
             );
-        print(config_item('auth_first_name'));
+        //if(isset(config_item('auth_first_name')))
+            //print_r(config_item('auth_first_name'));
+       // else
+
             $this->load->view($this->template, $data);
         //}
         // Make sure teacher is logged in
