@@ -644,6 +644,7 @@ class Administration extends MY_Controller
                     'js/default-char-limiters.js'
                 )
             );
+        print(config_item('auth_first_name'));
             $this->load->view($this->template, $data);
         //}
         // Make sure teacher is logged in
