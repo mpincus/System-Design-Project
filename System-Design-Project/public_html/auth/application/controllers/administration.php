@@ -636,7 +636,7 @@ class Administration extends MY_Controller
             }
             //$view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
             $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'));
-
+            print_r($view_data['schedule']);
             $data = array(
                 'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
                 'javascripts' => array(
