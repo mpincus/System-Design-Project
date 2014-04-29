@@ -942,21 +942,21 @@ class Auth_model extends MY_Model
         if ($this->validate()) {
             // If form submission is adding to deny list
             if ($this->input->post('add_section')) {
-                $termYear = set_value('year');
+                $termYear = $_POST['year'];
                 //echo $termYear;
 
                 $trueTermYear = $this->getTrueVal('term_year', $termYear, config_item('term_table'));
-                $termSeason = set_value('term');
+                $termSeason = $_POST['term'];
                 $trueTermSeason = $this->getTrueVal('term_season', $termSeason, config_item('term_table'));
-                $courseName = set_value('course_name');
+                $courseName = $_POST['course_name'];
                 $trueCourseName = $this->getTrueVal('courseName', $courseName, config_item('course_table'));
-                $timeslot = set_value('timeslot');
+                $timeslot = $_POST['timeslot'];
                 $trueTimeslot = $this->getTrueVal('timeslot', $timeslot, config_item('timeslot_table'));
-                $building = set_value('building');
+                $building = $_POST['building'];
                 $trueBuilding = $this->getTrueVal('building', $building, config_item('building_table'));
-                $room = set_value('room');
+                $room = $_POST['room'];
                 $trueRoom = $this->getTrueVal('room', $room, config_item('room_table'));
-                $instructor = set_value('instructor_name');
+                $instructor = $_POST['instructor_name'];
                 $trueInstructor = $this->getInstructorVal('first_name, last_name', $instructor, config_item('manager_profiles_table'));
 
                 // Make sure that the values we need were posted
@@ -965,8 +965,8 @@ class Auth_model extends MY_Model
               //  echo "<script>console.log(".print_r($trueTermSeason->term_season).")</script>";
                // exit();
                 if (!empty($termYear)) {
-                   // $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->term_year, $trueCourseName->courseName);
-                    $query = $this->createSectionID($_POST['term'], $_POST['year'], $_POST['course_name']);
+                    $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->term_year, $trueCourseName->courseName);
+                    //$query = $this->createSectionID($_POST['term'], $_POST['year'], $_POST['course_name']);
                     if (empty($query)) {
                         $i = '1';
                     } else {
@@ -978,7 +978,7 @@ class Auth_model extends MY_Model
 
 
                     $insert_data = array(
-                     /*   'year' => $trueTermYear->term_year,
+                        'year' => $trueTermYear->term_year,
                         'term' => $trueTermSeason->term_season,
                         'courseName' => $trueCourseName->courseName,
                         'timeslot' => $trueTimeslot->timeslot,
@@ -986,8 +986,8 @@ class Auth_model extends MY_Model
                         'room' => $trueRoom->room,
                         'sectionID' => $i,
                         'teacher' => $trueInstructor->first_name . " " . $trueInstructor->last_name
-                     */
-                        'year' => $_POST['year'],
+
+                       /* 'year' => $_POST['year'],
                         'term' => $_POST['term'],
                         'courseName' => $_POST['course_name'],
                         'timeslot' => $_POST['timeslot'],
@@ -995,7 +995,7 @@ class Auth_model extends MY_Model
                         'room' => $_POST['room'],
                         'sectionID' => $i,
                         'teacher' => $trueInstructor->first_name . " " . $trueInstructor->last_name
-
+*/
                         // 'time' => time()
                     );
 
