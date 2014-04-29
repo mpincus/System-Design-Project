@@ -1,4 +1,4 @@
-<?php if( ! defined('BASEPATH') ) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Community Auth - Form Validation Rules for Managing Deny List
  *
@@ -12,23 +12,23 @@
  */
 
 $config['deny_access_rules'] = array(
-	// Validation of IP address added to deny list
-	array(
-		'field' => 'ip_address',
-		'label' => 'IP ADDRESS',
-		'rules' => 'trim|valid_ip'
-	),
-	array(
-		'field' => 'reason_code',
-		'label' => 'REASON CODE',
-		'rules' => 'trim|integer'
-	),
-	// Validation of any IP addresses being removed from deny list
-	array(
-		'field' => 'ip_removals[]',
-		'label' => 'IP ADDRESSES TO REMOVE',
-		'rules' => 'trim|valid_ip'
-	)
+    // Validation of IP address added to deny list
+    array(
+        'field' => 'ip_address',
+        'label' => 'IP ADDRESS',
+        'rules' => 'trim|valid_ip'
+    ),
+    array(
+        'field' => 'reason_code',
+        'label' => 'REASON CODE',
+        'rules' => 'trim|integer'
+    ),
+    // Validation of any IP addresses being removed from deny list
+    array(
+        'field' => 'ip_removals[]',
+        'label' => 'IP ADDRESSES TO REMOVE',
+        'rules' => 'trim|valid_ip'
+    )
 );
 
 /* End of file deny_access.php */

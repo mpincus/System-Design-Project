@@ -1,4 +1,4 @@
-<?php if( ! defined('BASEPATH') ) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Community Auth - Form Validation Rules for Login
  *
@@ -13,16 +13,16 @@
 
 // LOGIN ---------------------------
 $config['login_rules'] = array(
-	array(
-		'field' => 'login_string',
-		'label' => 'USERNAME OR EMAIL ADDRESS',
-		'rules' => 'trim|required|max_length[255]|xss_clean'
-	),
-	array(
-		'field' => 'login_pass',
-		'label' => 'PASSWORD',
-		'rules' => 'trim|required|external_callbacks[model,formval_callbacks,_check_password_strength,TRUE]'
-	)
+    array(
+        'field' => 'login_string',
+        'label' => 'USERNAME OR EMAIL ADDRESS',
+        'rules' => 'trim|required|max_length[255]|xss_clean'
+    ),
+    array(
+        'field' => 'login_pass',
+        'label' => 'PASSWORD',
+        'rules' => 'trim|required|external_callbacks[model,formval_callbacks,_check_password_strength,TRUE]'
+    )
 );
 
 /* End of file login.php */
