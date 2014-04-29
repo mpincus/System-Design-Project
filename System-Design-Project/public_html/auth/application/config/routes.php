@@ -56,6 +56,15 @@ $route['eop']        = 'static_pages/eop';
 $route['international']        = 'static_pages/international';
 $route['graduate']        = 'static_pages/graduate';
 $route['nondegree']        = 'static_pages/nondegree';
+$route['stu']        = 'static_pages/stu';
+
+
+// pages when a student logs in
+
+
+$route['registatus']        = 'static_pages/registatus';
+$route['lookup']        = 'static_pages/lookup';
+$route['adclass']        = 'static_pages/adclass';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

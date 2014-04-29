@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if( ! defined('BASEPATH') ) exit('No direct script access allowed');
 /**
  * Community Auth - Example Config for Auto Population of Form Selects
  *
@@ -17,9 +17,10 @@ $config['example'] = array(
      * Levels array has database table columns that become the visible text in the options.
      */
     'levels' => array(
-        'type',
-        'make',
-        'model'
+        'year',
+        'term',
+        'courseName',
+        'section'
     ),
 
     /**
@@ -32,7 +33,8 @@ $config['example'] = array(
      */
     'keys' => array(
         //'make_id',
-        //'model_id'
+        //'model_id',
+        //'color_id'
     ),
 
     /**
@@ -41,8 +43,9 @@ $config['example'] = array(
      * are found in the auto_populate_model.php.
      */
     'methods' => array(
-        'get_makes_in_type',
-        'get_models_in_make'
+        'get_terms_in_year',
+        'get_courseNames_in_term',
+        'get_sections_in_courseName'
     ),
 
     /**
@@ -50,9 +53,11 @@ $config['example'] = array(
      */
     'defaults' => array(
         // Default option for second dropdown when first is ready
-        '-- Select Type --',
+        '-- Select year --',
         // Default option for third dropdown when second is ready
-        '-- Select Make --'
+        '-- Select term --',
+        // Default option for fourth dropdown when third is ready
+        '-- Select courseName --'
     )
 
 );

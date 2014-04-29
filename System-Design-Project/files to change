@@ -10,3 +10,23 @@ TODO:
 fix display names on all pages
 condense code and reuse model functions
 create faculty function, consider using prebuilt functions for users
+
+TODO:
+modify schedule page
+use data from class scheduling
+insert data must find the unique row using dropdown input ($trueVal)
+use autopopulate functionality to get specific class
+*figure out how autpop controller works*
+only change teacher, time, building, room - seperate from key on view page
+use checkbox to determine what needs to be changed
+selected checkbox pulls all data from database into dropdown, seleted dropdown added to section table
+
+
+getajax request?
+build array based on levels - option_data[x]
+if post first level -> build dropdowns
+data_key=2
+dropdown data = change text for next box to select
+call first method
+dropdowndata[2][current level] =
+

@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if( ! defined('BASEPATH') ) exit('No direct script access allowed');
 /**
  * Community Auth - Auto Populate View
  *
@@ -14,12 +14,9 @@
 
     <h1>Auto Population of Form Dropdowns</h1>
     <p>
-        This is just a simple example to show how to dynamically populate form dropdowns using jQuery. There are a lot
-        of questions in the CodeIgniter forum asking how to do this, and for my own projects I felt the need to perfect
-        this task. While there is no form validation for this example, most everything else is complete so you can have
-        a solid working example for your own needs.
+        This is just a simple example to show how to dynamically populate form dropdowns using jQuery. There are a lot of questions in the CodeIgniter forum asking how to do this, and for my own projects I felt the need to perfect this task. While there is no form validation for this example, most everything else is complete so you can have a solid working example for your own needs.
     </p>
-<?php echo form_open('', array('class' => 'std-form', 'style' => 'margin-top:24px;')); ?>
+<?php echo form_open( '', array( 'class' => 'std-form', 'style' => 'margin-top:24px;' ) ); ?>
     <div class="form-column-left">
         <fieldset>
             <legend>Select Vehicle:</legend>
@@ -27,19 +24,20 @@
 
                 <?php
                 // VEHICLE TYPE LABEL AND INPUT ***********************************
-                echo form_label('Vehicle Type', 'type', array('class' => 'form_label'));
+                echo form_label('Year','year',array('class'=>'form_label'));
 
                 echo input_requirement();
 
                 // Default option
-                $vehicle_types[] = '-- Select --';
+                $vehicle_years[] = '-- Select --';
 
                 // Options from query
-                foreach ($types as $row) {
-                    $vehicle_types[$row->type] = $row->type;
+                foreach( $years as $row )
+                {
+                    $vehicle_years[$row->year] = $row->year;
                 }
 
-                echo form_dropdown('type', $vehicle_types, set_value('type'), 'id="type" class="form_select"');
+                echo form_dropdown( 'year', $vehicle_years, set_value('year'), 'id="year" class="form_select"' );
 
                 ?>
 
@@ -48,25 +46,29 @@
 
                 <?php
                 // VEHICLE MAKE LABEL AND INPUT ***********************************
-                echo form_label('Vehicle Make', 'make', array('class' => 'form_label'));
+                echo form_label('Term','term',array('class'=>'form_label'));
 
                 echo input_requirement();
 
                 // If POST, there may be vehicle makes
-                if (isset($makes)) {
+                if( isset( $terms ) )
+                {
                     // Default option
-                    $vehicle_makes[] = '-- Select --';
+                    $vehicle_terms[] = '-- Select --';
 
                     // Options from query
-                    foreach ($makes as $row) {
-                        $vehicle_makes[$row['make']] = $row['make'];
+                    foreach( $terms as $row )
+                    {
+                        $vehicle_terms[$row['term']] = $row['term'];
                     }
-                } else {
+                }
+                else
+                {
                     // Default option if not POST request
-                    $vehicle_makes[] = '-- Select Type --';
+                    $vehicle_terms[] = '-- Select year --';
                 }
 
-                echo form_dropdown('make', $vehicle_makes, set_value('make'), 'id="make" class="form_select"');
+                echo form_dropdown( 'term', $vehicle_terms, set_value('term'), 'id="term" class="form_select"' );
 
                 ?>
 
@@ -75,35 +77,83 @@
 
                 <?php
                 // VEHICLE MODEL LABEL AND INPUT ***********************************
-                echo form_label('Vehicle Model', 'model', array('class' => 'form_label'));
+                echo form_label('Course Name','courseName',array('class'=>'form_label'));
 
                 echo input_requirement();
 
                 // If POST, there may be vehicle models
-                if (isset($models) && !empty($models)) {
+                if( isset( $courseNames ) && ! empty( $courseNames ) )
+                {
                     // Default option
-                    $vehicle_models[] = '-- Select --';
+                    $vehicle_courseNames[] = '-- Select --';
 
                     // Options from query
-                    foreach ($models as $row) {
-                        $vehicle_models[$row['model']] = $row['model'];
+                    foreach( $courseNames as $row )
+                    {
+                        $vehicle_courseNames[$row['courseName']] = $row['courseName'];
                     }
-                } // If POST and makes not empty
-                else if (isset($makes) && !empty($makes)) {
-                    $vehicle_models[] = '-- Select Make --';
-                } else {
-                    // Default option if not POST request
-                    $vehicle_models[] = '-- Select Type --';
                 }
 
-                echo form_dropdown('model', $vehicle_models, set_value('model'), 'id="model" class="form_select"');
+                // If POST and makes not empty
+                else if( isset( $terms ) && ! empty( $terms ) )
+                {
+                    $vehicle_courseNames[] = '-- Select term --';
+                }
+                else
+                {
+                    // Default option if not POST request
+                    $vehicle_courseNames[] = '-- Select year --';
+                }
+
+                echo form_dropdown( 'courseName', $vehicle_courseNames, set_value('courseName'), 'id="courseName" class="form_select"' );
 
                 ?>
 
             </div>
-            <input type="hidden" id="ci_csrf_token_name" value="<?php echo config_item('csrf_token_name'); ?>"/>
-            <input type="hidden" id="ajax_url"
-                   value="<?php echo if_secure_site_url('auto_populate/process_request/example'); ?>"/>
+            <div class="form-row">
+
+                <?php
+                // VEHICLE COLOR LABEL AND INPUT ***********************************
+                echo form_label('Section','section',array('class'=>'form_label'));
+
+                echo input_requirement();
+
+                // If POST, there may be vehicle models
+                if( isset( $sections ) && ! empty( $sections ) )
+                {
+                    // Default option
+                    $vehicle_sections[] = '-- Select --';
+
+                    // Options from query
+                    foreach( $sections as $row )
+                    {
+                        $vehicle_sections[$row['section']] = $row['section'];
+                    }
+                }
+
+                // If POST and models not empty
+                else if( isset( $courseNames ) && ! empty( $courseNames ) )
+                {
+                    $vehicle_sections[] = '-- Select courseName --';
+                }
+                // If POST and makes not empty
+                else if( isset( $terms ) && ! empty( $terms ) )
+                {
+                    $vehicle_sections[] = '-- Select term --';
+                }
+                else
+                {
+                    // Default option if not POST request
+                    $vehicle_sections[] = '-- Select year --';
+                }
+
+                echo form_dropdown( 'section', $vehicle_sections, set_value('section'), 'id="section" class="form_select"' );
+
+                ?>
+
+            </div>
+            <input type="hidden" id="ci_csrf_token_name" value="<?php echo config_item('csrf_token_name'); ?>" />
+            <input type="hidden" id="ajax_url" value="<?php echo if_secure_site_url('auto_populate/process_request/example'); ?>" />
         </fieldset>
         <div class="form-row">
             <div id="submit_box">
@@ -111,15 +161,89 @@
                 <?php
                 // SUBMIT BUTTON ***********************
                 $input_data = array(
-                    'name' => 'submit',
-                    'id' => 'submit_button',
-                    'value' => 'Submit'
+                    'name'		=> 'get_classes',
+                    'id'		=> 'submit_button',
+                    'value'		=> 'Submit'
                 );
 
                 echo form_submit($input_data);
                 ?>
 
             </div>
+        </div>
+    </div>
+
+    <div id="table-wrapper">
+        <h2>Deny List</h2>
+
+        <div id="table-wrapper">
+            <table id="myTable" class="tablesorter">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>term</th>
+                    <th>year</th>
+                    <th>course</th>
+                    <th>section</th>
+                    <th>instructor</th>
+                    <th>timeslot</th>
+                    <th>room</th>
+                    <th>building</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php
+
+                if (!empty($classes)) {
+                    //$denial_reasons = config_item('denied_access_reason');
+
+                    foreach ($classes as $row) {
+                        echo '
+				<tr>
+					<td>
+						<input type="checkbox" name="ip_removals[]" value="' . $row->ID . '" />
+					</td>
+					<td>'
+                            .$row->term.
+
+                            '</td>
+                            <td>'
+                            .$row->year.
+                            '</td>
+                            <td>'
+                            .$row->courseName.
+
+                            '</td>
+                             <td>'
+                            .$row->section.
+                            '</td>
+                            <td>'
+                            .$row->teacher.
+                            '</td>
+                            <td>'
+                            .$row->timeslot.
+                            '</td>
+                            <td>'
+                            .$row->room.
+                            '</td>
+                            <td>'
+                            .$row->building.
+                            '</td>
+
+                        </tr>
+                            ';
+                    }
+                }
+
+                ?>
+
+                </tbody>
+            </table>
+        </div>
+        <div id="decision_buttons">
+            <input type="submit" class="form_button" name="remove_selected" value="Remove Selected"
+                   style="margin-top:10px;"/>
         </div>
     </div>
     </form>

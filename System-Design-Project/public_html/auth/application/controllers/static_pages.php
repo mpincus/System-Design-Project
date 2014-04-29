@@ -76,6 +76,77 @@ class Static_pages extends MY_Controller {
 	}
 
 	// --------------------------------------------------------------
+// display student login funtion
+
+
+// this would be the unctions for the student log in section
+
+
+
+
+
+
+    public function registatus()
+    {
+        $data = array(
+            'title' => WEBSITE_NAME . ' - registatus',
+            'description' => 'Not sure Community Auth is right for you? See soof the areas in Community Auth that require login.',
+            'content' => $this->load->view( 'static_pages/registatus', '', TRUE )
+        );
+
+        $this->load->view( $this->template, $data );
+    }
+
+
+
+
+
+
+
+    public function lookup()
+    {
+        $data = array(
+            'title' => WEBSITE_NAME . ' - lookup',
+            'description' => 'Not sure Community Auth is right for you? See soof the areas in Community Auth that require login.',
+            'content' => $this->load->view( 'static_pages/lookup', '', TRUE )
+        );
+
+        $this->load->view( $this->template, $data );
+    }
+
+
+
+    public function adclass()
+    {
+        $data = array(
+            'title' => WEBSITE_NAME . ' - adclass',
+            'description' => 'Not sure Community Auth is right for you? See soof the areas in Community Auth that require login.',
+            'content' => $this->load->view( 'static_pages/adclass', '', TRUE )
+        );
+
+        $this->load->view( $this->template, $data );
+    }
+
+
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------
+
+
+    public function stu()
+    {
+        $data = array(
+            'title' => WEBSITE_NAME . ' - stu',
+            'description' => 'Not sure Community Auth is right for you? See soof the areas in Community Auth that require login.',
+            'content' => $this->load->view( 'static_pages/stu', '', TRUE )
+        );
+
+        $this->load->view( $this->template, $data );
+    }
 
 	//display for cost
     

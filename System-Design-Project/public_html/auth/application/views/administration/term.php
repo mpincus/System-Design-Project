@@ -154,9 +154,9 @@ if (config_item('deny_access') > 0) {
 					<td>'
                             . $row->term_year .
                             '</td>
-                            <td>'
-                            . date("M j, Y", $row->time) .
-                            '</td>
+                            <td>
+                          //  . date("M j, Y", $row->time) .
+                            </td>
                         </tr>
                     ';
                     }

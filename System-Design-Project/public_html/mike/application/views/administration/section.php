@@ -263,7 +263,7 @@ if (config_item('deny_access') > 0) {
 
                     '</td>
                      <td>'
-                            .$row->sectionID.
+                            .$row->section.
                     '</td>
                     <td>'
                             .$row->teacher.
@@ -291,9 +291,28 @@ if (config_item('deny_access') > 0) {
         <div id="decision_buttons">
             <input type="submit" class="form_button" name="remove_selected" value="Remove Selected"
                    style="margin-top:10px;"/>
+           <?php echo anchor_popup('administration/modifyclass', 'My News', array('title' => 'The best news!')); ?>
         </div>
+
+
     </div>
     </form>
+    <script type="text/javascript">/*
+       // document.getElementById('fieldstuff').style.display='none';
+        function hideshow(){
+            if (!document.getElementById)
+                return
+            if (document.getElementById('fieldstuff').style.display=="block")
+                document.getElementById('fieldstuff').style.display="none"
+            else
+                document.getElementById('fieldstuff').style.display="block"
+        }
+        function changestuff(){
+            <?php/* echo anchor_popup('administration/modifyclass');*/?>
+            var blah;
+        }
+
+   */ </script>
 
 <?php
 

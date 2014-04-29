@@ -1,13 +1,11 @@
-/*
-Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+/*Copyright (c) 2010, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
-http://developer.yahoo.com/yui/license.html
-version: 3.1.1
+                    http://developer.yahoo.com/yui/license.html
+                                                   version: 3.1.1
 build: 47
 */
 html {
-    color: #000;
-    background: #FFF;
+
 }
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
@@ -78,30 +76,26 @@ Licensed under the BSD licence:
 http://http://www.opensource.org/licenses/BSD-3-Clause
 */
 
-html, body {
-    height: 100%;
-}
-
-html {
-    background: #d8d8d8 url(../img/page-background.jpg) repeat-y top center;
-}
 
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
 .wrapper {
-    width: 922px;
+    width: 100%;
     min-height: 100%;
     height: auto !important;
     height: 100%;
     margin: 0 auto -30px;
+    background: beige;
+
 }
 
 .width-limiter {
     position: relative;
-    float: left;
-    width: 920px;
+    float: left ;
+    width: 85%;
+    background:beige;
 }
 
 #logo {
@@ -128,6 +122,7 @@ body {
 #two-right {
     float: right;
     width: 295px;
+    width: 295px;
     margin-right: 24px;
 }
 
@@ -139,7 +134,7 @@ body {
 #indicator {
     float: left;
     width: 100%;
-    background-color: #006401;
+    background-color: #430826;
     margin: 0;
 }
 
@@ -252,6 +247,8 @@ ul.std-list ul {
     padding: 15px;
     margin: 4em 0 0 0;
     color: #fff;
+
+
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 15px;
@@ -1051,44 +1048,12 @@ table.simple_table th.fixed_10_percent {
 #category-menu .submenu-listbox {
     float: right;
 }
-/*footer*/
-
-#wrapper {
-    width: 100%;
-    max-width: 980px;
-    margin: auto;
-}
 
 
-#footer {
-    text-decoration-color: white;
-    background-color: #006401;
-    width: 100%;
-    float:left;
-}
-
-.footerFloat {
-   color: white;
-    width: 25%;
-    float: left;
-    min-width:200px;
-
-}
-div.footerFloat h4{
-    color:  white;
-}
-div.footerFloat ul li{
-    color:white;
-
-
-}
 ul li a {
     color:white;
 }
-body {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto; }
+
 nav {
     width: 100%;
     margin: 20px 0; }
@@ -1150,74 +1115,1110 @@ nav ul li:first-child a {
 nav ul li:last-child a {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px; }
+/*student login css*/
 
 
-/*style for slider */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
 
 
-#slider {
-    position: relative;
-    overflow: hidden;
-    margin: 20px auto 0 auto;
-    border-radius: 4px;
+#stulogin{
+    background:white;
+
+    
+
+
 }
 
-#slider ul {
-    position: relative;
-    margin: 0;
-    padding: 0;
-    height: 200px;
-    list-style: none;
+
+/*css for page*/
+/*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*//*css for page*/
+/*
+Template Name: Educational
+File: Layout CSS
+Author: OS Templates
+Author URI: http://www.os-templates.com/
+Licence: <a href="http://www.os-templates.com/template-terms">Website Template Licence</a>
+*/
+
+@import url(navi.css);
+@import url(forms.css);
+@import url(tables.css);
+@import url(featured_slide.css);
+@import url(loginslider.css);
+
+body{
+    margin:0;
+    padding:0;
+    font-size:12px;
+    font-family:verdana, Arial, Helvetica, sans-serif;
+    color:#333333;
+    background-color:#FFFFFF;
 }
 
-#slider ul li {
-    position: relative;
-    display: block;
+img{display:block; margin:0; padding:0; border:none;}
+.justify{text-align:justify;}
+.bold{font-weight:bold;}
+.center{text-align:center;}
+.right{text-align:right;}
+.nostart {list-style-type:none; margin:0; padding:0;}
+.clear{clear:both;}
+br.clear{clear:both; margin-top:-15px;}
+
+a{outline:none; text-decoration:none;}
+
+.fl_left{float:left;}
+.fl_right{float:right;}
+
+.imgl, .imgr{border:1px solid #999999; padding:5px;}
+.imgl{float:left; margin:0 8px 8px 0; clear:left;}
+.imgr{float:right; margin:0 0 8px 8px; clear:right;}
+
+/* ----------------------------------------------Wrapper-------------------------------------*/
+
+div.wrapper{
+    display:block;
+    width:100%;
+    margin:0;
+    padding:0;
+    text-align:left;
+}
+
+div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, div.wrapper h6{
+    margin:0;
+    padding:0;
+    font-size:20px;
+    font-weight:normal;
+    line-height:normal;
+    font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.col0{color:#313131; background-color:#F8F7DF; border-top:5px solid #313131;}
+.col1, .col1 a{color:#8B785F; background-color:#F8F7DF;}
+.col2{color:#333333; background:url("../img/topnav_bg.gif") bottom left repeat-x #E5E2C9;}
+.col3{color:#313131; background-color:#F8F7DF;}
+.col4{color:#666666; background-color:#F8F7DF;}
+.col4 a{color:#746550; background-color:#F8F7DF;}
+.col5{color:#CCCCCC; background-color:#48282F;}
+.col5 a{color:#E5E2C9; background-color:#48282F;}
+.col6, .col6 a{color:#767772; background-color:#FFFFFF;}
+.col7{color:black; background-color:white;}
+.col7 a{color:#000000; background-color:white;}
+.col8{color:black; background-color:white;}
+.col8 a{color:#000000; background-color:white;}
+.col9{color:black; background-color:white;}
+.col9 a{color:#000000; background-color:white;}
+/* ----------------------------------------------Generalise-------------------------------------*/
+
+#header, #topbar, #topnav, #breadcrumb, #container, #footer, #copyright{
+    position:relative;
+    margin:0 auto 0;
+    display:block;
+    width:960px;
+}
+
+/* ----------------------------------------------Header-------------------------------------*/
+
+#header{
+    padding:0 0 20px 0;
+}
+
+#header #logo{
+    display:block;
+    float:left;
+    width:300px;
+    overflow:hidden;
+}
+
+#header #logo h1, #header p, #header ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+    line-height:normal;
+}
+
+#header #logo h1{
+    font-size:36px;
+}
+
+#header h1 a{
+    color:#333333;
+    background-color:#F8F7DF;
+}
+
+#header .fl_right{
+    display:block;
+    float:right;
+    width:330px;
+    margin:17px 0 0 0;
+    padding:0;
+    text-align:right;
+}
+
+#header .fl_right ul{
+    margin-bottom:10px;
+}
+
+#header li{
+    display:inline;
+    margin:0 0 0 8px;
+    padding:0 0 0 10px;
+    border-left:1px solid #8B785F;
+}
+
+#header li.last{
+    margin-right:0;
+    padding-right:0;
+    border:none;
+}
+
+/* ----------------------------------------------BreadCrumb-------------------------------------*/
+
+#breadcrumb{
+    padding:20px 0;
+    border-bottom:1px dotted #CCCCCC;
+}
+
+#breadcrumb a{
+    color:#746550;
+    background-color:#F8F7DF;
+}
+
+#breadcrumb ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+#breadcrumb ul li{display:inline;}
+#breadcrumb ul li.current a{text-decoration:underline;}
+
+/* ----------------------------------------------Container-------------------------------------*/
+
+#container{
+    padding:20px 0;
+}
+
+#container h1, #container h2, #container h3, #container h4, #container h5, #container h6{
+    font-size:18px;
+    margin:0 0 10px 0;
+    color:#333333;
+    background-color:#F8F7DF;
+}
+
+/* ----------------------------------------------Homepage Services-------------------------------------*/
+
+#hpage{
+    display:block;
+    width:100%;
+    margin:10px 0;
+}
+
+#hpage ul{
+    margin:0;
+    padding:0;
+    border:none;
+    list-style:none;
+    line-height:normal;
+}
+
+#hpage li{
+    display:block;
+    float:left;
+    width:210px;
+    margin:0 40px 0 0;
+    padding:0;
+}
+
+#hpage li.last{margin-right:0;}
+
+#hpage li div.imgholder{
+    display:block;
+    margin:0 0 10px 0;
+    padding:4px;
+    color:#666666;
+    background-color:#EDECE4;
+    border:1px solid #BEBB9E;
+}
+
+#hpage p{
+    margin:0 0 10px 0;
+    padding:0;
+    line-height:1.8em;
+}
+
+#hpage p.readmore{
+    display:block;
+    margin:0;
+    line-height:normal;
+    font-weight:bold;
+}
+
+/* ----------------------------------------------Content-------------------------------------*/
+
+#content{
+    display:block;
+    float:left;
+    width:600px;
+}
+
+/* ------Comments-----*/
+
+#comments{margin-bottom:40px;}
+
+#comments .commentlist {margin:0; padding:0;}
+
+#comments .commentlist ul{margin:0; padding:0; list-style:none;}
+
+#comments .commentlist li.comment_odd, #comments .commentlist li.comment_even{margin:0 0 10px 0; padding:15px; list-style:none;}
+
+#comments .commentlist li.comment_odd{color:#666666; background-color:#FDFFE1;}
+#comments .commentlist li.comment_odd a{color:#746550; background-color:#FDFFE1;}
+
+#comments .commentlist li.comment_even{color:#666666; background-color:#FBFFBF;}
+#comments .commentlist li.comment_even a{color:#746550; background-color:#FBFFBF;}
+
+#comments .commentlist .author .name{font-weight:bold;}
+#comments .commentlist .submitdate{font-size:smaller;}
+
+#comments .commentlist p{margin:10px 5px 10px 0; padding:0; font-weight: normal;text-transform: none;}
+
+#comments .commentlist li .avatar{float:right; border:1px solid #EEEEEE; margin:0 0 0 10px;}
+
+/* ----------------------------------------------Right Block-------------------------------------*/
+
+#column{
+    display:block;
+    float:right;
+    width:300px;
+}
+
+#column .holder, #column #featured{
+    display:block;
+    width:300px;
+    margin-bottom:40px;
+}
+
+#column .holder p{
+    line-height:1.6em;
+}
+
+#column .holder h2.title{
+    display:block;
+    width:100%;
+    height:65px;
+    margin:0;
+    padding:15px 0 8px 0;
+    font-size:20px;
+    border-bottom:1px dotted #CCCCCC;
+}
+
+#column .holder h2.title img{
+    float:left;
+    margin:-15px 8px 0 0;
+    padding:5px;
+    border:1px solid #CCCCCC;
+}
+
+#column .holder p.readmore{
+    display:block;
+    width:100%;
+    font-weight:bold;
+    text-align:right;
+    line-height:normal;
+}
+
+#column div.imgholder{
+    display:block;
+    width:290px;
+    margin:0 0 10px 0;
+    padding:4px;
+    border:1px solid #CCCCCC;
+}
+
+/* Featured Block */
+
+#column #featured a{
+    color:#746550;
+    background-color:#FFFFFF;
+}
+
+#column #featured ul, #column #featured h2, #column #featured p{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+#column #featured li{
+    display:block;
+    width:250px;
+    margin:0;
+    padding:20px 25px;
+    color:#2E271D;
+    background-color:#FFFFFF;
+}
+
+#column #featured li p{
+    line-height:1.6em;
+}
+
+#column #featured li p.imgholder{
+    display:block;
+    width:240px;
+    height:90px;
+    margin:20px 0 15px 0;
+    padding:4px;
+    border:1px solid #CCCCCC;
+}
+
+#column #featured li h2{
+    font-size:20px;
+    color:#333333;
+    background-color:#FFFFFF;
+}
+
+#column #featured p.readmore{
+    display:block;
+    width:100%;
+    margin-top:15px;
+    font-weight:bold;
+    text-align:right;
+    line-height:normal;
+}
+
+/* ----------------------------------------------Footer-------------------------------------*/
+
+#footer{
+    padding:20px 0;
+}
+
+#footer h2{
+    margin-bottom:15px;
+    padding-bottom:8px;
+    border-bottom:1px dotted #999999;
+}
+
+#footer p, #footer ul, #footer a{
+    margin:0;
+    padding:0;
+    font-weight:normal;
+    list-style:none;
+    line-height:normal;
+}
+
+#footer .footbox{
+    display:block;
+    float:right;
+    width:190px;
+    margin:0 0 0 30px;
+    padding:0;
+}
+
+#footer li{
+    margin-bottom:3px;
+}
+
+#footer .last{
+    margin:0;
+}
+
+#newsletter{
+    display:block;
+    float:left;
+    width:300px;
+}
+
+
+/*this is the css for the student login table formss*/
+
+
+#footer1{
+    padding:20px 0;
+}
+#footer1 .footbox1{
+    display:block;
+    float:right;
+    width:20%;
+    margin:0 0 0 30px;
+    padding:0;
+    background-color: white;
+    border-style:solid;
+
+}
+
+#footer1 .footbox1 a{
+   color: blue;
+}
+
+
+#footer1 li{
+    margin-bottom:3px;
+}
+
+#footer1 .last{
+    margin:0;
+}
+
+#newsletter1{
+    display:block;
+    float:left;
+    width:20%;
+    background-color: white;
+    border-width: 1px;
+    border-style:solid;}
+
+
+
+
+#footer1{
+    padding:20px 0;
+}
+#footer1 .footbox1{
+    display:block;
+    float:right;
+    width:20%;
+    margin:0 0 0 30px;
+    padding:0;
+    background-color: white;
+    border-style:solid;
+
+}
+
+#footer1 .footbox1 a{
+    color: blue;
+}
+
+
+#footer1 li{
+    margin-bottom:3px;
+}
+
+#footer1 .last{
+    margin:0;
+}
+
+#newsletter1{
+    display:block;
+    float:left;
+    width:20%;
+    background-color: white;
+    border-width: 1px;
+    border-style:solid;}
+
+
+
+
+
+
+
+
+/*-----------------------------------------------------------------------------------------------*/
+.about{
+    overflow: auto;
+
+}
+.about1{
+    float:left;
+    width:39%;
+    border-style:solid;
+    border-width: 1px;
+}
+.about2{
     float: left;
-    margin: 0;
-    padding: 0;
-    width: 500px;
-    height: 300px;
-    background: #ccc;
+    width:30%;
     text-align: center;
-    line-height: 300px;
+    border-style:solid;
+    border-width: 1px;
+
 }
 
-a.control_prev, a.control_next {
-    position: absolute;
-    top: 40%;
-    z-index: 999;
-    display: block;
-    padding: 4% 3%;
-    width: auto;
-    height: auto;
-    background: #2a2a2a;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 18px;
-    opacity: 0.8;
-    cursor: pointer;
+.about3{
+float:left;
+    width:30%;
+    border-style:solid;
+    border-width: 1px;
+
 }
 
-a.control_prev:hover, a.control_next:hover {
-    opacity: 1;
-    -webkit-transition: all 0.2s ease;
+.banners{
+    overflow: auto;
+
 }
 
-a.control_prev {
-    border-radius: 0 2px 2px 0;
+
+#banners1{
+    float:left;
+    width:30%;
+    border-style:solid;
+    border-width: 1px;
+
+}
+.banners2{
+    float: left;
+    width:30%;
+    text-align: center;
+    border-style:solid;
+    border-width: 1px;
+
 }
 
-a.control_next {
-    right: 0;
-    border-radius: 2px 0 0 2px;
+.banners3{
+    float:left;
+    width:30%;
+    border-style:solid;
+    border-width: 1px;
+
 }
 
-.slider_option {
-    position: relative;
-    margin: 10px auto;
-    width: 300px;
-    font-size: 18px;
+
+.stulink{
+    overflow: auto;
+
 }
+
+
+#stulink1{
+    float:left;
+    width:30%;
+    border-style:solid;
+    border-width: 1px;
+
+}
+.stulink2{
+    float: left;
+    width:30%;
+    text-align: center;
+    border-style:solid;
+    border-width: 1px;
+
+}
+
+.stulink3{
+    float:left;
+    width:30%;
+    border-style:solid;
+    border-width: 1px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ----------------------------------------------Copyright-------------------------------------*/
+
+#copyright{
+    padding:15px 0;
+}
+
+#copyright p{
+    margin:0;
+    padding:0;
+}
+
+
+/*formmmm csssssss*/
+
+
+
+/*
+Template Name: Educational
+File: Forms CSS
+Author: OS Templates
+Author URI: http://www.os-templates.com/
+Licence: <a href="http://www.os-templates.com/template-terms">Website Template Licence</a>
+*/
+
+form, fieldset, legend{margin:0; padding:0; border:none;}
+legend{display:none;}
+input, textarea, select{font-size:12px; font-family:Verdana, Arial, Helvetica, sans-serif;}
+
+/* ----------------------------------------------Forms in Content Area-------------------------------------*/
+
+#container #respond{display: block; width:100%;}
+
+#container #respond input{width:170px; padding:2px; border:1px solid #CCCCCC; margin:5px 5px 0 0;}
+
+#container #respond textarea{width:98%; border:1px solid #CCCCCC; padding:2px; overflow:auto;}
+
+#container #respond p{margin:5px 0;}
+
+#container #respond #submit, #container #respond #reset{
+    margin:0;
+    padding:5px;
+    color:#666666;
+    background-color:#F7F7F7;
+    border:1px solid #CCCCCC;
+    cursor:pointer;
+}
+
+/* ----------------------------------------------Newsletter-------------------------------------*/
+
+#footer form{
+    display:block;
+    width:300px;
+    margin:0;
+    padding:10px 0;
+    border:none;
+}
+
+#footer input{
+    display:block;
+    float:left;
+    width:245px;
+    margin:0 5px 0 0;
+    padding:5px;
+    color:#666666;
+    background-color:#FFFFFF;
+    border:1px solid #DBDBDB;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+}
+
+#footer input#news_go{
+    width:auto;
+    height:auto;
+    margin:0;
+    padding:4px;
+}
+
+
+
+
+/*slider css*/
+
+
+
+
+/*
+Template Name: Educational
+File: Featured Slider CSS
+Author: OS Templates
+Author URI: http://www.os-templates.com/
+Licence: <a href="http://www.os-templates.com/template-terms">Website Template Licence</a>
+*/
+
+#featured_slide{
+    position:relative;
+    width:960px;
+    margin:0 auto;
+    padding:20px 0 0 0;
+}
+
+#featured_slide #featured_wrap{
+    position:relative;
+    width:940px;
+    height:290px;
+    padding:10px;
+    overflow:hidden;
+    color:#333333;
+    background-color:#FFFFFF;
+}
+
+#featured_slide a{
+    color:#CCCCCC;
+    background-color:transparent;
+}
+
+#featured_slide a, #featured_slide ul, #featured_slide img{
+    margin:0;
+    padding:0;
+    border:none;
+    outline:none;
+    list-style:none;
+    text-decoration:none;
+}
+
+#featured_slide h1, #featured_slide h2, #featured_slide h3, #featured_slide h4, #featured_slide h5, #featured_slide h6{
+    margin:0 0 15px 0;
+    padding:0;
+    line-height:normal;
+    font-size:20px;
+    font-weight:normal;
+}
+
+/* ----------------------------------------------Generalise-------------------------------------*/
+
+#featured_content, .featured_box, .featured_box img{
+    display:block;
+    width:940px;
+    height:290px;
+}
+
+#featured_content{
+    overflow:hidden;
+}
+
+.featured_box{
+    position:relative;
+}
+
+/* ----------------------------------------------Content-------------------------------------*/
+
+.featured_box .floater{
+    display:block;
+    position:absolute;
+    bottom:0;
+    right:0;
+    margin:0;
+    padding:5px 10px;
+    background-image:url("../img/trans.png");
+}
+
+#featured_slide .floater a{
+    font-weight:bold;
+    text-transform:uppercase;
+    color:#D6D1A9;
+    background-color:transparent;
+}
+
+/* ----------------------------------------------Tabbed Navigation-------------------------------------*/
+
+#featured_slide .ui-tabs-hide{display:none;}
+
+#featured_slide ul#featured_tabs{
+    display:block;
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:300px;
+    height:270px;
+    padding:10px;
+    overflow:hidden;
+    font-size:12px;
+    color:#CCCCCC;
+    background:url("../img/trans.png") transparent;
+    z-index:1;
+}
+
+#featured_slide ul#featured_tabs li{
+    display:block;
+    width:300px;
+    height:53px;
+    margin:0;
+    padding:13px 0 0 0;
+    border-bottom:2px dotted #7B7774;
+}
+
+#featured_slide ul#featured_tabs li.last{
+    border-bottom:none;
+}
+
+#featured_slide ul#featured_tabs li a{
+    display:block;
+    width:300px;
+    height:53px;
+    margin:0;
+    padding:0;
+    font-size:18px;
+    font-weight:normal;
+    font-family:Georgia, "Times New Roman", Times, serif;
+    color:#CCCCCC;
+    background:url("../img/file.png") top right no-repeat transparent;
+}
+
+#featured_slide ul#featured_tabs li a span{
+    display:block;
+    margin:10px 0 0 0;
+    padding:0;
+    font-size:12px;
+    font-weight:normal;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+#featured_slide ul#featured_tabs li a:hover, #featured_slide ul#featured_tabs li.ui-state-active a{
+    color:#CCCCCC;
+    background-color:transparent;
+}
+
+#featured_slide ul#featured_tabs li.ui-tabs-selected a{
+    color:#D6D1A9;
+    background-color:transparent;
+    background-image:url("../img/file2.png");
+}
+
+
+
+/*login slider*/
+
+/*
+Template Name: Educational
+File: LoginSlider CSS
+Author: OS Templates
+Author URI: http://www.os-templates.com/
+Licence: <a href="http://www.os-templates.com/template-terms">Website Template Licence</a>
+
+Inspired By: Sliding Login Panel with jQuery from http://web-kreation.com/index.php/tutorials/nice-clean-sliding-login-panel-built-with-jquery/
+*/
+
+#topbar{
+    position:relative;
+    margin:0 auto 0;
+    display:block;
+    width:960px;
+    font-size:12px;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+#topbar a{
+    color:#F8F7DF;
+    background-color:#313131;
+}
+
+#topbar a:hover{
+    color:#8B785F;
+    background-color:#313131;
+}
+
+#slidepanel{
+    display:none;
+    position:relative;
+    width:960px;
+    overflow:hidden;
+    color:#FFFFFF;
+    background:url("../images/tab_l.gif") bottom left no-repeat #313131;
+}
+
+/* ----------------------------------------------Content-------------------------------------*/
+
+#topbar .topbox{
+    display:block;
+    float:left;
+    width:270px;
+    margin:0 30px 0 0;
+    padding:15px;
+}
+
+#topbar .last{
+    margin-right:0;
+}
+
+#topbar h1, #topbar h2, #topbar h3, #topbar h4, #topbar h5, #topbar h6{
+    font-size:18px;
+    margin:0 0 15px 0;
+    padding:0 0 8px 0;
+    border-bottom:1px dotted #E7E6E6;
+}
+
+#topbar p{
+    margin:0 0 15px 0;
+    padding:0;
+    line-height:1.6em;
+}
+
+#topbar p.readmore{
+    display:block;
+    margin:0;
+    text-align:right;
+    line-height:normal;
+    font-weight:bold;
+}
+
+/* ----------------------------------------------Forms-------------------------------------*/
+
+#topbar form, #topbar fieldset, #topbar legend{margin:0; padding:0; border:none;}
+#topbar legend{display:none;}
+#topbar input, #topbar textarea, #topbar select{font-size:12px; font-family:Verdana, Arial, Helvetica, sans-serif;}
+
+#topbar label{
+    display:block;
+    width:270px;
+    margin:0 0 12px 0;
+    padding:0;
+}
+
+#topbar label input{
+    display:block;
+    width:262px;
+    margin:5px 0;
+    padding:3px;
+    color:#333333;
+    background-color:#F8F7DF;
+    border:1px solid #CCCCCC;
+}
+
+#topbar .topbox p input{
+    padding:3px 10px;
+    color:#666666;
+    background-color:#F7F7F7;
+    border:1px solid #CCCCCC;
+    cursor:pointer;
+}
+
+#topbar label input.checkbox{
+    display:inline;
+    width:auto;
+    margin:0 5px 0 0;
+    padding:0;
+}
+
+/* ----------------------------------------------Tab Panel-------------------------------------*/
+
+#loginpanel{
+    display:block;
+    position:relative;
+    top:0;
+}
+
+#loginpanel ul{
+    display:block;
+    float:right;
+    width:210px;
+    height:24px;
+    margin:0;
+    padding:6px 0 0 0;
+    text-align:center;
+    color:#CCCCCC;
+    background-color:#313131;
+}
+
+#loginpanel li{
+    display:block;
+    height:24px;
+    margin:0;
+    padding:0;
+}
+
+#loginpanel li.left{
+    float:left;
+    text-align:right;
+    padding-left:10px;
+    background:url("../images/tab_l.gif") no-repeat bottom left;
+}
+
+#loginpanel li.right{
+    float:right;
+    text-align:left;
+    padding-right:10px;
+    background:url("../images/tab_r.gif") no-repeat bottom right;
+}
+
+#loginpanel a{
+    display:block;
+    width:100px;
+}
+
+/*navigation*/
+
+
+
+/*
+Template Name: Educational
+File: Navigation CSS
+Author: OS Templates
+Author URI: http://www.os-templates.com/
+Licence: <a href="http://www.os-templates.com/template-terms">Website Template Licence</a>
+*/
+
+#topnav{
+    height:75px;
+    overflow:hidden;
+}
+
+#topnav ul{
+    display:block;
+    width:100%;
+    height:75px;
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+#topnav ul li ul{display:none;}
+
+#topnav ul li.active ul{
+    display:block;
+    position:absolute;
+    top:35px;
+    left:0;
+    width:100%;
+    height:40px;
+}
+
+#topnav li{display:block; float:left;}
+#topnav li.last{margin-right:0;}
+
+#topnav ul li a:link, #topnav ul li a:visited, #topnav ul li a:hover{
+    display:block;
+    float:left;
+    height:25px;
+    padding:10px 15px 0 15px;
+    color:#333333;
+    background-color:#E5E2C9;
+}
+
+#topnav ul ul li a:link, #topnav ul ul li a:visited, #topnav ul ul li a:hover{
+    float:left;
+    height:auto;
+    margin:13px 15px 0 0;
+    padding:0 16px 0 0;
+    color:#FFFFFF;
+    background-color:#591434;
+    border-right:1px solid #FFFFFF;
+}
+
+#topnav ul ul li.last a{
+    margin-right:0;
+    padding:0;
+    border-right:none;
+}
+
+#topnav ul li.active a, #topnav ul li a:hover{
+    color:#FFFFFF;
+    background-color:#591434;
+}
+
+/* ----------------------------------------------Column Navigation-------------------------------------*/
+
+#column .subnav{display:block; width:250px; padding:25px; background-color:#FFFFFF; margin-bottom:30px;}
+
+#column .subnav h2{
+    margin:0 0 20px 0;
+    padding:0 0 14px 0;
+    font-size:20px;
+    font-weight:normal;
+    font-family:Georgia, "Times New Roman", Times, serif;
+    color:#666666;
+    background-color:#FFFFFF;
+    line-height:normal;
+    border-bottom:1px dotted #666666;
+}
+
+#column .subnav ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+#column .subnav li{
+    margin:0 0 3px 0;
+    padding:0;
+}
+
+#column .subnav ul ul, #column .subnav ul ul ul, #column .subnav ul ul ul ul, #column .subnav ul ul ul ul ul{border-top:none; padding-top:0;}
+
+#column .subnav a{
+    display:block;
+    margin:0;
+    padding:5px 10px 5px 20px;
+    color:#777777;
+    background:url("../images/purple_file.gif") no-repeat 10px center #FFFFFF;
+    text-decoration:none;
+    border-bottom:1px dotted #666666;
+}
+
+#column .subnav a:hover{color:#591434; background-color:#FFFFFF;}
+
+#column .subnav ul ul a, #column .subnav ul ul ul a, #column .subnav ul ul ul ul a, #column .subnav ul ul ul ul ul a{background:url("../imag");
+
+
+
+
+
+
+
+

@@ -74,45 +74,78 @@
 				// Show the login / logout ...
 				echo ( isset( $_user_first_name ) ) ? 'Welcome, ' . $_user_first_name . ' &bull; ' . secure_anchor('user','User Index') . ' &bull; ' . secure_anchor('user/logout','Logout') : secure_anchor('register','Register') . ' &bull; ' . secure_anchor('user','Login');
 			?>
-            <!-- HTML for SEARCH BAR -->
-            <div id="tfheader">
-                <form id="tfnewsearch" method="get" action="http://www.google.com">
-                    <input type="text" class="tftextinput" name="q" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
-                </form>
-                <div class="tfclear"></div>
-            </div>
-		</div>
+</div>
 	</div>
 	<div class="width-limiter">
-		<div id="logo">
-			<?php echo anchor('', img( array( 'src' => 'img/indi.jpg', 'alt' => WEBSITE_NAME ) ) )  . "\n"; ?>
-		</div>
 
-		<div id="two-left" class="content">
-            <nav>
+        <div class="wrapper col1">
+            <div id="header">
+                <div id="logo">
+                    <h1><a href="#">SUNY TECH</a></h1>
+                    <p>Come join us</p>
+                </div>
+                <div class="fl_right">
+                    <ul>
+                        <p>put somthing here</p>
+                    </ul>
+
+                </div>
+                <br class="clear" />
+            </div>
+        </div>
+        <div class="wrapper col2">
+            <div id="topnav">
                 <ul>
-                    <li>
-                        <a href="#">Home</a>
+                    <li class="active"><a href="index.php">Home</a>
+                        <ul>
+                            <li> <?php
+                                echo ( $this->uri->segment(1) == 'cost' ) ? anchor('cost', 'Cost', array( 'id' => 'active' ) ) : anchor('cost', 'Cost');
+                                ?></li>
+                            <li> <?php
+                                echo ( $this->uri->segment(1) == 'Financial' ) ? anchor('financial', 'Financial Aid', array( 'id' => 'active' ) ) : anchor('financial', 'Financial Aid');
+                                ?></li>
+                            <li> <?php
+                                echo ( $this->uri->segment(1) == 'studentlife' ) ? anchor('Studentlife', 'Student Life', array( 'id' => 'active' ) ) : anchor('studentlife', 'Student Life');
+                                ?></li>
+                            <li class="last"> <?php
+                                echo ( $this->uri->segment(1) == 'apply' ) ? anchor('apply', 'Apply Now', array( 'id' => 'active' ) ) : anchor('apply', 'Apply Now');
+                                ?></li>
+                            <il>
+
+                                <?php
+                                echo ( $this->uri->segment(1) == 'stu' ) ? anchor('Stu', 'studentlogin', array( 'id' => 'active' ) ) : anchor('stu', 'studentlogin');
+                                ?>
+                            </il>
+
+
+                        </ul>
                     </li>
-                    <li>
-                        <a href="#">Print Design</a>
+                    <li><a href="apply.php">Student</a>
+                        <ul>
+                            <li><?php
+                                echo ( $this->uri->segment(1) == 'freshman' ) ? anchor('freshman', 'freshman', array( 'id' => 'active' ) ) : anchor('freshman', 'freshman');
+                                ?></li>
+                            <li><?php
+                                echo ( $this->uri->segment(1) == 'cost' ) ? anchor('cost', 'Cost', array( 'id' => 'active' ) ) : anchor('cost', 'Cost');
+                                ?></li>
+                            <li class="last"><a href="#">Praesent et eros</a></li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="#">Web Design</a>
+                    <li><a href="full-width.html">Full Width</a>
+                        <ul>
+                            <li><a href="#">Lorem ipsum dolor</a></li>
+                            <li><a href="#">Suspendisse in neque</a></li>
+                            <li class="last"><a href="#">Praesent et eros</a></li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="#">Bio</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
+                    <li><a href="#">Our Services</a></li>
+                    <li class="last"><a href="#">Long Link Text</a></li>
                 </ul>
-            </nav>
+            </div>
+        </div>
 
 
-
-
-            <?php echo ( isset( $content ) ) ? $content : ''; ?>
+        <?php echo ( isset( $content ) ) ? $content : ''; ?>
 		</div>
 		<div id="two-right">
 
@@ -124,6 +157,11 @@
 			<?php
 				}
 			?>
+            <?php
+            if( isset( $auth_level ) ){
+
+
+            ?>
 			<div id="menu">
 				<h3>Site Menu</h3>
 				<ul>
@@ -240,6 +278,10 @@
                         echo '<li>';
                         echo ($this->uri->segment(2) == 'section') ? secure_anchor('administration/section', 'Add/Drop Section', array('id' => 'active')) : secure_anchor('administration/section', 'Add/Drop Section');
                         echo '</li>';
+						
+						  echo '<li>';
+                        echo ($this->uri->segment(1) == 'admin_modify_schedule') ? secure_anchor('administration/admin_modify_schedule', 'Modify Class Schedule', array('id' => 'active')) : secure_anchor('administration/admin_modify_schedule', 'modifyClassSchedule');
+                        echo '</li>';
 						}
 
 						// If any user is logged in
@@ -260,83 +302,67 @@
 					?>
 				</ul>
 			</div>
+            <?php
+            }
+            ?>
 		</div>
 		<div class="push">&nbsp;</div>
 	</div>
 </div>
-<div class="footer">
-
-    <div id="wrapper">
-        <div id="footer">
-            <div class="footerFloat">
-
-                <h4>Welcome</h4>
-                <ul>
-                    <li>  <?php
-                        echo ( $this->uri->segment(1) == 'studentlife' ) ? anchor('Studentlife', 'Student Life', array( 'id' => 'active' ) ) : anchor('studentlife', 'Student Life');
-                        ?></li>
-                    <li><?php
-                        echo ( $this->uri->segment(1) == 'apply' ) ? anchor('apply', 'Apply Now', array( 'id' => 'active' ) ) : anchor('apply', 'Apply Now');
-                        ?></li>
-                    <li> <?php
-                        echo ( $this->uri->segment(1) == 'academics' ) ? anchor('academics', 'Academics', array( 'id' => 'active' ) ) : anchor('academics', 'Academics');
-                        ?></li>
-                    <li><?php
-                        echo ( $this->uri->segment(1) == 'contact' ) ? secure_anchor('contact', 'Contact', array( 'id' => 'active' ) ) : secure_anchor('contact', 'Contact');
-                        ?></li>
-                </ul>
-
-
-            </div>
-            <div class="footerFloat">
-                <h4>SUNY TECH </h4>
-                <ul>
-                    <p>Welcome to SUNY TECH explore our website
-                    and if you have any question contact us or meet up with one
-                    of our counselor and ask away! </p>
-                </ul>
-            </div>
-            <div class="footerFloat">
-
-                <h4>Contact us</h4>
-
-                1 old westbury Parkway
-                |
-                NY, NY 11568<br>
-                |
-                123-456-3500
-            </div>
-            <div class="footerFloat">
-
-                <div class="content">
-                    <p><a href="" onClick="javascript: pageTracker._trackPageview('/outbound/footer/connectwithoneonta');">Connect With SUNY TECH:</a></p>
-                    <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/facebook');"><img src="http://www.oneonta.edu/home/images/facebook-icon.png" alt="Facebook" title="Facebook"  class="image image-thumbnail " width="24" height="24" /></a>
-                    <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/youtube');"><img src="http://www.oneonta.edu/home/images/youtube-icon.png" alt="YouTube" title="YouTube"  class="image image-thumbnail " width="24" height="24" /></a>
-                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/twitter');"><img src="http://www.oneonta.edu/home/images/twitter-icon.png" alt="Twitter" title="Twitter"  class="image image-thumbnail " width="24" height="24" /></a>
-                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/instagram');"><img src="http://www.oneonta.edu/home/images/instagram-icon.png" alt="Instagram" title="Instagram"  class="image image-thumbnail " width="24" height="24" /></a>
-                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/tumblr');"><img src="http://www.oneonta.edu/home/images/tumblr-icon.png" alt="Tumblr" title="Tumblr"  class="image image-thumbnail " width="24" height="24" /></a>
-                    <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/linkedin');"><img src="http://www.oneonta.edu/home/images/linkedin-icon.png" alt="LinkedIn" title="LinkedIn"  class="image image-thumbnail " width="24" height="24" /></a>
-                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/App-AndroidMarket');"><img src="http://www.oneonta.edu/home/images/android_market_icon.png" alt="Android Market" title="Android Market"  class="image image-thumbnail " width="24" height="24" /></a>
-                    <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/App-AppStore');"><img src="http://www.oneonta.edu/home/images/iphone_icon.png" alt="iPhone App Store" title="iPhone App Store"  class="image image-thumbnail " width="24" height="24" /></a>
-                    <div class="clear">&nbsp;</div>
-            </div>
-
-                <p></p>
-                <p></p>
-                <p></p>
-            </div>
-            <p>Copyright (c) 2011 - <?php echo date('Y') . ' &bull; Robert B. Gottier &bull; ' . anchor('http://brianswebdesign.com','Brian\'s Web Design - Temecula, CA') . ' &bull; ' . anchor('privacy','Privacy Policy'); ?></p>
+<div class="wrapper col5">
+    <div id="footer">
+        <div id="newsletter">
+            <h2>Stay In The Know !</h2>
+            <p>Please enter your email to join our mailing list</p>
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>News Letter</legend>
+                    <input type="text" value="Enter Email Here&hellip;"  onfocus="this.value=(this.value=='Enter Email Here&hellip;')? '' : this.value ;" />
+                    <input type="submit" name="news_go" id="news_go" value="GO" />
+                </fieldset>
+            </form>
+            <p>To unsubscribe please <a href="#">click here &raquo;</a></p>
+        </div>
+        <div class="footbox">
+            <h2>Social Network</h2>
+            <ul>
+                <li><a href="#">Praesent et eros</a></li>
+                <li><a href="#">Praesent et eros</a></li>
+                <li><a href="#">Lorem ipsum dolor</a></li>
+                <li><a href="#">Suspendisse in neque</a></li>
+                <li class="last"><a href="#">Praesent et eros</a></li>
+            </ul>
+        </div>
+        <div class="footbox">
+            <h2>About us</h2>
+            <ul>
+<p>The State University of New York (SUNY) allows you to apply to 50 of the 64 colleges and universities in the SUNY system through one application. Please contact the SUNY Application Services Center with any processing questions.</p>
+            </ul>
+        </div>
+        <div class="footbox">
+            <h2>Directions</h2>
+            <ul>
+                <li>SUNY TECH</li>
+                <li>Old Westbury, NY 11568</li>
+                <li>(516) 876-3000</li>
+            </ul>
+        </div>
+        <br class="clear" />
+    </div>
+</div>
+<!-- ####################################################################################################### -->
+<div class="wrapper col6">
+    <div id="copyright">
+        <p class="fl_left">Copyright &copy; 2014 - All Rights Reserved - <a href="#">SUNYTECH.COM</a></p>
+        <br class="clear" />
+    </div>
+</div>
 
         </div>
 
 
 
     </div>
-
-
-
-
-
 
 <?php
 	// Insert any HTML before the closing body tag if desired
