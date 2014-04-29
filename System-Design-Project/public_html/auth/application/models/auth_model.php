@@ -966,7 +966,7 @@ class Auth_model extends MY_Model
                // exit();
                 if (!empty($termYear)) {
                    // $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->term_year, $trueCourseName->courseName);
-                    $query = $this->createSectionID($_POST['term'], $_POST['year'], $_POST['courseName']);
+                    $query = $this->createSectionID($_POST['term'], $_POST['year'], $_POST['course_name']);
                     if (empty($query)) {
                         $i = '1';
                     } else {
