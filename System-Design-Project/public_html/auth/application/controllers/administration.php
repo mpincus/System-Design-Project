@@ -643,6 +643,7 @@ class Administration extends MY_Controller
                     'js/default-char-limiters.js'
                 )
             );
+            $this->load->view($this->template, $data);
         }
         // Make sure teacher is logged in
         if ($this->require_role('manager')) {
@@ -659,6 +660,7 @@ class Administration extends MY_Controller
                     'js/default-char-limiters.js'
                 )
             );
+            $this->load->view($this->template, $data);
         }
         // Make sure user is logged in
         if ($this->require_role('customer')) {
@@ -674,8 +676,9 @@ class Administration extends MY_Controller
                     'js/default-char-limiters.js'
                 )
             );
-        }
             $this->load->view($this->template, $data);
+        }
+            //$this->load->view($this->template, $data);
 
     }
 
