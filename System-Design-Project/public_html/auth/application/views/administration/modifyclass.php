@@ -57,19 +57,53 @@ if (config_item('deny_access') > 0) {
 
                 <?php
                 // VEHICLE TYPE LABEL AND INPUT ***********************************
-                echo form_label('Year', 'year', array('class' => 'form_label'));
+                echo form_label('Row ID', 'id', array('class' => 'form_label'));
+
 
                 echo input_requirement();
 
+                if(!empty($modify)){
+                       $ids[$modify->ID] = $modify->ID;
+                }
+                else{
+
+                    // Default option
+                    $ids[] = '-- Select --';
+                }
+
+
+                echo form_dropdown('id', $ids, set_value('ids'), 'id="id" class="form_select"');
+
+                    ?>
+
+            </div>
+            <div class="form-row">
+
+                <?php
+                // VEHICLE TYPE LABEL AND INPUT ***********************************
+                echo form_label('Year', 'year', array('class' => 'form_label'));
+
+
+                echo input_requirement();
+
+                if(!empty($modify)){
+
+                       $years[] = $modify->year;
+                }
+                else{
+
                 // Default option
                 $years[] = '-- Select --';
+                }
 
                 // Options from query
                 foreach ($term_list as $row) {
                     $years[$row->ID] = $row->term_year ;
                 }
 
+
                 echo form_dropdown('year', $years, set_value('years'), 'id="year" class="form_select"');
+
 
                 ?>
 
@@ -82,9 +116,14 @@ if (config_item('deny_access') > 0) {
 
                 echo input_requirement();
 
+    if(!empty($modify)){
+        $term1[] = $modify->term;
+    }
+    else{
+
                 // Default option
                 $term1[] = '-- Select --';
-
+    }
                 // Options from query
                 foreach ($term_list as $row) {
                     $term1[$row->ID] = $row->term_season;
@@ -103,16 +142,21 @@ if (config_item('deny_access') > 0) {
 
                 echo input_requirement();
 
+    if(!empty($modify)){
+        $course_names[] = $modify->courseName;
+    }
+    else{
                 // Default option
                 $course_names[] = '-- Select --';
+    }
                 foreach($course_list as $row){
                     $course_names[$row->ID]=$row->courseName;
                 }
 
                 // Options from query
-               // foreach ($course_name_list as $row) {
-               //     $course_names[$row->courseName] = $row->courseName;
-               // }
+                // foreach ($course_name_list as $row) {
+                //     $course_names[$row->courseName] = $row->courseName;
+                // }
 
                 echo form_dropdown('course_name', $course_names, set_value('course_names'), 'id="course_name" class="form_select"');
 
@@ -127,9 +171,13 @@ if (config_item('deny_access') > 0) {
 
                 echo input_requirement();
 
+    if(!empty($modify)){
+        $timeslot[] = $modify->timeslot;
+    }
+    else{
                 // Default option
                 $timeslot[] = '-- Select --';
-
+    }
                 // Options from query
                 foreach ($timeslot_list as $row) {
                     $timeslot[$row->ID] = $row->timeslot;
@@ -148,9 +196,13 @@ if (config_item('deny_access') > 0) {
 
                 echo input_requirement();
 
+    if(!empty($modify)){
+        $building[] = $modify->building;
+    }
+    else{
                 // Default option
                 $building[] = '-- Select --';
-
+    }
                 // Options from query
                 foreach ($building_list as $row) {
                     $building[$row->ID] = $row->building;
@@ -169,9 +221,13 @@ if (config_item('deny_access') > 0) {
 
                 echo input_requirement();
 
+    if(!empty($modify)){
+        $room[] = $modify->room;
+    }
+    else{
                 // Default option
                 $room[] = '-- Select --';
-
+    }
                 // Options from query
                 foreach ($room_list as $num => $text) {
                     $room[$text->ID] = $text->room;
@@ -189,8 +245,13 @@ if (config_item('deny_access') > 0) {
 
                 echo input_requirement();
 
- //               Default option
+    if(!empty($modify)){
+        $instructor_names[] = $modify->teacher;
+    }
+    else{
+                //               Default option
                 $instructor_names[] = '-- To be determined --';
+    }
                 foreach($instructor_list as $row){
                     $instructor_names[$row->user_id]=$row->first_name.$row->last_name;
                 }
@@ -254,32 +315,32 @@ if (config_item('deny_access') > 0) {
 					<td>'
                             .$row->term.
 
-					'</td>
-					<td>'
+                            '</td>
+                            <td>'
                             .$row->year.
-                    '</td>
-					<td>'
+                            '</td>
+                            <td>'
                             .$row->courseName.
 
-                    '</td>
-                     <td>'
+                            '</td>
+                             <td>'
                             .$row->section.
-                    '</td>
-                    <td>'
+                            '</td>
+                            <td>'
                             .$row->teacher.
-                    '</td>
-                    <td>'
+                            '</td>
+                            <td>'
                             .$row->timeslot.
-                    '</td>
-                    <td>'
+                            '</td>
+                            <td>'
                             .$row->room.
-                    '</td>
-                    <td>'
+                            '</td>
+                            <td>'
                             .$row->building.
-                    '</td>
+                            '</td>
 
-                </tr>
-                    ';
+                        </tr>
+                            ';
                     }
                 }
 
@@ -289,30 +350,14 @@ if (config_item('deny_access') > 0) {
             </table>
         </div>
         <div id="decision_buttons">
-            <input type="submit" class="form_button" name="remove_selected" value="Remove Selected"
+            <input type="submit" class="form_button" name="modify" value="Modify Selected"
                    style="margin-top:10px;"/>
-           <?php echo anchor_popup('administration/modifyclass', 'My News', array('title' => 'The best news!')); ?>
+
         </div>
 
 
     </div>
     </form>
-    <script type="text/javascript">/*
-       // document.getElementById('fieldstuff').style.display='none';
-        function hideshow(){
-            if (!document.getElementById)
-                return
-            if (document.getElementById('fieldstuff').style.display=="block")
-                document.getElementById('fieldstuff').style.display="none"
-            else
-                document.getElementById('fieldstuff').style.display="block"
-        }
-        function changestuff(){
-            <?php/* echo anchor_popup('administration/modifyclass');*/?>
-            var blah;
-        }
-
-   */ </script>
 
 <?php
 

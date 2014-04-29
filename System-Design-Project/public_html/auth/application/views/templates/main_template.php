@@ -282,6 +282,10 @@
 						  echo '<li>';
                         echo ($this->uri->segment(1) == 'admin_modify_schedule') ? secure_anchor('administration/admin_modify_schedule', 'Modify Class Schedule', array('id' => 'active')) : secure_anchor('administration/admin_modify_schedule', 'modifyClassSchedule');
                         echo '</li>';
+
+                            echo '<li>';
+                            echo ($this->uri->segment(1) == 'datatables_stuff') ? secure_anchor('administration/datatables_stuff', 'View Schedule', array('id' => 'active')) : secure_anchor('administration/datatables_stuff', 'View Schedule');
+                            echo '</li>';
 						}
 
 						// If any user is logged in

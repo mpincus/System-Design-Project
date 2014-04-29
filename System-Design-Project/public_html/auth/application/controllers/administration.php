@@ -521,14 +521,23 @@ class Administration extends MY_Controller
                 // If POST, do delete or addition of IP
                 if ($this->tokens->match) {
                     $this->auth_model->process_section();
+                    if( $this->input->post('modify') ){
+                        $view_data['modify'] = $this->auth_model->getips;
+                        print_r($view_data['modify']);
+
+                    }
                 }
 
                 // Get the current deny list
                 $view_data['course_name_list'] = $this->auth_model->get_course_name();
+                $view_data['course_list']=$this->auth_model->get_course_list();
                 $view_data['term_list'] = $this->auth_model->get_term_list();
                 $view_data['timeslot_list'] = $this->auth_model->get_stuff_list(config_item('timeslot_table'));
                 $view_data['building_list'] = $this->auth_model->get_stuff_list(config_item('building_table'));
                 $view_data['room_list'] = $this->auth_model->get_stuff_list(config_item('room_table'));
+                $view_data['sect_list'] = $this->auth_model->get_section_list();
+                //print_r($view_data['sect_list']);
+                $view_data['instructor_list'] = $this->auth_model->get_instructor_list(config_item('manager_profiles_table'));
 
             }
 
@@ -543,6 +552,149 @@ class Administration extends MY_Controller
             $this->load->view($this->template, $data);
         }
     }
+
+    /*==================================================
+    =================================================
+    =================================================
+    =================================================
+    =================================================
+    */
+
+    public function modifyclass()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+
+                if ($this->tokens->match) {
+                    $view_data['modify'] = $this->auth_model->process_modify();
+                    print_r($view_data['modify']);
+
+
+
+                }
+
+                // Get the current deny list
+                $view_data['course_name_list'] = $this->auth_model->get_course_name();
+                $view_data['course_list']=$this->auth_model->get_course_list();
+                $view_data['term_list'] = $this->auth_model->get_term_list();
+                $view_data['timeslot_list'] = $this->auth_model->get_stuff_list(config_item('timeslot_table'));
+                $view_data['building_list'] = $this->auth_model->get_stuff_list(config_item('building_table'));
+                $view_data['room_list'] = $this->auth_model->get_stuff_list(config_item('room_table'));
+                $view_data['sect_list'] = $this->auth_model->get_section_list();
+                //print_r($view_data['sect_list']);
+                $view_data['instructor_list'] = $this->auth_model->get_instructor_list(config_item('manager_profiles_table'));
+
+
+            }
+
+
+            $data = array(
+                'content' => $this->load->view('administration/modifyclass', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                    //    'js/administration/dropdown.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+    public function admin_modify_schedule()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+            }
+
+            // $this->load->helper(array('url','form','html'));
+            $view_data['years_list'] = $this->auth_model->get_modify_class_year();
+            //  $this->load->view('multi_message', $data);
+
+            $data = array(
+                'content' => $this->load->view('administration/modifyClassSchedule', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                    //    'js/administration/dropdown.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
+    public function datatables_stuff()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+            }
+
+            // $this->load->helper(array('url','form','html'));
+            $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
+            //  $this->load->view('multi_message', $data);
+
+            $data = array(
+                'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                    //    'js/administration/dropdown.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
+
+    /* public function multi_drop()
+     {
+         $this->load->helper(array('url','form','html'));
+         $this->load->model('zip_model', '', TRUE);
+         $data['all_states'] = $this->zip_model->get_state_list();
+         $this->load->view('multi_message', $data);
+     }
+ */
+    public function handle_submission()
+    {
+        $this->load->helper(array('url','form','html'));
+        $this->load->view('multi_response');
+    }
+
+    public function ajaxdrop()
+    {
+        if($this->_is_ajax()){
+            // $this->load->helper(array('url','form','html'));
+            // $this->load->model('zip_model', '', TRUE);
+            $year = $this->input->get('year', TRUE);
+            $data['term_list'] = $this->auth_model->get_modify_class_term_in_year($year);
+            $term = $this->input->get('term', TRUE);
+            $data['course_list'] = $this->auth_model->get_modify_class_course_in_term($year,$term);
+            $course = $this->input->get('course', TRUE);
+            $data['section_list'] = $this->auth_model->get_modify_class_section_in_course($year,$term, $course);
+
+
+            //echo "State is $state";
+            echo json_encode($data);
+            //return $data;
+        }else{
+            echo "Apparently is_ajax returned false!";
+            show_error('This method can only be accessed internally.', 404);
+        }
+    }
+    /**
+     * Checks to see if its an AJAX call.
+     */
+    function _is_ajax(){
+        return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'));
+    }
+
 
     // --------------------------------------------------------------
 }

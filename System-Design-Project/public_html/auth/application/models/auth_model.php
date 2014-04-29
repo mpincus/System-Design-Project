@@ -22,6 +22,7 @@ class Auth_model extends MY_Model
      * @access protected
      */
     protected $selected_profile_columns = array();
+    var $getips;
 
     /**
      * Class constructor
@@ -31,6 +32,8 @@ class Auth_model extends MY_Model
         parent::__construct();
 
         $this->selected_profile_columns = config_item('selected_profile_columns');
+
+        //$this->getips;
     }
 
     /**
@@ -629,7 +632,7 @@ class Auth_model extends MY_Model
                     $insert_data = array(
                         'term_season' => $season,
                         'term_year' => $year
-                    //    'time' => time()
+                        //    'time' => time()
                     );
 
                     // Insert the denial
@@ -680,7 +683,7 @@ class Auth_model extends MY_Model
         $this->db->set($data)
             ->insert(config_item('term_table'));
 
-       // $this->_rebuild_deny_list();
+        // $this->_rebuild_deny_list();
     }
 
     // --------------------------------------------------------------
@@ -704,7 +707,7 @@ class Auth_model extends MY_Model
 
         $this->db->delete(config_item('term_table'));
 
-       // $this->_rebuild_deny_list();
+        // $this->_rebuild_deny_list();
     }
 
     // --------------------------------------------------------------
@@ -749,7 +752,7 @@ class Auth_model extends MY_Model
                         'courseDesc' => $courseDesc,
                         'DeptID' => $dept,
                         'credit' => $credit
-                       // 'time' => time()
+                        // 'time' => time()
                     );
 
                     // Insert the denial
@@ -826,6 +829,7 @@ class Auth_model extends MY_Model
 
         // $this->_rebuild_deny_list();
     }
+
     /**
      * Validate and process the add or removal of course
      * in the denied access table.
@@ -843,36 +847,62 @@ class Auth_model extends MY_Model
         }
 
 
-
-
-
         return FALSE;
     }
-    public function getTrueVal($field, $fieldVal, $table){
+
+    public function getTrueVal($field, $fieldVal, $table)
+    {
         $this->db->select($field);
-        $this->db->where('ID',$fieldVal);
+        $this->db->where($field, $fieldVal);
         $query = $this->db->get($table);
 
         if ($query->num_rows() > 0) {
             return $query->row();
         }
     }
-    public function getInstructorVal($field, $fieldVal, $table){
-        $this->db->select($field);
-        $this->db->where('user_id',$fieldVal);
-        $query = $this->db->get($table);
 
-        if ($query->num_rows() > 0) {
-            return $query->row();
+    public function getTrueVall($field, $fieldVal, $table)
+    {
+        if ($fieldVal == 0) {
+
+
+            return 0;
+        } else {
+            $this->db->select($field);
+            $this->db->where('ID', $fieldVal);
+            $query = $this->db->get($table);
+
+            if ($query->num_rows() > 0) {
+
+                return $query->row();
+            }
         }
     }
-    public function createSectionID($trueTermSeason,$trueTermYear,$trueCourseName){
-        $this->db->select_max('sectionID');
-        $this->db->where('term',$trueTermSeason);
-        $this->db->where('year',$trueTermYear);
-        $this->db->where('courseName',$trueCourseName);
+
+    public function getInstructorVal($field, $fieldVal, $table)
+    {
+        if ($fieldVal == 0) {
+
+            return 0;
+        } else {
+            $this->db->select($field);
+            $this->db->where('user_id', $fieldVal);
+            $query = $this->db->get($table);
+
+            if ($query->num_rows() > 0) {
+                return $query->row();
+            }
+        }
+    }
+
+    public function createSectionID($trueTermSeason, $trueTermYear, $trueCourseName)
+    {
+        $this->db->select_max('section');
+        $this->db->where('term', $trueTermSeason);
+        $this->db->where('year', $trueTermYear);
+        $this->db->where('courseName', $trueCourseName);
         $query = $this->db->get(config_item('section_table'));
-        if(!empty($query)){
+        if (!empty($query)) {
             if ($query->num_rows() > 0) {
                 return $query->row();
             }
@@ -880,7 +910,9 @@ class Auth_model extends MY_Model
         echo "<script>console.log('god i had this shit');</script>";
         return false;
     }
-    public function get_instructor_list($table){
+
+    public function get_instructor_list($table)
+    {
         $query = $this->db->from($table)->get();
 
         if ($query->num_rows() > 0) {
@@ -889,6 +921,18 @@ class Auth_model extends MY_Model
 
         return FALSE;
     }
+
+    public function get_ips($ips)
+    {
+        $this->db->where('ID', $ips[0]);
+        $query = $this->db->get(config_item('section_table'));
+        if (!empty($query)) {
+            if ($query->num_rows() > 0) {
+                return $query->row();
+            }
+        }
+    }
+
     public function process_section()
     {
         // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
@@ -899,50 +943,35 @@ class Auth_model extends MY_Model
             // If form submission is adding to deny list
             if ($this->input->post('add_section')) {
                 $termYear = set_value('year');
-                $trueTermYear=$this->getTrueVal('term_year',$termYear,config_item('term_table'));
+                //echo $termYear;
+
+                $trueTermYear = $this->getTrueVal('term_year', $termYear, config_item('term_table'));
                 $termSeason = set_value('term');
-                $trueTermSeason=$this->getTrueVal('term_season',$termSeason,config_item('term_table'));
+                $trueTermSeason = $this->getTrueVal('term_season', $termSeason, config_item('term_table'));
                 $courseName = set_value('course_name');
-                $trueCourseName=$this->getTrueVal('courseName',$courseName,config_item('course_table'));
+                $trueCourseName = $this->getTrueVal('courseName', $courseName, config_item('course_table'));
                 $timeslot = set_value('timeslot');
-                $trueTimeslot=$this->getTrueVal('timeslot',$timeslot,config_item('timeslot_table'));
+                $trueTimeslot = $this->getTrueVal('timeslot', $timeslot, config_item('timeslot_table'));
                 $building = set_value('building');
-                $trueBuilding=$this->getTrueVal('building',$building,config_item('building_table'));
+                $trueBuilding = $this->getTrueVal('building', $building, config_item('building_table'));
                 $room = set_value('room');
-                $trueRoom=$this->getTrueVal('room',$room, config_item('room_table'));
+                $trueRoom = $this->getTrueVal('room', $room, config_item('room_table'));
                 $instructor = set_value('instructor_name');
-                $trueInstructor = $this->getInstructorVal('first_name, last_name',$instructor,config_item('manager_profiles_table'));
-                print_r($instructor);
-               // echo $instructor;
-                print_r($trueInstructor);
-               // print_r($x);
-             //   $i = $trueRoom->room;
-             //   echo $i;
-
-            //   echo "<script>console.log($i);</script>";
-               // echo "<script>document.getElementById('room');";
-
-               // echo "<script>console.log($rooms);</script>";
-               // $courseName = set_value('courseName');
-                //$courseDesc = set_value('courseDesc');
-                //$dept = set_value('DeptID');
-                //$credit = set_value('credit');
+                $trueInstructor = $this->getInstructorVal('first_name, last_name', $instructor, config_item('manager_profiles_table'));
 
                 // Make sure that the values we need were posted
-                if (!empty($termYear))
-                {
-                    $query = $this->createSectionID($trueTermSeason->term_season,$trueTermYear->term_year,$trueCourseName->courseName);
-                    if(empty($query)){
-                        $i='1';
-                    }
-                    else{
-                        $i=$query->sectionID;
+                if (!empty($termYear)) {
+                    $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->term_year, $trueCourseName->courseName);
+                    if (empty($query)) {
+                        $i = '1';
+                    } else {
+                        $i = $query->section;
                         $i++;
                     }
-                 //   if($instructor == 0){
-                   //     $trueInstructor='To Be Determined';
-                    //}
-                    //$x=print_r($trueCourseName);
+
+
+
+
                     $insert_data = array(
                         'year' => $trueTermYear->term_year,
                         'term' => $trueTermSeason->term_season,
@@ -951,7 +980,7 @@ class Auth_model extends MY_Model
                         'building' => $trueBuilding->building,
                         'room' => $trueRoom->room,
                         'sectionID' => $i,
-                        'teacher' => $trueInstructor->first_name." ".$trueInstructor->last_name
+                        'teacher' => $trueInstructor->first_name . " " . $trueInstructor->last_name
 
                         // 'time' => time()
                     );
@@ -987,14 +1016,138 @@ class Auth_model extends MY_Model
                     // Show error message
                     $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
                 }
+            } else if ($this->input->post('modify')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    $getips = $this->get_ips($ips);
+                    // Remove the IPs
+                    //  $this->_remove_section($ips);
+                    echo "im here";
+                    return $getips;
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
             }
-        }
-        else{
-        $this->load->vars(array('validation_errors' => '<li><span class="redfield">check validation files </span></li>'));
+        } else {
+            $this->load->vars(array('validation_errors' => '<li><span class="redfield">check validation files </span></li>'));
         }
     }
 
     // --------------------------------------------------------------
+
+    public function process_modify()
+    {
+        // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
+        $this->config->load('form_validation/administration/section');
+        $this->validation_rules = config_item('section_rules');
+
+        if ($this->validate()) {
+            // If form submission is adding to deny list
+            if ($this->input->post('add_section')) {
+                $termYear = set_value('year');
+
+
+                // echo $shit;
+                $trueTermYear = $this->getTrueVall('term_year', $termYear, config_item('term_table'));
+                $termSeason = set_value('term');
+                $trueTermSeason = $this->getTrueVall('term_season', $termSeason, config_item('term_table'));
+                $courseName = set_value('course_name');
+                $trueCourseName = $this->getTrueVall('courseName', $courseName, config_item('course_table'));
+                $timeslot = set_value('timeslot');
+                $trueTimeslot = $this->getTrueVall('timeslot', $timeslot, config_item('timeslot_table'));
+                $building = set_value('building');
+                $trueBuilding = $this->getTrueVall('building', $building, config_item('building_table'));
+                $room = set_value('room');
+                $trueRoom = $this->getTrueVall('room', $room, config_item('room_table'));
+                $instructor = set_value('instructor_name');
+                $trueInstructor = $this->getInstructorVal('first_name, last_name', $instructor, config_item('manager_profiles_table'));
+
+                // Make sure that the values we need were posted
+                if (isset($termYear)) {
+
+                    $insert_data = array();
+                    if ($termYear != '0'){
+                        echo "success";
+                        $insert_data = array('year' => $trueTermYear->term_year);
+                    }
+                    if ($termYear > 0)
+                        $insert_data = array('term' => $trueTermSeason->term_season);
+                    if ($courseName > 0)
+                        $insert_data = array('courseName' => $trueCourseName->courseName);
+                    if ($timeslot > 0)
+                        $insert_data = array('timeslot' => $trueTimeslot->timeslot);
+                    if ($building > 0)
+                        $insert_data = array('building' => $trueBuilding->building);
+                    if ($room > 0)
+                        $insert_data = array('room' => $trueRoom->room);
+                    if ($instructor > 0)
+                        $insert_data = array('teacher' => $trueInstructor->first_name . " " . $trueInstructor->last_name);
+
+                    // Insert the denial
+                    $hiddenID = $this->input->post('id');
+                    $this->_update_section($insert_data, $hiddenID);
+
+                    // Show confirmation that denial was added
+                    $this->load->vars(array('confirm_add_section' => 1));
+
+                    // Kill set_value() since we won't need it
+                    $this->kill_set_value();
+                } // Necessary values were not available
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
+                }
+            } // If form submission is removing from deny list
+            else if ($this->input->post('remove_selected')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    // Remove the IPs
+                    $this->_remove_section($ips);
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
+            } else if ($this->input->post('modify')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    $getips = $this->get_ips($ips);
+                    // Remove the IPs
+                    //  $this->_remove_section($ips);
+                    echo "im here";
+                    return $getips;
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
+            }
+        } else {
+            $this->load->vars(array('validation_errors' => '<li><span class="redfield">check validation files </span></li>'));
+        }
+    }
 
     /**
      * Add a record to the denied access table
@@ -1035,6 +1188,13 @@ class Auth_model extends MY_Model
         // $this->_rebuild_deny_list();
     }
 
+    protected function _update_section($data, $id)
+    {
+        $this->db->where('ID', $id);
+        $this->db->update(config_item('section_table'), $data);
+
+    }
+
     public function get_course_name()
     {
         $query = $this->db->distinct()
@@ -1047,6 +1207,7 @@ class Auth_model extends MY_Model
 
         return FALSE;
     }
+
     public function get_sect_list()
     {
         $query = $this->db->distinct()
@@ -1059,9 +1220,6 @@ class Auth_model extends MY_Model
 
         return FALSE;
     }
-
-
-
 
     public function get_stuff_list($stuff_table)
     {
@@ -1091,7 +1249,7 @@ class Auth_model extends MY_Model
                 // Make sure that the values we need were posted
                 if (!empty($stuffName)) {
                     $insert_data = array(
-                            $table_field => $stuffName,
+                        $table_field => $stuffName,
 
                         // 'time' => time()
 
@@ -1120,7 +1278,7 @@ class Auth_model extends MY_Model
                 // If there were IPs
                 if (!empty($ips)) {
                     // Remove the IPs
-                    $this->_remove_stuff($ips,$stuff_table);
+                    $this->_remove_stuff($ips, $stuff_table);
 
                     // Show confirmation of removal
                     $this->load->vars(array('confirm_removal' => 1));
@@ -1155,7 +1313,7 @@ class Auth_model extends MY_Model
     /**
      * Remove a record from the denied access table
      */
-    protected function _remove_stuff($ips,$stuff_table)
+    protected function _remove_stuff($ips, $stuff_table)
     {
         $i = 0;
 
@@ -1177,87 +1335,89 @@ class Auth_model extends MY_Model
     public function process_modifyClassScheduling($stuff_table, $table_field)
     {
         // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
-       // $this->config->load('form_validation/administration/stuff');
-       // $this->validation_rules = config_item('stuff_rules');
+        // $this->config->load('form_validation/administration/stuff');
+        // $this->validation_rules = config_item('stuff_rules');
 
-      //  if ($this->validate()) {
-            // If form submission is adding to deny list
-            if ($this->input->post('add_stuff')) {
-                $termYear = set_value('year');
-                $trueTermYear=$this->getTrueVal('term_year',$termYear,config_item('term_table'));
-                $termSeason = set_value('term');
-                $trueTermSeason=$this->getTrueVal('term_season',$termSeason,config_item('term_table'));
-                $courseName = set_value('course_name');
-                $trueCourseName=$this->getTrueVal('courseName',$courseName,config_item('section_table'));
-                $sectionID = set_value('section_id');
-                $trueSectionID=$this->getTrueVal('sectionID',$sectionID,config_item('section_table'));
-                $instructor = set_value('instructor_name');
-                $trueInstructor = $this->getInstructorVal('first_name, last_name',$instructor,config_item('manager_profiles_table'));
-
-
-                //$stuffName = set_value('stuffName');
-     //           echo "<script>console.log($stuffName);</script>";
-                //echo "<script>console.log('Testing console');</script>";
+        //  if ($this->validate()) {
+        // If form submission is adding to deny list
+        if ($this->input->post('add_stuff')) {
+            $termYear = set_value('year');
+            $trueTermYear = $this->getTrueVal('term_year', $termYear, config_item('term_table'));
+            $termSeason = set_value('term');
+            $trueTermSeason = $this->getTrueVal('term_season', $termSeason, config_item('term_table'));
+            $courseName = set_value('course_name');
+            $trueCourseName = $this->getTrueVal('courseName', $courseName, config_item('section_table'));
+            $sectionID = set_value('section_id');
+            $trueSectionID = $this->getTrueVal('sectionID', $sectionID, config_item('section_table'));
+            $instructor = set_value('instructor_name');
+            $trueInstructor = $this->getInstructorVal('first_name, last_name', $instructor, config_item('manager_profiles_table'));
 
 
-                // Make sure that the values we need were posted
-                if (!empty($courseName)) {
-                    $insert_data = array(
-                        $table_field => $trueInstructor,
-
-                        // 'time' => time()
-
-                    );
-                    // Insert the denial
-
-                    $this->_insert_teacher($insert_data, $stuff_table,$trueTermYear,$trueTermSeason,$trueCourseName,$trueSectionID);
+            //$stuffName = set_value('stuffName');
+            //           echo "<script>console.log($stuffName);</script>";
+            //echo "<script>console.log('Testing console');</script>";
 
 
-                    // Show confirmation that denial was added
-                    $this->load->vars(array('confirm_add_stuff' => 1));
+            // Make sure that the values we need were posted
+            if (!empty($courseName)) {
+                $insert_data = array(
+                    $table_field => $trueInstructor,
 
-                    // Kill set_value() since we won't need it
-                    $this->kill_set_value();
-                } // Necessary values were not available
-                else {
+                    // 'time' => time()
 
-                    // Show error message
-                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
-                }
-            } // If form submission is removing from deny list
-            else if ($this->input->post('remove_selected')) {
-                // Get the IPs to remove
-                $ips = set_value('ip_removals[]');
+                );
+                // Insert the denial
 
-                // If there were IPs
-                if (!empty($ips)) {
-                    // Remove the IPs
-                    $this->_remove_stuff($ips,$stuff_table);
+                $this->_insert_teacher($insert_data, $stuff_table, $trueTermYear, $trueTermSeason, $trueCourseName, $trueSectionID);
 
-                    // Show confirmation of removal
-                    $this->load->vars(array('confirm_removal' => 1));
-                } // If there were no IPs posted
-                else {
-                    // Show error message
-                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
-                }
+
+                // Show confirmation that denial was added
+                $this->load->vars(array('confirm_add_stuff' => 1));
+
+                // Kill set_value() since we won't need it
+                $this->kill_set_value();
+            } // Necessary values were not available
+            else {
+
+                // Show error message
+                $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
             }
-       // }
+        } // If form submission is removing from deny list
+        else if ($this->input->post('remove_selected')) {
+            // Get the IPs to remove
+            $ips = set_value('ip_removals[]');
+
+            // If there were IPs
+            if (!empty($ips)) {
+                // Remove the IPs
+                $this->_remove_stuff($ips, $stuff_table);
+
+                // Show confirmation of removal
+                $this->load->vars(array('confirm_removal' => 1));
+            } // If there were no IPs posted
+            else {
+                // Show error message
+                $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+            }
+        }
+        // }
     }
+
     protected function _insert_teacher($data, $stuff_table, $trueTermSeason, $trueTermYear, $trueCourseName, $trueSectionID)
     {
         //if ($data['IP_address'] == '0.0.0.0') {
         //    return FALSE;
         //}
-        $this->db->where('term',$trueTermSeason);
-        $this->db->where('year',$trueTermYear);
-        $this->db->where('courseName',$trueCourseName);
-        $this->db->where('sectionID',$trueSectionID);
+        $this->db->where('term', $trueTermSeason);
+        $this->db->where('year', $trueTermYear);
+        $this->db->where('courseName', $trueCourseName);
+        $this->db->where('sectionID', $trueSectionID);
         $this->db->set($data)
             ->insert($stuff_table);
 
         // $this->_rebuild_deny_list();
     }
+
     /**
      * Method to query database for vehicle types.
      *
@@ -1306,8 +1466,8 @@ class Auth_model extends MY_Model
         $query = $this->db->get(config_item('section_table'));
 
         if ($query->num_rows() > 0) {
-            $query->result_array();
-          // print_r($query);
+            //$query->result_array();
+            // print_r($query);
             return $query->result_array();
         }
 
@@ -1328,8 +1488,8 @@ class Auth_model extends MY_Model
      */
     public function get_modify_class_course_in_term($years, $terms)
     {
-       // $years = $this->input->post('year');
-      //  $terms = $this->input->post('term');
+        // $years = $this->input->post('year');
+        //  $terms = $this->input->post('term');
 
         $this->db->distinct();
         $this->db->select('courseName');
@@ -1345,18 +1505,19 @@ class Auth_model extends MY_Model
 
         return FALSE;
     }
+
     public function get_modify_class_section_in_course($years, $terms, $course)
     {
-       // $years = $this->input->post('year');
-       // $terms = $this->input->post('term');
-       // $courseName = $this->input->post('courseName');
+        // $years = $this->input->post('year');
+        // $terms = $this->input->post('term');
+        // $courseName = $this->input->post('courseName');
 
         $this->db->distinct();
         $this->db->select('section');
 
         $this->db->where('year', $years);
         $this->db->where('term', $terms);
-        $this->db->where('courseName',$course);
+        $this->db->where('courseName', $course);
 
         $query = $this->db->get(config_item('section_table'));
 
@@ -1366,6 +1527,7 @@ class Auth_model extends MY_Model
 
         return FALSE;
     }
+
     public function get_modify_class_otherInfo_in_section($table)
     {
         $years = $this->input->post('year');
@@ -1378,8 +1540,8 @@ class Auth_model extends MY_Model
 
         $this->db->where('year', $years);
         $this->db->where('term', $terms);
-        $this->db->where('courseName',$courseNames);
-        $this->db->where('sectionID',$sectionIDs);
+        $this->db->where('courseName', $courseNames);
+        $this->db->where('sectionID', $sectionIDs);
 
         $query = $this->db->get($table);
 
@@ -1389,7 +1551,6 @@ class Auth_model extends MY_Model
 
         return FALSE;
     }
-
 
 
 }
