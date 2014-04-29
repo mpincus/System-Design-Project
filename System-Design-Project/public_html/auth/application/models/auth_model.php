@@ -962,7 +962,7 @@ class Auth_model extends MY_Model
                 // Make sure that the values we need were posted
                 echo "<script>console.log(".print_r($trueTermSeason).")</script>";
                 echo "<script>console.log(".$_POST['term'].")</script>";
-                echo "<script>console.log(".print_r($trueTermSeason->term_season).")</script>";
+              //  echo "<script>console.log(".print_r($trueTermSeason->term_season).")</script>";
                // exit();
                 if (!empty($termYear)) {
                    // $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->term_year, $trueCourseName->courseName);
@@ -978,12 +978,21 @@ class Auth_model extends MY_Model
 
 
                     $insert_data = array(
-                        'year' => $trueTermYear->term_year,
+                     /*   'year' => $trueTermYear->term_year,
                         'term' => $trueTermSeason->term_season,
                         'courseName' => $trueCourseName->courseName,
                         'timeslot' => $trueTimeslot->timeslot,
                         'building' => $trueBuilding->building,
                         'room' => $trueRoom->room,
+                        'sectionID' => $i,
+                        'teacher' => $trueInstructor->first_name . " " . $trueInstructor->last_name
+                     */
+                        'year' => $_POST['year'],
+                        'term' => $_POST['term'],
+                        'courseName' => $_POST['course_name'],
+                        'timeslot' => $_POST['timeslot'],
+                        'building' => $_POST['building'],
+                        'room' => $_POST['room'],
                         'sectionID' => $i,
                         'teacher' => $trueInstructor->first_name . " " . $trueInstructor->last_name
 
