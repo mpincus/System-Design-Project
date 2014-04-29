@@ -960,6 +960,9 @@ class Auth_model extends MY_Model
                 $trueInstructor = $this->getInstructorVal('first_name, last_name', $instructor, config_item('manager_profiles_table'));
 
                 // Make sure that the values we need were posted
+                print_r($trueTermSeason);
+                print_r($trueTermSeason->term_season);
+                ecxit();
                 if (!empty($termYear)) {
                     $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->term_year, $trueCourseName->courseName);
                     if (empty($query)) {
