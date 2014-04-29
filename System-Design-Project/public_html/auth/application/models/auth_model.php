@@ -1552,6 +1552,19 @@ class Auth_model extends MY_Model
         return FALSE;
     }
 
+    public function get_teacher_schedule($table, $teacherfname, $teacherlname)
+    {
+        $this->db->where('teacher',$teacherfname.' '.$teacherlname);
+
+        $query = $this->db->get($table);
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+        return FALSE;
+    }
+
 
 }
 

@@ -634,22 +634,49 @@ class Administration extends MY_Controller
             if (config_item('deny_access') > 0) { //needed
                 // If POST, do delete or addition of IP
             }
-
-            // $this->load->helper(array('url','form','html'));
             $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
-            //  $this->load->view('multi_message', $data);
 
             $data = array(
                 'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
                 'javascripts' => array(
                     'js/jquery.char-limiter-3.0.0.js',
                     'js/default-char-limiters.js'
-                    //    'js/administration/dropdown.js'
                 )
             );
-
-            $this->load->view($this->template, $data);
         }
+        // Make sure teacher is logged in
+        if ($this->require_role('manager')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+            }
+
+            $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'), config_item('auth_first_name'), config_item('auth_last_name'));
+
+            $data = array(
+                'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+        }
+        // Make sure user is logged in
+        if ($this->require_role('customer')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+            }
+            $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
+
+            $data = array(
+                'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+        }
+            $this->load->view($this->template, $data);
+
     }
 
 
