@@ -961,6 +961,7 @@ class Auth_model extends MY_Model
 
                 // Make sure that the values we need were posted
                 echo "<script>console.log(".print_r($trueTermSeason).")</script>";
+                echo "<script>console.log(".$_POST['term'].")</script>";
                 print_r($trueTermSeason->term_season);
                 exit();
                 if (!empty($termYear)) {
