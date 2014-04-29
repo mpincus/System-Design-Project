@@ -630,11 +630,12 @@ class Administration extends MY_Controller
     public function datatables_stuff()
     {
         // Make sure admin is logged in
-        if ($this->require_role('admin')) {
+        //if ($this->require_role('admin')) {
             if (config_item('deny_access') > 0) { //needed
                 // If POST, do delete or addition of IP
             }
-            $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
+            //$view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
+            $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'), config_item('auth_first_name'), config_item('auth_last_name'));
 
             $data = array(
                 'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
@@ -644,9 +645,9 @@ class Administration extends MY_Controller
                 )
             );
             $this->load->view($this->template, $data);
-        }
+        //}
         // Make sure teacher is logged in
-        if ($this->require_role('manager')) {
+       /* if ($this->require_role('manager')) {
             if (config_item('deny_access') > 0) { //needed
                 // If POST, do delete or addition of IP
             }
@@ -677,7 +678,7 @@ class Administration extends MY_Controller
                 )
             );
             $this->load->view($this->template, $data);
-        }
+        }*/
             //$this->load->view($this->template, $data);
 
     }
