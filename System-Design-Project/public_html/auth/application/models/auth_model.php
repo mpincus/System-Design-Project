@@ -1568,8 +1568,8 @@ class Auth_model extends MY_Model
 
     public function get_teacher_schedule($table)
     {
-        $teacherfname =  config_item('auth_first_name');
-        $teacherlname = config_item('auth_last_name');
+        $teacherfname =  config_item('first_name');
+        $teacherlname = config_item('last_name');
         $this->db->where('teacher',$teacherfname.' '.$teacherlname);
 
         $query = $this->db->get($table);
