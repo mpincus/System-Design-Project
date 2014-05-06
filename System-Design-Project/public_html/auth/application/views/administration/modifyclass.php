@@ -13,6 +13,52 @@
 ?>
 
     <h1>Deny Access</h1>
+    <link rel="stylesheet" type="text/css" href="DataTables/media/css/demo_page.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="DataTables/media/css/demo_table.css" media="screen" />
+
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        var asInitVals = new Array();
+
+        $(document).ready(function () {
+            var oTable = $('#example').dataTable({
+                "oLanguage": {
+                    "sSearch": "Search all columns:"
+                }
+            });
+
+            $("tfoot input").keyup(function () {
+                /* Filter on the column (the index) of this element */
+                oTable.fnFilter(this.value, $("tfoot input").index(this));
+            });
+
+
+            /*
+             * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+             * the footer
+             */
+            $("tfoot input").each(function (i) {
+                asInitVals[i] = this.value;
+            });
+
+            $("tfoot input").focus(function () {
+                if (this.className == "search_init") {
+                    this.className = "";
+                    this.value = "";
+                }
+            });
+
+            $("tfoot input").blur(function (i) {
+                if (this.value == "") {
+                    this.className = "search_init";
+                    this.value = asInitVals[$("tfoot input").index(this)];
+                }
+            });
+        });
+    </script>
 
 <?php
 
@@ -53,6 +99,14 @@ if (config_item('deny_access') > 0) {
     <div class="form-column-left">
         <fieldset>
             <legend>Add/Remove Section:</legend>
+
+
+            <style type="text/css">
+                #hide{ display:none; }
+            </style>
+
+
+            <div class="hide" id="hide">
             <div class="form-row">
 
                 <?php
@@ -97,8 +151,8 @@ if (config_item('deny_access') > 0) {
                 }
 
                 // Options from query
-                foreach ($term_list as $row) {
-                    $years[$row->ID] = $row->term_year ;
+                foreach ($year_list as $row) {
+                    $years[$row->ID] = $row->year ;
                 }
 
 
@@ -138,7 +192,7 @@ if (config_item('deny_access') > 0) {
 
                 <?php
                 // VEHICLE TYPE LABEL AND INPUT ***********************************
-                echo form_label('Course Name', 'course_name', array('class' => 'form_label'));
+                echo form_label('Course Name', 'course_name', array('class' => 'form_label', 'hidden'=>'true'));
 
                 echo input_requirement();
 
@@ -158,10 +212,11 @@ if (config_item('deny_access') > 0) {
                 //     $course_names[$row->courseName] = $row->courseName;
                 // }
 
-                echo form_dropdown('course_name', $course_names, set_value('course_names'), 'id="course_name" class="form_select"');
+                echo form_dropdown('course_name', $course_names, set_value('course_names'), 'id="course_name" class="form_select" hidden="true"');
 
                 ?>
 
+            </div>
             </div>
             <div class="form-row">
 
@@ -281,25 +336,109 @@ if (config_item('deny_access') > 0) {
             </div>
         </fieldset>
     </div>
-    <div id="table-wrapper">
-        <h2>Deny List</h2>
+    <div id="'dt_example">
+    <div id="container">
+    <div id="demo">
+    <div id="example_wrapper" class="dataTables_wrapper" role="grid">
 
-        <div id="table-wrapper">
-            <table id="myTable" class="tablesorter">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>term</th>
-                    <th>year</th>
-                    <th>course</th>
-                    <th>section</th>
-                    <th>instructor</th>
-                    <th>timeslot</th>
-                    <th>room</th>
-                    <th>building</th>
-                </tr>
-                </thead>
-                <tbody>
+    <h2>Deny List</h2>
+
+    <div id="table-wrapper">
+    <table aria-describedby="example_info" class="display dataTable" id="example" border="0"
+           cellpadding="0" cellspacing="0">
+    <thead>
+    <tr role="row">
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">
+        </th>
+
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">term
+        </th>
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">year
+        </th>
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">course
+        </th>
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">department
+        </th>
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">section
+        </th>
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">instructor
+        </th>
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">timeslot
+        </th>
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">room
+        </th>
+        <th aria-label="Rendering engine: activate to sort column descending"
+            aria-sort="ascending"
+            style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+            tabindex="0"
+            role="columnheader" class="sorting_asc">building
+        </th>
+
+
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init" hidden="true"
+                                           type="text"></th>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                           type="text"></th>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                           type="text"></th>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                           type="text"></th>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                           type="text"></th>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                           type="text"></th>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                           type="text"></th>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                           type="text"></th>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                           type="text"></th>
+        <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                           type="text"></th>
+
+    </tr>
+    </tfoot>
+    <tbody aria-relevant="all" aria-live="polite" role="alert">
 
                 <?php
 
@@ -321,6 +460,10 @@ if (config_item('deny_access') > 0) {
                             '</td>
                             <td>'
                             .$row->courseName.
+
+                            '</td>
+                            <td>'
+                            .$row->major.
 
                             '</td>
                              <td>'
@@ -357,6 +500,10 @@ if (config_item('deny_access') > 0) {
 
 
     </div>
+    </div>
+    </div>
+    </div>
+
     </form>
 
 <?php

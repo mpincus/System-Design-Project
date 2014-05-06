@@ -38,6 +38,9 @@ $config['section_table'] =    'section';
 $config['timeslot_table'] =    'timeslot';
 $config['building_table'] =     'building';
 $config['room_table'] =         'room';
+$config['student_courses_table'] = 'student_courses';
+$config['year_table'] = 'year';
+$config['major_table'] = 'major';
 
 /* End of file db_tables.php */
 /* Location: /application/config/db_tables.php */

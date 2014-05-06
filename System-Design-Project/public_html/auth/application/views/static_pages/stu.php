@@ -2,7 +2,12 @@
     <div id="banners">
         <div id="banners1">
             <h2>Banner self-Service</h2>
-            <p><img src="img/menud.gif" alt=""> Banner Self-service</p>
+            <img src="img/menud.gif" alt="">
+                <?php
+                echo ( $this->uri->segment(1) == 'banner' ) ? anchor('banner', 'Banner Self Service', array( 'id' => 'active' ) ) : anchor('banner', 'Banner Self Service');
+                ?>
+
+
 
 
 

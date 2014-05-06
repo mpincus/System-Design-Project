@@ -199,7 +199,40 @@ class Static_pages extends MY_Controller {
         $this->load->view( $this->template, $data );
     }
 
+//------------------------------------------------------------------------------------------------
+//banner page \
+    public function banner()
+    {
+        $data = array(
+            'title' => WEBSITE_NAME . ' - banner',
+            'description' => 'Not sure Community Auth is right for you? See soof the areas in Community Auth that require login.',
+            'content' => $this->load->view( 'static_pages/banner', '', TRUE )
+        );
 
+        $this->load->view( $this->template, $data );
+    }
+
+
+
+//------------------------------------------------------------------------------------------------
+//registration ee page
+
+
+    public function fee()
+    {
+        $data = array(
+            'title' => WEBSITE_NAME . ' - fee',
+            'description' => 'Not sure Community Auth is right for you? See soof the areas in Community Auth that require login.',
+            'content' => $this->load->view( 'static_pages/fee', '', TRUE )
+        );
+
+        $this->load->view( $this->template, $data );
+    }
+
+
+
+
+//-------------------
     public function apply()
     {
         $data = array(

@@ -96,15 +96,7 @@ if (config_item('deny_access') > 0) {
 
     echo form_open('', array('class' => 'std-form', 'style' => 'margin-top:24px;')); ?>
     <div class="form-column-left">
-   <?php
-        if(($auth_level < 9)){
-            if(!isset($workdamnit)){
-        echo '<div id="decision_buttons">';
-        echo '<input type="submit" class="form_button" name="view schedule" value="View Schedule"';
-        echo 'style="margin-top:10px;"/></div>';
-            }
-        }
-?>
+
 
     <div id="'dt_example">
         <div id="container">
@@ -134,11 +126,6 @@ if (config_item('deny_access') > 0) {
                                         style="width: 138px;" colspan="1"
                                         rowspan="1" aria-controls="example" tabindex="0" role="columnheader"
                                         class="sorting">Course
-                                    </th>
-                                    <th aria-label="Platform(s): activate to sort column ascending"
-                                        style="width: 138px;" colspan="1"
-                                        rowspan="1" aria-controls="example" tabindex="0" role="columnheader"
-                                        class="sorting">Department
                                     </th>
                                     <th aria-label="Engine version: activate to sort column ascending"
                                         style="width: 128px;" colspan="1"
@@ -187,8 +174,6 @@ if (config_item('deny_access') > 0) {
                                                                        type="text"></th>
                                     <th colspan="1" rowspan="1"><input name="search_grade" value="Search grades" class="search_init"
                                                                        type="text"></th>
-                                    <th colspan="1" rowspan="1"><input name="search_grade" value="Search grades" class="search_init"
-                                                                       type="text"></th>
                                 </tr>
                                 </tfoot>
                                 <tbody aria-relevant="all" aria-live="polite" role="alert">
@@ -199,9 +184,7 @@ if (config_item('deny_access') > 0) {
                                     //$denial_reasons = config_item('denied_access_reason');
 
                                     foreach ($schedule as $row) {
-                                        if(($auth_level == 9) || ($auth_level == 1)){
-                                            if(!isset($workdamnit)){
-
+                                        if(($auth_level == 9) || $auth_level == 1){
 
                                         echo '
                                 <tr class="gradeA odd">
@@ -219,11 +202,7 @@ if (config_item('deny_access') > 0) {
                                             . $row->courseName .
 
                                             '</td>
-                                            <td>'
-                                            . $row->major .
-
-                                            '</td>
-                                         <td>'
+                                             <td>'
                                             . $row->section .
                                             '</td>
                                             <td>'
@@ -242,48 +221,6 @@ if (config_item('deny_access') > 0) {
                                         </tr>
                                             ';
                                         }
-                                           // else if($auth_level == 1){
-                                            else{
-                                                echo '
-                                <tr class="gradeA odd">
-                                    <td>
-                                        <input type="checkbox" name="ip_removals[]" value="' . $row['ID'] . '" />
-                                    </td>
-                                    <td class="  sorting_1">'
-                                                    . $row['term'] .
-
-                                                    '</td>
-                                                    <td>'
-                                                    . $row['year'] .
-                                                    '</td>
-                                                    <td>'
-                                                    . $row['courseName'] .
-
-                                                    '</td>
-                                                    <td>'
-                                                    . $row['major'] .
-
-                                                    '</td>
-                                                         <td>'
-                                                    . $row['section'] .
-                                                    '</td>
-                                                    <td>'
-                                                    . $row['teacher'] .
-                                                    '</td>
-                                                    <td>'
-                                                    . $row['timeslot'] .
-                                                    '</td>
-                                                    <td>'
-                                                    . $row['room'] .
-                                                    '</td>
-                                                    <td>'
-                                                    . $row['building'] .
-                                                    '</td>
-
-                                                </tr>
-                                                    ';
-                                            }
-                                        }
                                         else if($auth_level == 6){
                                             echo '
                                 <tr class="gradeA odd">
@@ -299,10 +236,6 @@ if (config_item('deny_access') > 0) {
                                                 '</td>
                                                 <td>'
                                                 . $row['courseName'] .
-
-                                                '</td>
-                                                <td>'
-                                                . $row['major'] .
 
                                                 '</td>
                                                  <td>'
@@ -321,11 +254,45 @@ if (config_item('deny_access') > 0) {
                                                 . $row['building'] .
                                                 '</td>
 
+                                            </tr>
+                                                ';
+                                        }
+                                        else if($auth_level == 1){
+                                            echo '
+                                <tr class="gradeA odd">
+                                    <td>
+                                        <input type="checkbox" name="ip_removals[]" value="' . $row['ID'] . '" />
+                                    </td>
+                                    <td class="  sorting_1">'
+                                                . $row['term'] .
+
+                                                '</td>
+                                                <td>'
+                                                . $row['year'] .
+                                                '</td>
+                                                <td>'
+                                                . $row['courseName'] .
+
+                                                '</td>
+                                                 <td>'
+                                                . $row['section'] .
+                                                '</td>
+                                                <td>'
+                                                . $row['teacher'] .
+                                                '</td>
+                                                <td>'
+                                                . $row['timeslot'] .
+                                                '</td>
+                                                <td>'
+                                                . $row['room'] .
+                                                '</td>
+                                                <td>'
+                                                . $row['building'] .
+                                                '</td>
 
                                             </tr>
                                                 ';
                                         }
-
                                     }
                                 }
 
@@ -334,19 +301,10 @@ if (config_item('deny_access') > 0) {
                                 </tbody>
                             </table>
                         </div>
-                        <?php if(!isset($workdamnit)){?>
                         <div id="decision_buttons">
                             <input type="submit" class="form_button" name="remove_selected" value="Remove Selected"
                                    style="margin-top:10px;"/>
                         </div>
-   <?php }else{?>
-        <div id="decision_buttons">
-            <input type="submit" class="form_button" name="drop_selected" value="Drop Selected"
-                   style="margin-top:10px;"/>
-        </div>
-
-        <?php }?>
-
                     </div>
                 </div>
             </div>

@@ -121,8 +121,8 @@ body {
 
 #two-right {
     float: right;
-    width: 295px;
-    width: 295px;
+    width: 175px;
+    width: 175px;
     margin-right: 24px;
 }
 
@@ -220,6 +220,7 @@ ul.std-list, ol.std-list {
 
 ul.std-list ul {
     margin: 0 0 0 2em;
+    padding: 20px;
 }
 
 #user_info {
@@ -271,7 +272,7 @@ ul.std-list ul {
 
 #menu a, #downloads a {
     display: block;
-    width: 252px;
+    width: 150px;
     padding: 4px 0 4px 8px;
     background-color: #222;
     text-decoration: none;
@@ -372,6 +373,7 @@ table.tablesorter thead tr th.icon-column {
     font-family: "Warnock Pro", "Goudy Old Style", "Palatino", "Book Antiqua", Georgia, serif;
     font-style: italic;
     color: #003362;
+    padding: 20px;
 }
 
 .std-form fieldset {
@@ -389,6 +391,7 @@ table.tablesorter thead tr th.icon-column {
 .std-form .form-column-left {
     float: left;
     width: 400px;
+    padding: 20px;
 }
 
 .std-form .form-column-right {
@@ -1051,7 +1054,7 @@ table.simple_table th.fixed_10_percent {
 
 
 ul li a {
-    color:white;
+    color:black;
 }
 
 nav {
@@ -1178,13 +1181,13 @@ div.wrapper{
     display:block;
     width:100%;
     margin:0;
-    padding:0;
+    padding:10;
     text-align:left;
 }
 
 div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, div.wrapper h6{
     margin:0;
-    padding:0;
+    padding:10px;
     font-size:20px;
     font-weight:normal;
     line-height:normal;

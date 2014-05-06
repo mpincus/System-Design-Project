@@ -13,6 +13,52 @@
 ?>
 
     <h1>Deny Access</h1>
+    <link rel="stylesheet" type="text/css" href="DataTables/media/css/demo_page.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="DataTables/media/css/demo_table.css" media="screen" />
+
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        var asInitVals = new Array();
+
+        $(document).ready(function () {
+            var oTable = $('#example').dataTable({
+                "oLanguage": {
+                    "sSearch": "Search all columns:"
+                }
+            });
+
+            $("tfoot input").keyup(function () {
+                /* Filter on the column (the index) of this element */
+                oTable.fnFilter(this.value, $("tfoot input").index(this));
+            });
+
+
+            /*
+             * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+             * the footer
+             */
+            $("tfoot input").each(function (i) {
+                asInitVals[i] = this.value;
+            });
+
+            $("tfoot input").focus(function () {
+                if (this.className == "search_init") {
+                    this.className = "";
+                    this.value = "";
+                }
+            });
+
+            $("tfoot input").blur(function (i) {
+                if (this.value == "") {
+                    this.className = "search_init";
+                    this.value = asInitVals[$("tfoot input").index(this)];
+                }
+            });
+        });
+    </script>
 
 <?php
 
@@ -89,18 +135,44 @@ if (config_item('deny_access') > 0) {
             </div>
         </fieldset>
     </div>
-    <div id="table-wrapper">
+    <div id="'dt_example">
+    <div id="container">
+    <div id="demo">
+    <div id="example_wrapper" class="dataTables_wrapper" role="grid">
+
         <h2>Deny List</h2>
 
         <div id="table-wrapper">
-            <table id="myTable" class="tablesorter">
+            <table aria-describedby="example_info" class="display dataTable" id="example" border="0"
+                   cellpadding="0" cellspacing="0">
                 <thead>
-                <tr>
-                    <th></th>
-                    <th>TimeSlot</th>
+                <tr role="row">
+                    <th aria-label="Rendering engine: activate to sort column descending"
+                        aria-sort="ascending"
+                        style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+                        tabindex="0"
+                        role="columnheader" class="sorting_asc">
+                    </th>
+
+                    <th aria-label="Rendering engine: activate to sort column descending"
+                        aria-sort="ascending"
+                        style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
+                        tabindex="0"
+                        role="columnheader" class="sorting_asc">Timeslot
+                    </th>
+
                 </tr>
                 </thead>
-                <tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init" hidden="true"
+                                                       type="text"></th>
+                    <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                                       type="text"></th>
+
+                </tr>
+                </tfoot>
+                <tbody aria-relevant="all" aria-live="polite" role="alert">
 
                 <?php
 
@@ -131,6 +203,10 @@ if (config_item('deny_access') > 0) {
                    style="margin-top:10px;"/>
         </div>
     </div>
+    </div>
+    </div>
+    </div>
+
     </form>
 
 <?php

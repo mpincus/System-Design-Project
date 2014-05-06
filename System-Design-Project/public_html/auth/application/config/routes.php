@@ -57,8 +57,8 @@ $route['international']        = 'static_pages/international';
 $route['graduate']        = 'static_pages/graduate';
 $route['nondegree']        = 'static_pages/nondegree';
 $route['stu']        = 'static_pages/stu';
-
-
+$route['banner']        = 'static_pages/banner';
+$route['fee']        = 'static_pages/fee';
 // pages when a student logs in
 
 

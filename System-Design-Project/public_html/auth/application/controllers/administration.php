@@ -403,6 +403,61 @@ class Administration extends MY_Controller
         }
     }
 
+    public function year()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_stuff(config_item('year_table'), 'year');
+                }
+
+
+                // Get the current deny list
+                $view_data['stuff_list'] = $this->auth_model->get_stuff_list(config_item('year_table'));
+
+            }
+
+            $data = array(
+                'content' => $this->load->view('administration/year', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
+    public function major()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_stuff(config_item('major_table'), 'major');
+                }
+
+
+                // Get the current deny list
+                $view_data['stuff_list'] = $this->auth_model->get_stuff_list(config_item('major_table'));
+
+            }
+
+            $data = array(
+                'content' => $this->load->view('administration/major', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
     public function course()
     {
         // Make sure admin is logged in
@@ -414,6 +469,7 @@ class Administration extends MY_Controller
                 }
 
                 // Get the current deny list
+                $view_data['major_list'] = $this->auth_model->get_stuff_list(config_item('major_table'));
                 $view_data['course_list'] = $this->auth_model->get_course_list();
             }
 
@@ -532,6 +588,7 @@ class Administration extends MY_Controller
                 $view_data['course_name_list'] = $this->auth_model->get_course_name();
                 $view_data['course_list']=$this->auth_model->get_course_list();
                 $view_data['term_list'] = $this->auth_model->get_term_list();
+                $view_data['year_list'] = $this->auth_model->get_stuff_list(config_item('year_table'));
                 $view_data['timeslot_list'] = $this->auth_model->get_stuff_list(config_item('timeslot_table'));
                 $view_data['building_list'] = $this->auth_model->get_stuff_list(config_item('building_table'));
                 $view_data['room_list'] = $this->auth_model->get_stuff_list(config_item('room_table'));
@@ -579,6 +636,7 @@ class Administration extends MY_Controller
                 $view_data['course_name_list'] = $this->auth_model->get_course_name();
                 $view_data['course_list']=$this->auth_model->get_course_list();
                 $view_data['term_list'] = $this->auth_model->get_term_list();
+                $view_data['year_list'] = $this->auth_model->get_stuff_list(config_item('year_table'));
                 $view_data['timeslot_list'] = $this->auth_model->get_stuff_list(config_item('timeslot_table'));
                 $view_data['building_list'] = $this->auth_model->get_stuff_list(config_item('building_table'));
                 $view_data['room_list'] = $this->auth_model->get_stuff_list(config_item('room_table'));
@@ -629,62 +687,111 @@ class Administration extends MY_Controller
 
     public function datatables_stuff()
     {
+        if ($this->require_min_level(1)) {
+        $this->load->library('encrypt');
+        $this->load->model('user_model');
+        $this->load->library('upload');
+      //  $this->load->model('user_model');
         // Make sure admin is logged in
         //if ($this->require_role('admin')) {
             if (config_item('deny_access') > 0) { //needed
                 // If POST, do delete or addition of IP
             }
-            //$view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
-            $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'));
-           // print_r($view_data['schedule']);
-            $data = array(
-                'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
-                'javascripts' => array(
-                    'js/jquery.char-limiter-3.0.0.js',
-                    'js/default-char-limiters.js'
-                )
-            );
-        //if(isset(config_item('auth_first_name')))
-            //print_r(config_item('auth_first_name'));
-       // else
-
-            $this->load->view($this->template, $data);
-        //}
-        // Make sure teacher is logged in
-       /* if ($this->require_role('manager')) {
-            if (config_item('deny_access') > 0) { //needed
-                // If POST, do delete or addition of IP
+            if (/*$this->require_role('admin')*/$this->auth_level == '9') {
+            $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
             }
+            else if ($this->auth_level == '6') {
+                if ($this->tokens->match) {
+            $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'));
+                }
+                else{
+                    $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
+                }
+            }
+            else if($this->auth_level =='1'){
+                if ($this->tokens->match) {
+                    $view_data['workdamnit'] = $this->auth_model->process_student_schedule(config_item('student_courses_table'));
+                    $view_data['schedule'] = $this->auth_model->get_student_schedule(config_item('student_courses_table'));
 
-            $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'), config_item('auth_first_name'), config_item('auth_last_name'));
-
+                }
+              //  $view_data['schedule'] = $this->auth_model->get_student_schedule(config_item('student_courses_table'));
+                else{
+                    $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
+                }
+            }
+           // print_r($view_data['schedule']);
+       // echo "<script>console.log(".$this->auth_user_id.")</script>";
             $data = array(
                 'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
                 'javascripts' => array(
+                    'js/jquery.passwordToggle-1.1.js',
                     'js/jquery.char-limiter-3.0.0.js',
-                    'js/default-char-limiters.js'
+                    'js/default-char-limiters.js',
+                    'js/ajaxupload.js',
+                    'js/user/self-update.js'
                 )
             );
+
             $this->load->view($this->template, $data);
         }
-        // Make sure user is logged in
-        if ($this->require_role('customer')) {
+
+    }
+    public function registerstudent()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
             if (config_item('deny_access') > 0) { //needed
                 // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_student_register();
+                }
+
+                // Get the current deny list
+           //     $view_data['term_list'] = $this->auth_model->get_term_list();
             }
-            $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
 
             $data = array(
-                'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
+                'content' => $this->load->view('administration/registerstudent', (isset($view_data)) ? $view_data : '', TRUE),
                 'javascripts' => array(
                     'js/jquery.char-limiter-3.0.0.js',
                     'js/default-char-limiters.js'
                 )
             );
-            $this->load->view($this->template, $data);
-        }*/
-            //$this->load->view($this->template, $data);
 
+            $this->load->view($this->template, $data);
+        }
+    }
+    public function roster()
+    {
+        if ($this->require_min_level(1)) {
+        $this->load->library('encrypt');
+        $this->load->model('user_model');
+        $this->load->library('upload');
+                // Get the current deny list
+                //     $view_data['term_list'] = $this->auth_model->get_term_list();
+        $view_data['courses_teaching'] = $this->auth_model->get_teacher_schedule(config_item('section_table'));
+            if(isset($_GET['n'])){
+                $view_data['roster'] = $this->auth_model->get_students_in_class();
+            }
+            if ($this->tokens->match) {
+                $this->auth_model->process_grading(config_item('student_courses_table'));
+            }
+            //print_r($view_data['roster']);
+            //print_r($_POST);
+
+            $data = array(
+                'content' => $this->load->view('administration/roster', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                      'js/jquery.passwordToggle-1.1.js',
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js',
+                    'js/ajaxupload.js',
+                    'js/user/self-update.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
     }
 
 

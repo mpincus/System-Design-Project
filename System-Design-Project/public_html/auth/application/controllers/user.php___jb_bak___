@@ -420,7 +420,35 @@ class User extends MY_Controller
 
     // --------------------------------------------------------------
 
+    public function datatables_stuff()
+    {
+        if ($this->require_min_level(1)) {
+            // Load resources
+            $this->load->library('encrypt');
+            $this->load->model('user_model');
+            $this->load->library('upload');
 
+            $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'));
+            echo "<script>console.log(" . $this->auth_user_id . ")</script>";
+
+            $data = array(
+             //   'content' => $this->load->view('user/self_update', $view_data, TRUE),
+                'content' => $this->load->view('administration/datatables_stuff', (isset($view_data)) ? $view_data : '', TRUE),
+
+                // Load the show password script
+                'javascripts' => array(
+                    'js/jquery.passwordToggle-1.1.js',
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js',
+                    'js/ajaxupload.js',
+                    'js/user/self-update.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+
+        }
+    }
 }
 
 /* End of file users.php */

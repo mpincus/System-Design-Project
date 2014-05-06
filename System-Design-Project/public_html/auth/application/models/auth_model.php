@@ -625,13 +625,13 @@ class Auth_model extends MY_Model
             // If form submission is adding to deny list
             if ($this->input->post('add_term')) {
                 $season = set_value('term_season');
-                $year = set_value('term_year');
+               // $year = set_value('term_year');
 
                 // Make sure that the values we need were posted
                 if (!empty($season)) {
                     $insert_data = array(
-                        'term_season' => $season,
-                        'term_year' => $year
+                        'term_season' => $season
+                 //       'term_year' => $year
                         //    'time' => time()
                     );
 
@@ -710,6 +710,8 @@ class Auth_model extends MY_Model
         // $this->_rebuild_deny_list();
     }
 
+
+
     // --------------------------------------------------------------
 
     /**
@@ -742,15 +744,17 @@ class Auth_model extends MY_Model
             if ($this->input->post('add_course')) {
                 $courseName = set_value('courseName');
                 $courseDesc = set_value('courseDesc');
-                $dept = set_value('DeptID');
+               // $dept = set_value('DeptID');
                 $credit = set_value('credit');
+                $major = $_POST['major'];
+                $trueMajor = $this->getTrueVal('major', $major, config_item('major_table'));
 
                 // Make sure that the values we need were posted
                 if (!empty($courseName)) {
                     $insert_data = array(
                         'courseName' => $courseName,
                         'courseDesc' => $courseDesc,
-                        'DeptID' => $dept,
+                        'major' => $trueMajor->major,
                         'credit' => $credit
                         // 'time' => time()
                     );
@@ -945,7 +949,7 @@ class Auth_model extends MY_Model
                 $termYear = $_POST['year'];
                 //echo $termYear;
 
-                $trueTermYear = $this->getTrueVal('term_year', $termYear, config_item('term_table'));
+                $trueTermYear = $this->getTrueVal('year', $termYear, config_item('year_table'));
                 $termSeason = $_POST['term'];
                 $trueTermSeason = $this->getTrueVal('term_season', $termSeason, config_item('term_table'));
                 $courseName = $_POST['course_name'];
@@ -965,7 +969,7 @@ class Auth_model extends MY_Model
                 //echo "<script>console.log(".$trueTermSeason->term_season.")</script>";
                // exit();
                 if (!empty($termYear)) {
-                    $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->term_year, $trueCourseName->courseName);
+                    $query = $this->createSectionID($trueTermSeason->term_season, $trueTermYear->year, $trueCourseName->courseName);
                     //$query = $this->createSectionID($_POST['term'], $_POST['year'], $_POST['course_name']);
                     if (empty($query)) {
                         $i = '1';
@@ -974,18 +978,27 @@ class Auth_model extends MY_Model
                         $i++;
                     }
 
+                    $getDept = $this->get_course_list();
+                    $dept='';
+                    foreach($getDept as $row){
+                        if($row->courseName == $trueCourseName->courseName){
+                            $dept = $row->major;
+                        }
+                    }
+
 
 
 
                     $insert_data = array(
-                        'year' => $trueTermYear->term_year,
+                        'year' => $trueTermYear->year,
                         'term' => $trueTermSeason->term_season,
                         'courseName' => $trueCourseName->courseName,
                         'timeslot' => $trueTimeslot->timeslot,
                         'building' => $trueBuilding->building,
                         'room' => $trueRoom->room,
                         'section' => $i,
-                        'teacher' => $trueInstructor->first_name . " " . $trueInstructor->last_name
+                        'teacher' => $trueInstructor->first_name . " " . $trueInstructor->last_name,
+                        'major' => $dept
 
                        /* 'year' => $_POST['year'],
                         'term' => $_POST['term'],
@@ -1568,14 +1581,12 @@ class Auth_model extends MY_Model
 
     public function get_teacher_schedule($table)
     {
-        $teacherfname =  config_item('first_name');
-        $teacherlname = config_item('last_name');
-        print_r($teacherfname);
-        print_r($teacherlname);
-        print_r(config_item('auth_user_name'));
-        $this->db->where('teacher',$teacherfname.' '.$teacherlname);
 
+      //  echo config_item('auth_first_name').' '.config_item('auth_last_name');
+        $teacherstuff = config_item('auth_first_name').' '.config_item('auth_last_name');
+        $this->db->where('teacher',$teacherstuff);
         $query = $this->db->get($table);
+
 
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -1583,8 +1594,301 @@ class Auth_model extends MY_Model
 
         return FALSE;
     }
+    public function process_student_schedule($stuff_table){
+      //  echo config_item('auth_user_id');
+        $studentid = config_item('auth_user_id');
+      //  $data = array(
+      //      'user_id' => $studentid
+     //   );
+      //  $this->db->insert($table, $data);
 
 
+            if ($this->input->post('remove_selected')) {
+                // Get the IPs to remove
+                $insert_data = $_POST['ip_removals'];//('ip_removals[]');
+
+              //  echo "<script>console.log(".print_r($insert_data).");</script>";//;print_r($insert_data);
+                    foreach ($insert_data as $cname){
+                        $this->db->select();
+                        $this->db->where('user_id', $studentid);
+                        $this->db->where('cID', $cname);
+                        $query = $this->db->get($stuff_table);
+                      //  print_r($query);
+                        if ($query->num_rows() > 0) {
+                            $this->load->vars(array('validation_errors' => '<li>You have already registered for this course. <span class="redfield">CLASS NOT ADDED</span></li>'));
+
+                        }
+                        else {
+                            $ips= array(
+                            'user_id' => $studentid,
+                            'cID' => $cname
+                            );
+                            $diditwork =  $this->_set_student_schedule($ips, $stuff_table);
+                        }
+
+                    }
+               // print_r($ips);
+          //      exit();
+
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    // Show confirmation of removal
+                    if (!empty($diditwork)) {
+                    $this->load->vars(array('confirm_removal' => 1));
+                    }
+                    else{
+
+                    }
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>You have already registered for this course. <span class="redfield">CLASS NOT ADDED</span></li>'));
+                }
+            }
+        else if($this->input->post('drop_selected')){
+            $ips = $_POST['ip_removals'];
+            $this->_remove_shit($ips, $stuff_table);
+        }
+            // }
+        return 1;
+        }
+
+    protected function _set_student_schedule($ips, $stuff_table)
+    {
+        $this->db->set($ips)
+            ->insert($stuff_table);
+    }
+
+
+
+    public function get_student_schedule($table){
+
+
+        $this->db->select('ID,term,year,courseName,timeslot,building,room,section,teacher');
+        $this->db->from('section');
+        $this->db->where( $table.'.user_id',config_item('auth_user_id'));
+
+        $this->db->join($table, 'student_courses.cID = section.ID ');
+        $query = $this->db->get();
+        $stuff=$query->result_array();
+        $count = 0;
+        $year = '';
+        $term = '';
+        $delID='';
+       // print_r($stuff);
+        foreach($stuff as $row){
+            foreach($stuff as $otherrow){
+                if(($otherrow['year'] == $row['year']) && ($otherrow['term'] == $row['term'])) {
+                    $count++;
+                    $year = $otherrow['year'];
+                    $term = $otherrow['term'];
+                    $delID = $otherrow['ID'];
+
+                }
+            }
+            echo $count;
+        }
+
+        if($count < 18){
+        if (($query->num_rows() > 0)) {
+            return $query->result_array();
+        }
+        }
+        else{
+        //if($query->num_rows() > 4){
+            $this->load->vars(array('validation_errors' => '<li>You have already registered for 4 courses. Please contact the administrator. <span class="redfield">CLASS NOT ADDED</span></li>'));
+
+           $this->db->limit(1);
+            $this->db->select('student_courses.user_id, ID,term,year,courseName,timeslot,building,room,section,teacher');
+            $this->db->from('section');
+            $this->db->where( $table.'.user_id',config_item('auth_user_id'));
+            $this->db->where('section.year',$year);
+            $this->db->where('section.term',$term);
+            $this->db->where('section.ID',$delID);
+            $this->db->join($table, 'student_courses.cID = section.ID ');
+            //$this->db->delete($table);
+            $query = $this->db->get();
+         //  $stuff=$query->row();
+         //   $this->db->insert('tempclasses', $stuff);
+
+           // this->db->where()*/
+            $data = array('user_id'=>config_item('auth_user_id'), 'cID'=>$delID);
+            $this->db->delete($table,$data);
+            return $query->result_array();
+
+
+        }
+    }
+    protected function _remove_shit($ips, $stuff_table)
+    {
+        $i = 0;
+
+        foreach ($ips as $cname) {
+            if ($i == 0) {
+                $this->db->where('cID', $cname);
+            } else {
+                $this->db->or_where('cID', $cname);
+            }
+
+            $i++;
+        }
+
+        $this->db->delete($stuff_table);
+
+        // $this->_rebuild_deny_list();
+    }
+
+    public function process_student_register()
+    {
+        // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
+        $this->config->load('form_validation/administration/term');
+        $this->validation_rules = config_item('term_rules');
+
+        if ($this->validate()) {
+            // If form submission is adding to deny list
+            if ($this->input->post('add_term')) {
+                $studentuser = $_POST['student_user_name'];
+                $classid = $_POST['class_id'];
+
+                $this->db->select('user_id');
+                $this->db->from(config_item('user_table'));
+                $this->db->where('user_name', $studentuser);
+                $query = $this->db->get();
+                $user_id = $query->row();
+             //   print_r($user_id);
+                //exit();
+
+
+                // Make sure that the values we need were posted
+                if (!empty($user_id)) {
+                    $insert_data = array(
+                        'user_id' => $user_id->user_id,
+                        'cID' => $classid
+                        //    'time' => time()
+                    );
+
+                    // Insert the denial
+                    $this->_insert_stuff($insert_data, config_item('student_courses_table'));
+
+                    // Show confirmation that denial was added
+                    $this->load->vars(array('confirm_add_term' => 1));
+
+                    // Kill set_value() since we won't need it
+                    $this->kill_set_value();
+                } // Necessary values were not available
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
+                }
+            } // If form submission is removing from deny list
+            else if ($this->input->post('remove_selected')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    // Remove the IPs
+                    $this->_remove_term($ips);
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
+            }
+        }
+    }
+
+    public function get_students_in_class(){
+      $sql = "SELECT DISTINCT users.user_id, users.user_name, users.user_email, customer_profiles.first_name, customer_profiles.last_name, student_courses.cID, student_courses.grade
+FROM `users`
+JOIN `customer_profiles` ON `customer_profiles`.user_id = `users`.user_id
+JOIN `student_courses` ON `student_courses`.user_id = `customer_profiles`.user_id
+where cID = ?";
+        $query=$this->db->query($sql, $_GET['n']);
+        return $query->result_array();
+
+    }
+    public function process_grading($stuff_table){
+        //  echo config_item('auth_user_id');
+       // $studentid = config_item('auth_user_id');
+        //  $data = array(
+        //      'user_id' => $studentid
+        //   );
+        //  $this->db->insert($table, $data);
+
+
+        if ($this->input->post('remove_selected')) {
+            // Get the IPs to remove
+            $insert_id = $_POST['ip_removals'];//('ip_removals[]');
+            $insert_grade = $_POST['grades'];
+            if(count($insert_id) != count($insert_grade)){
+                $this->load->vars(array('validation_errors' => '<li>Make sure you confirm the grade by selecting the corresponding checkbox></li>'));
+                return 0;
+            }
+
+         //   $course = $_POST['course'];
+            $i=0;
+           // print_r($insert_grade);
+          //  print_r($insert_id);
+         //   print_r( $_POST['course']);
+          //  exit();
+
+
+            //  echo "<script>console.log(".print_r($insert_data).");</script>";//;print_r($insert_data);
+            foreach ($insert_id as $cname){
+
+                //  print_r($query);
+
+
+                    $ips= array(
+
+                        'grade' => $insert_grade[$i]
+                    );
+                    $diditwork =  $this->_set_student_grade($cname, $ips, config_item('student_courses_table'));
+
+
+                $i++;
+            }
+            // print_r($ips);
+            //      exit();
+
+
+            // If there were IPs
+            if (!empty($ips)) {
+                // Show confirmation of removal
+                if (!empty($diditwork)) {
+                    $this->load->vars(array('confirm_removal' => 1));
+                }
+                else{
+
+                }
+            } // If there were no IPs posted
+            else {
+                // Show error message
+                $this->load->vars(array('validation_errors' => '<li>You have already registered for this course. <span class="redfield">CLASS NOT ADDED</span></li>'));
+            }
+        }
+        else if($this->input->post('drop_selected')){
+            $ips = $_POST['ip_removals'];
+            $this->_remove_shit($ips, $stuff_table);
+        }
+        // }
+        return 1;
+    }
+    protected function _set_student_grade($id, $ips, $stuff_table)
+    {
+        $this->db->query("SET FOREIGN_KEY_CHECKS=0");
+        $this->db->where('user_id',$id);
+        $this->db->where('cID', $_POST['course']);
+        $this->db->update($stuff_table, $ips);
+        $this->db->query("SET FOREIGN_KEY_CHECKS=1");
+    }
+
+//589798833
 }
 
 /* End of file auth_model.php */

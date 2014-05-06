@@ -12,7 +12,7 @@
  */
 ?>
 
-    <h1>Add/Drop Course</h1>
+    <h1>Add/Drop Term</h1>
     <link rel="stylesheet" type="text/css" href="DataTables/media/css/demo_page.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="DataTables/media/css/demo_table.css" media="screen" />
 
@@ -63,7 +63,7 @@
 <?php
 
 if (config_item('deny_access') > 0) {
-    if (isset($confirm_add_course)) {
+    if (isset($confirm_add_term)) {
         echo '
 			<div class="feedback confirmation">
 				<p class="feedback_header">
@@ -103,15 +103,15 @@ if (config_item('deny_access') > 0) {
 
                 <?php
                 // season ***********************************
-                echo form_label('course name', 'courseName', array('class' => 'form_label'));
+                echo form_label('Year', 'stuffName', array('class' => 'form_label'));
 
                 echo input_requirement('*');
 
                 $input_data = array(
-                    'name' => 'courseName',
-                    'id' => 'courseName',
-                   // 'class' => 'form_input ip_address_format',
-                    'value' => set_value('courseName'),
+                    'name' => 'stuffName',
+                    'id' => 'stuffName',
+                    // 'class' => 'form_input ip_address_format',
+                  //  'value' => set_value('year'),
                     'maxlength' => '39'
                 );
 
@@ -120,86 +120,14 @@ if (config_item('deny_access') > 0) {
                 ?>
 
             </div>
-            <div class="form-row">
 
-                <?php
-                // DENIAL REASON SELECTION ***************************************
-          /*      echo form_label('Denial Reason', 'reason_code', array('class' => 'form_label'));
-
-                echo input_requirement();
-
-                foreach (config_item('denied_access_reason') as $num => $text) {
-                    $options[$num] = $text;
-                }
-
-                echo form_dropdown('reason_code', $options, set_value('reason_code', '0'), 'id="reason_code" class="form_select"');
-          */
-                // year ***********************************
-                echo form_label('course desc', 'courseDesc', array('class' => 'form_label'));
-
-                echo input_requirement('*');
-
-                $input_data = array(
-                    'name' => 'courseDesc',
-                    'id' => 'courseDesc',
-                    // 'class' => 'form_input ip_address_format',
-                    'value' => set_value('courseDesc'),
-                    //'maxlength' => '39'
-                );
-
-                echo form_input($input_data);
-                ?>
-
-            </div>
-            <div class="form-row">
-
-                <?php
-                // VEHICLE TYPE LABEL AND INPUT ***********************************
-                echo form_label('Department', 'major', array('class' => 'form_label'));
-
-                echo input_requirement();
-
-                // Default option
-                $major[] = '-- Select --';
-
-                // Options from query
-                foreach ($major_list as $row) {
-                    $major[$row->ID] = $row->major;
-                }
-
-                echo form_dropdown('major', $major, set_value('major'), 'id="major" class="form_select"');
-
-                ?>
-
-            </div>
-            <div class="form-row">
-
-                <?php
-                // season ***********************************
-                echo form_label('credit', 'credit', array('class' => 'form_label'));
-
-                echo input_requirement('*');
-
-                $input_data = array(
-                    'name' => 'credit',
-                    'id' => 'credit',
-                    // 'class' => 'form_input ip_address_format',
-                    'value' => set_value('credit'),
-                    'maxlength' => '39'
-                );
-
-                echo form_input($input_data);
-
-                ?>
-
-            </div>
             <div class="form-row">
                 <div id="submit_box">
 
                     <?php
                     // SUBMIT BUTTON **************************************************************
                     $input_data = array(
-                        'name' => 'add_course',
+                        'name' => 'add_stuff',
                         'id' => 'submit_button',
                         'value' => 'Deny'
                     );
@@ -222,7 +150,6 @@ if (config_item('deny_access') > 0) {
                    cellpadding="0" cellspacing="0">
                 <thead>
                 <tr role="row">
-
                     <th aria-label="Rendering engine: activate to sort column descending"
                         aria-sort="ascending"
                         style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
@@ -234,25 +161,7 @@ if (config_item('deny_access') > 0) {
                         aria-sort="ascending"
                         style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
                         tabindex="0"
-                        role="columnheader" class="sorting_asc">Course Name
-                    </th>
-                    <th aria-label="Rendering engine: activate to sort column descending"
-                        aria-sort="ascending"
-                        style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
-                        tabindex="0"
-                        role="columnheader" class="sorting_asc">Course Description
-                    </th>
-                    <th aria-label="Rendering engine: activate to sort column descending"
-                        aria-sort="ascending"
-                        style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
-                        tabindex="0"
-                        role="columnheader" class="sorting_asc">Department
-                    </th>
-                    <th aria-label="Rendering engine: activate to sort column descending"
-                        aria-sort="ascending"
-                        style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
-                        tabindex="0"
-                        role="columnheader" class="sorting_asc">Credits
+                        role="columnheader" class="sorting_asc">Year
                     </th>
 
                 </tr>
@@ -263,12 +172,6 @@ if (config_item('deny_access') > 0) {
                                                        type="text"></th>
                     <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
                                                        type="text"></th>
-                    <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
-                                                       type="text"></th>
-                    <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
-                                                       type="text"></th>
-                    <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
-                                                       type="text"></th>
 
                 </tr>
                 </tfoot>
@@ -276,28 +179,19 @@ if (config_item('deny_access') > 0) {
 
                 <?php
 
-                if (!empty($course_list)) {
+                if (!empty($stuff_list)) {
                     //$denial_reasons = config_item('denied_access_reason');
 
-                    foreach ($course_list as $row) {
+                    foreach ($stuff_list as $row) {
                         echo '
 				<tr>
 					<td>
 						<input type="checkbox" name="ip_removals[]" value="' . $row->ID . '" />
 					</td>
 					<td>
-						' . $row->courseName . '
+						' . $row->year . '
 					</td>
-					<td>
-						' . $row->courseDesc . '
-					</td>
-					<td>
-                        ' . $row->major . '
-                    </td>
-                    <td>
-                        ' . $row->credit . '
-                    </td>
-                </tr>
+
                     ';
                     }
                 }
@@ -307,7 +201,6 @@ if (config_item('deny_access') > 0) {
                 </tbody>
             </table>
         </div>
-
         <div id="decision_buttons">
             <input type="submit" class="form_button" name="remove_selected" value="Remove Selected"
                    style="margin-top:10px;"/>
@@ -315,7 +208,7 @@ if (config_item('deny_access') > 0) {
     </div>
     </div>
     </div>
-</div>
+    </div>
 
     </form>
 
