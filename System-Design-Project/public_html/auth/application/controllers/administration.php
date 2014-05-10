@@ -484,6 +484,32 @@ class Administration extends MY_Controller
             $this->load->view($this->template, $data);
         }
     }
+    public function assignMajor()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_assignmajor();
+                }
+
+                // Get the current deny list
+                $view_data['major_list'] = $this->auth_model->get_stuff_list(config_item('major_table'));
+               // $view_data['course_list'] = $this->auth_model->get_course_list();
+            }
+
+            $data = array(
+                'content' => $this->load->view('administration/assignMajor', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
 
     // --------------------------------------------------------------
     public function timeslot()
@@ -703,6 +729,7 @@ class Administration extends MY_Controller
             else if ($this->auth_level == '6') {
                 if ($this->tokens->match) {
             $view_data['schedule'] = $this->auth_model->get_teacher_schedule(config_item('section_table'));
+                    $view_data['sluts'] = $this->auth_model->get_teacher_schedule(config_item('section_table'));
                 }
                 else{
                     $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
@@ -716,7 +743,12 @@ class Administration extends MY_Controller
                 }
               //  $view_data['schedule'] = $this->auth_model->get_student_schedule(config_item('student_courses_table'));
                 else{
+                    $view_data['holdStatus'] = $this->auth_model->checkHoldStatus();
+                    //print_r($view_data['holdStatus']);
+                    //echo $view_data['holdStatus']->holdStatus;
+                    if($view_data['holdStatus']->holdStatus == 0){
                     $view_data['schedule'] = $this->auth_model->get_stuff_list(config_item('section_table'));
+                    }
                 }
             }
            // print_r($view_data['schedule']);
@@ -752,6 +784,31 @@ class Administration extends MY_Controller
 
             $data = array(
                 'content' => $this->load->view('administration/registerstudent', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+    public function holdstatus()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+                // If POST, do delete or addition of IP
+                if ($this->tokens->match) {
+                    $this->auth_model->process_student_hold();
+                }
+
+                // Get the current deny list
+                //     $view_data['term_list'] = $this->auth_model->get_term_list();
+            }
+
+            $data = array(
+                'content' => $this->load->view('administration/holdStatus', (isset($view_data)) ? $view_data : '', TRUE),
                 'javascripts' => array(
                     'js/jquery.char-limiter-3.0.0.js',
                     'js/default-char-limiters.js'

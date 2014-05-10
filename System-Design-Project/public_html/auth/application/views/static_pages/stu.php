@@ -50,9 +50,9 @@
     <div id="stulink">
         <div id="stulink1">
             <h2>Financial Aid requierements</h2>
-
-
-
+            <ul>Last day to submit Fafsa 5/08/2014</ul>
+            <ul>Last day to submit eop application 5/08/2014</ul>
+            <ul>Last day to submit Tap Application</ul>
         </div>
         <div class="stulink2">
 
@@ -71,6 +71,12 @@
 
             <h2>Student Links</h2>
             <ul>
+                <p>Student last day to register May 18 2014</p>
+                <p>Last day for basketball try outs May 19 2014</p>
+            </ul>
+            <ul>
+                <p>Student immunization shot day May 19 2014</p>
+                <p></p>
             </ul>
 
 
@@ -78,24 +84,3 @@
         <br class="clear" />
     </div>
 </div><p></p>
-
-    <div class="wrapper col9">
-        <div class="about">
-            <div class="about1">
-                <h2>Personal Information</h2>
-             <p>hello 5</p>
-
-
-                </div>
-            <div class="about3">
-                <h2>Academic Profile</h2>
-                <p>
-                   hello 4
-                </p>
-            </div>
-            <div class="about2">
-                <p>hello </p>
-            </div>
-        </div>
-    </div><p></p>
-</div>

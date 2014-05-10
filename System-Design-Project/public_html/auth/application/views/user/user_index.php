@@ -12,12 +12,8 @@
  */
 ?>
 
-<h1>User Index</h1>
-<p>This is special content only seen when logged in.</p>
-<p>This page could hold any number of things that logged in users should see or do. Special downloads, videos, information, and top secret stuff...</p>
-
-
-<?php if($auth_level == 1){$this->load->view('static_pages/stu'); }?>
+<h1>Admin Page</h1>
+    
 <?php
 /* End of file user_index.php */
 /* Location: /application/views/user/user_index.php */

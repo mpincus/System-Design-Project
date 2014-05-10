@@ -78,7 +78,7 @@
 	</div>
 	<div class="width-limiter">
 
-        <div class="wrapper col1">
+        <div class="col1">
             <div id="header">
                 <div id="logo">
                     <h1><a href="#">SUNY TECH</a></h1>
@@ -86,14 +86,14 @@
                 </div>
                 <div class="fl_right">
                     <ul>
-                        <p>put somthing here</p>
+
                     </ul>
 
                 </div>
                 <br class="clear" />
             </div>
         </div>
-        <div class="wrapper col2">
+        <div class=" col2">
             <div id="topnav">
                 <ul>
                     <li class="active"><a href="index.php">Home</a>
@@ -107,13 +107,13 @@
                             <li> <?php
                                 echo ( $this->uri->segment(1) == 'studentlife' ) ? anchor('Studentlife', 'Student Life', array( 'id' => 'active' ) ) : anchor('studentlife', 'Student Life');
                                 ?></li>
-                            <li class="last"> <?php if(!isset($auth_level)){
-                                echo ( $this->uri->segment(1) == 'apply' ) ? anchor('apply', 'Apply Now', array( 'id' => 'active' ) ) : anchor('apply', 'Apply Now');}
+                            <li class="last"> <?php
+                                echo ( $this->uri->segment(1) == 'apply' ) ? anchor('apply', 'Apply Now', array( 'id' => 'active' ) ) : anchor('apply', 'Apply Now');
                                 ?></li>
                             <il>
 
-                                <?php if($auth_level == 1){
-                                echo ( $this->uri->segment(1) == 'stu' ) ? anchor('Stu', 'studentlogin', array( 'id' => 'active' ) ) : anchor('stu', 'studentlogin'); }
+                                <?php
+                                echo ( $this->uri->segment(1) == 'stu' ) ? anchor('Stu', 'studentlogin', array( 'id' => 'active' ) ) : anchor('stu', 'studentlogin');
                                 ?>
                             </il>
 
@@ -168,7 +168,7 @@
 				<ul>
 					<li>
 						<?php 
-							echo ( $this->uri->segment(1) ) ? anchor('/', 'Home') : anchor('/', 'Home', array( 'id' => 'active' ) );
+					//		echo ( $this->uri->segment(1) ) ? anchor('/', 'Home') : anchor('/', 'Home', array( 'id' => 'active' ) );
 						?>
 					</li>
 					<!--<li>
@@ -176,7 +176,7 @@
 					</li>-->
 				    <!--<li>
 						<?php 
-						//	echo ( $this->uri->segment(1) == 'license' ) ? anchor('license', 'License', array( 'id' => 'active' ) ) : anchor('license', 'License');
+					//		echo ( $this->uri->segment(1) == 'license' ) ? anchor('license', 'License', array( 'id' => 'active' ) ) : anchor('license', 'License');
 						?>
 					</li>-->
                     <!--<li>
@@ -186,32 +186,32 @@
 					</li>-->
 					<li>
                         <?php
-                       // echo ( $this->uri->segment(1) == 'cost' ) ? anchor('cost', 'Cost', array( 'id' => 'active' ) ) : anchor('cost', 'Cost');
+                     //   echo ( $this->uri->segment(1) == 'cost' ) ? anchor('cost', 'Cost', array( 'id' => 'active' ) ) : anchor('cost', 'Cost');
                         ?>
 
                     </li>
                     <li>
                         <?php
-                      //  echo ( $this->uri->segment(1) == 'Financial' ) ? anchor('financial', 'Financial Aid', array( 'id' => 'active' ) ) : anchor('financial', 'Financial Aid');
+                     //   echo ( $this->uri->segment(1) == 'Financial' ) ? anchor('financial', 'Financial Aid', array( 'id' => 'active' ) ) : anchor('financial', 'Financial Aid');
                         ?>
 
                     </li>
                     <li>
                         <?php
-                       // echo ( $this->uri->segment(1) == 'studentlife' ) ? anchor('Studentlife', 'Student Life', array( 'id' => 'active' ) ) : anchor('studentlife', 'Student Life');
+                     //   echo ( $this->uri->segment(1) == 'studentlife' ) ? anchor('Studentlife', 'Student Life', array( 'id' => 'active' ) ) : anchor('studentlife', 'Student Life');
                         ?>
                     </li>
 
 
                     <li>
                         <?php
-                       // echo ( $this->uri->segment(1) == 'apply' ) ? anchor('apply', 'Apply Now', array( 'id' => 'active' ) ) : anchor('apply', 'Apply Now');
+                     //   echo ( $this->uri->segment(1) == 'apply' ) ? anchor('apply', 'Apply Now', array( 'id' => 'active' ) ) : anchor('apply', 'Apply Now');
                         ?>
                     </li>
 
                     <li>
                         <?php
-                       // echo ( $this->uri->segment(1) == 'academics' ) ? anchor('academics', 'Academics', array( 'id' => 'active' ) ) : anchor('academics', 'Academics');
+                     //   echo ( $this->uri->segment(1) == 'academics' ) ? anchor('academics', 'Academics', array( 'id' => 'active' ) ) : anchor('academics', 'Academics');
                         ?>
                     </li>
 
@@ -232,29 +232,26 @@
 						// If a manager or admin is logged in
 						if( isset( $auth_level ) && $auth_level == 6 )
 						{
+							echo '<li>';
+						//	echo ( $this->uri->segment(2) == 'create_user' ) ? secure_anchor('administration/create_user', 'Create User', array( 'id' => 'active' ) ) : secure_anchor('administration/create_user', 'Create User');
+							echo '</li>';
+
+							echo '<li>';
+						//	echo ( $this->uri->segment(2) == 'manage_users' OR $this->uri->segment(2) == 'update_user' ) ? secure_anchor('administration/manage_users', 'Manage Users', array( 'id' => 'active' ) ) : secure_anchor('administration/manage_users', 'Manage Users');
+							echo '</li>';
+
+							echo '<li>';
+						//	echo ( $this->uri->segment(2) == 'pending_registrations' ) ? secure_anchor('register/pending_registrations', 'Pending Registrations', array( 'id' => 'active' ) ) : secure_anchor('register/pending_registrations', 'Pending Registrations');
+							echo '</li>';
 
                             echo '<li>';
-                            echo ($this->uri->segment(2) == 'roster') ? secure_anchor('administration/roster', 'View Class Roster', array('id' => 'active')) : secure_anchor('administration/roster', 'View Class Roster');
+                            echo ($this->uri->segment(1) == 'roster') ? secure_anchor('administration/roster', 'View Roster', array('id' => 'active')) : secure_anchor('administration/roster', 'View Roster');
                             echo '</li>';
-
-
 						}
 
 						// If an admin is logged in
 						if( isset( $auth_level ) && $auth_level == 9 )
 						{
-                            echo '<li>';
-                            echo ( $this->uri->segment(2) == 'create_user' ) ? secure_anchor('administration/create_user', 'Create User', array( 'id' => 'active' ) ) : secure_anchor('administration/create_user', 'Create User');
-                            echo '</li>';
-
-                            echo '<li>';
-                            echo ( $this->uri->segment(2) == 'manage_users' OR $this->uri->segment(2) == 'update_user' ) ? secure_anchor('administration/manage_users', 'Manage Users', array( 'id' => 'active' ) ) : secure_anchor('administration/manage_users', 'Manage Users');
-                            echo '</li>';
-
-                            echo '<li>';
-                            echo ( $this->uri->segment(2) == 'pending_registrations' ) ? secure_anchor('register/pending_registrations', 'Pending Registrations', array( 'id' => 'active' ) ) : secure_anchor('register/pending_registrations', 'Pending Registrations');
-                            echo '</li>';
-
 							echo '<li>';
 							echo ( $this->uri->segment(2) == 'settings' ) ? secure_anchor('register/settings', 'Registration Mode', array( 'id' => 'active' ) ) : secure_anchor('register/settings', 'Registration Mode');
 							echo '</li>';
@@ -266,13 +263,6 @@
                         echo '<li>';
                         echo ($this->uri->segment(2) == 'term') ? secure_anchor('administration/term', 'Add/Drop Term', array('id' => 'active')) : secure_anchor('administration/term', 'Add/Drop Term');
                         echo '</li>';
-
-                            echo '<li>';
-                            echo ($this->uri->segment(2) == 'year') ? secure_anchor('administration/year', 'Add/Drop Year', array('id' => 'active')) : secure_anchor('administration/year', 'Add/Drop Year');
-                            echo '</li>';
-                            echo '<li>';
-                            echo ($this->uri->segment(2) == 'major') ? secure_anchor('administration/major', 'Add/Drop Major', array('id' => 'active')) : secure_anchor('administration/major', 'Add/Drop Major');
-                            echo '</li>';
 
                         echo '<li>';
                         echo ($this->uri->segment(2) == 'course') ? secure_anchor('administration/course', 'Add/Drop Course', array('id' => 'active')) : secure_anchor('administration/course', 'Add/Drop Course');
@@ -291,19 +281,21 @@
                         echo '</li>';
 
                         echo '<li>';
-                        echo ($this->uri->segment(2) == 'section') ? secure_anchor('administration/section', 'Add/Drop Class Scheduling', array('id' => 'active')) : secure_anchor('administration/section', 'Add/Drop Class Scheduling');
+                        echo ($this->uri->segment(2) == 'section') ? secure_anchor('administration/section', 'Add/Drop Section', array('id' => 'active')) : secure_anchor('administration/section', 'Add/Drop Section');
                         echo '</li>';
-
-                            echo '<li>';
-                            echo ($this->uri->segment(2) == 'modifyclass') ? secure_anchor('administration/modifyclass', 'Modify Existing Schedule', array('id' => 'active')) : secure_anchor('administration/modifyclass', 'Modify Existing Schedule');
-                            echo '</li>';
 						
-						//  echo '<li>';
-                   //     echo ($this->uri->segment(1) == 'admin_modify_schedule') ? secure_anchor('administration/admin_modify_schedule', 'Modify Class Schedule', array('id' => 'active')) : secure_anchor('administration/admin_modify_schedule', 'modifyClassSchedule');
-                   //     echo '</li>';
+						  echo '<li>';
+                        echo ($this->uri->segment(1) == 'admin_modify_schedule') ? secure_anchor('administration/admin_modify_schedule', 'Modify Class Schedule', array('id' => 'active')) : secure_anchor('administration/admin_modify_schedule', 'Modify Class Schedule');
+                        echo '</li>';
+                            echo '<li>';
+                            echo ($this->uri->segment(1) == 'registerstudent') ? secure_anchor('administration/registerstudent', 'Register Student', array('id' => 'active')) : secure_anchor('administration/registerstudent', 'Register Student');
+                            echo '</li>';
+                            echo '<li>';
+                            echo ($this->uri->segment(1) == 'holdStatus') ? secure_anchor('administration/holdstatus', 'Change Hold Status', array('id' => 'active')) : secure_anchor('administration/holdstatus', 'Change Hold Status');
+                            echo '</li>';
 
                             echo '<li>';
-                            echo ($this->uri->segment(1) == 'registerstudent') ? secure_anchor('administration/registerstudent', 'Register Student for Course', array('id' => 'active')) : secure_anchor('administration/registerstudent', 'Register Student for Course');
+                            echo ($this->uri->segment(1) == 'assignMajor') ? secure_anchor('administration/assignMajor', 'Assign Major', array('id' => 'active')) : secure_anchor('administration/assignMajor', 'Assign Major');
                             echo '</li>';
 						}
 
@@ -314,17 +306,17 @@
                             echo ($this->uri->segment(1) == 'datatables_stuff') ? secure_anchor('administration/datatables_stuff', 'View Schedule', array('id' => 'active')) : secure_anchor('administration/datatables_stuff', 'View Schedule');
                             echo '</li>';
 
-						//	echo '<li>';
+							echo '<li>';
 						//	echo ( $this->uri->segment(2) == 'uploader_controls' ) ? secure_anchor('custom_uploader/uploader_controls', 'Custom Uploader', array( 'id' => 'active' ) ) : secure_anchor('custom_uploader/uploader_controls', 'Custom Uploader');
-						//	echo '</li>';
+							echo '</li>';
 
-							//echo '<li>';
+							echo '<li>';
 						//	echo ( $this->uri->segment(1) == 'auto_populate' ) ? secure_anchor('auto_populate', 'Auto Populate', array( 'id' => 'active' ) ) : secure_anchor('auto_populate', 'Auto Populate');
-						//	echo '</li>';
+							echo '</li>';
 
-						//	echo '<li>';
+							echo '<li>';
 						//	echo ( $this->uri->segment(1) == 'category_menu' ) ? secure_anchor('category_menu', 'Category Menu', array( 'id' => 'active' ) ) : secure_anchor('category_menu', 'Category Menu');
-						//	echo '</li>';
+							echo '</li>';
 						}
 					?>
 				</ul>
@@ -355,15 +347,12 @@
             <ul>
 
                     <div class="content">
-                        <p><a href="" onClick="javascript: pageTracker._trackPageview('/outbound/footer/connectwithoneonta');">Connect With SUNY TECH:</a></p>
-                        <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/facebook');"><img src="http://www.oneonta.edu/home/images/facebook-icon.png" alt="Facebook" title="Facebook"  class="image image-thumbnail " width="24" height="24" />
-                        <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/youtube');"><img src="http://www.oneonta.edu/home/images/youtube-icon.png" alt="YouTube" title="YouTube"  class="image image-thumbnail " width="24" height="24" />
-                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/twitter');"><img src="http://www.oneonta.edu/home/images/twitter-icon.png" alt="Twitter" title="Twitter"  class="image image-thumbnail " width="24" height="24" />
-                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/instagram');"><img src="http://www.oneonta.edu/home/images/instagram-icon.png" alt="Instagram" title="Instagram"  class="image image-thumbnail " width="24" height="24" />
-                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/tumblr');"><img src="http://www.oneonta.edu/home/images/tumblr-icon.png" alt="Tumblr" title="Tumblr"  class="image image-thumbnail " width="24" height="24" /></a>
-                        <a class="thumbnail" href="" target="_blank" onClick="javascript: pageTracker._trackPageview('/outbound/footer/linkedin');"><img src="http://www.oneonta.edu/home/images/linkedin-icon.png" alt="LinkedIn" title="LinkedIn"  class="image image-thumbnail " width="24" height="24" /></a>
-                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/App-AndroidMarket');"><img src="http://www.oneonta.edu/home/images/android_market_icon.png" alt="Android Market" title="Android Market"  class="image image-thumbnail " width="24" height="24" /></a>
-                        <a class="thumbnail" href="" target="_blank" onclick="javascript: pageTracker._trackPageview('/outbound/footer/App-AppStore');"><img src="http://www.oneonta.edu/home/images/iphone_icon.png" alt="iPhone App Store" title="iPhone App Store"  class="image image-thumbnail " width="24" height="24" /></a>
+
+                        <img src="http://www.oneonta.edu/home/images/facebook-icon.png" alt="Facebook" title="Facebook"  class="image image-thumbnail " width="24" height="24" />
+                      <img src="http://www.oneonta.edu/home/images/youtube-icon.png" alt="YouTube" title="YouTube"  class="image image-thumbnail " width="24" height="24" />
+                     <img src="http://www.oneonta.edu/home/images/twitter-icon.png" alt="Twitter" title="Twitter"  class="image image-thumbnail " width="24" height="24" />
+
+
                         <div class="clear">&nbsp;</div>
                     </div><!-- end content -->
 

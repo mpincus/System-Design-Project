@@ -25,11 +25,18 @@
 
         $(document).ready(function () {
             var oTable = $('#example').dataTable({
-                "oLanguage": {
+               "oLanguage": {
                     "sSearch": "Search all columns:"
                 }
             });
+            var currentSeason='';
+            if(<?php echo date("m");?> < 6)
+                currentSeason='Spring';
+            else
+                currentSeason='Fall'
 
+            oTable.fnFilter('<?php echo date("Y");?> '+currentSeason);
+           // oTable.fnFilter('Summer');
             $("tfoot input").keyup(function () {
                 /* Filter on the column (the index) of this element */
                 oTable.fnFilter(this.value, $("tfoot input").index(this));
@@ -171,9 +178,9 @@ if (config_item('deny_access') > 0) {
                                 <tr>
                                     <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init" hidden="true"
                                                                        type="text"></th>
-                                    <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
+                                    <th colspan="1" rowspan="1"><input id="currentTerm" name="search_engine" value="Search engines" class="search_init"
                                                                        type="text"></th>
-                                    <th colspan="1" rowspan="1"><input name="search_browser" value="Search browsers" class="search_init"
+                                    <th colspan="1" rowspan="1"><input id="currentYear" name="search_browser" value="Search browsers" class="search_init"
                                                                        type="text"></th>
                                     <th colspan="1" rowspan="1"><input name="search_platform" value="Search platforms"
                                                                        class="search_init" type="text"></th>
@@ -199,7 +206,7 @@ if (config_item('deny_access') > 0) {
                                     //$denial_reasons = config_item('denied_access_reason');
 
                                     foreach ($schedule as $row) {
-                                        if(($auth_level == 9) || ($auth_level == 1)){
+                                        if(($auth_level == 9) || ($auth_level == 1) || (($auth_level==6) && (!isset($sluts)))){
                                             if(!isset($workdamnit)){
 
 
@@ -284,7 +291,7 @@ if (config_item('deny_access') > 0) {
                                                     ';
                                             }
                                         }
-                                        else if($auth_level == 6){
+                                        else if(($auth_level == 6) && (isset($sluts))){
                                             echo '
                                 <tr class="gradeA odd">
                                     <td>
@@ -334,7 +341,8 @@ if (config_item('deny_access') > 0) {
                                 </tbody>
                             </table>
                         </div>
-                        <?php if(!isset($workdamnit)){?>
+
+                        <?php  if(!isset($workdamnit)){?>
                         <div id="decision_buttons">
                             <input type="submit" class="form_button" name="remove_selected" value="Remove Selected"
                                    style="margin-top:10px;"/>
@@ -351,6 +359,9 @@ if (config_item('deny_access') > 0) {
                 </div>
             </div>
         </div>
+   </div>
+
+
 
     </form>
     </div>

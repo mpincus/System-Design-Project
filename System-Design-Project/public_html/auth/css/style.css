@@ -1203,12 +1203,12 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 .col5{color:#CCCCCC; background-color:#48282F;}
 .col5 a{color:#E5E2C9; background-color:#48282F;}
 .col6, .col6 a{color:#767772; background-color:#FFFFFF;}
-.col7{color:black; background-color:white;}
-.col7 a{color:#000000; background-color:white;}
-.col8{color:black; background-color:white;}
-.col8 a{color:#000000; background-color:white;}
-.col9{color:black; background-color:white;}
-.col9 a{color:#000000; background-color:white;}
+.col7{color:black; background-color:baged;}
+.col7 a{color:#000000; background-color:baged;}
+.col8{color:black; background-color:baged;}
+.col8 a{color:#000000; background-color:baged;}
+.col9{color:black; background-color:baged;}
+.col9 a{color:#000000; background-color:baged;}
 .col10{color:black; background-color:#E5E2C9;}
 .col10a{color:#000000; background-color:#E5E2C9;}
 .col11{color:black; background-color:#E5E2C9;}
@@ -1654,24 +1654,21 @@ float:left;
 #banners1{
     float:left;
     width:30%;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 .banners2{
     float: left;
     width:30%;
     text-align: center;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 
 .banners3{
     float:left;
     width:30%;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 
@@ -1685,32 +1682,28 @@ float:left;
 #stulink1{
     float:left;
     width:30%;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 .stulink2{
     float: left;
     width:30%;
     text-align: center;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 
 .stulink3{
     float:left;
     width:30%;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 .stulink4{
     float: right;
     width:30%;
     text-align: center;
-    border-style:solid;
-    border-width: 1px;
+
 }
 
 
@@ -1721,16 +1714,14 @@ float:left;
 .fi1{
     float:left;
     width:30%;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 .fi2{
     float: right;
     width:30%;
     text-align: center;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 
@@ -1739,16 +1730,14 @@ float:left;
 .studentlife3{
     float:left;
     width:30%;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 .studentlife4{
     float: right;
     width:30%;
     text-align: center;
-    border-style:solid;
-    border-width: 1px;
+
 
 }
 

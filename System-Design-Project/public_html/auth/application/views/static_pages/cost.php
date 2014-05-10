@@ -2,7 +2,7 @@
 <div class="wrapper col10">
     <div id="stulink">
         <div id="stulink1">
-            <img src="img/cost.jpg" alt="" />
+            <img src="img/cost.jpg" width="500px"height="300px" alt="" />
 
         </div>
         <div class="stulink4">

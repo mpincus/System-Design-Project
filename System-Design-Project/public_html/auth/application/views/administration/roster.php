@@ -109,8 +109,16 @@ if (config_item('deny_access') > 0) {
     //print_r($_POST['grades']);
     echo '<fieldset>';
     echo '<legend>Courses Teaching</legend>';
+    $currentSeason = '';
+    if(date("m") < 6)
+        $currentSeason='Spring';
+    else
+        $currentSeason='Fall';
     foreach ($courses_teaching as $k => $v){
+        if(($v['year'] == date("Y")) && ($v['term'] == $currentSeason)){
+
     echo '<li>' . secure_anchor('administration/roster?n=' . $v['ID'], $v['year'].' '.$v['term'].' '.$v['courseName'].' '.$v['section']) . '</li>';
+    }
     }
     echo '</fieldset>';
     ?>

@@ -138,8 +138,7 @@ if (config_item('deny_access') > 0) {
             </div>
         </fieldset>
     </div>
-    <div id="'dt_example">
-    <div id="container">
+
     <div id="demo">
     <div id="example_wrapper" class="dataTables_wrapper" role="grid">
 
@@ -206,8 +205,7 @@ if (config_item('deny_access') > 0) {
         </div>
     </div>
     </div>
-    </div>
-    </div>
+
 
     </form>
 

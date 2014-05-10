@@ -138,77 +138,7 @@ if (config_item('deny_access') > 0) {
             </div>
         </fieldset>
     </div>
-    <div id="'dt_example">
-    <div id="container">
-    <div id="demo">
-    <div id="example_wrapper" class="dataTables_wrapper" role="grid">
-
-        <h2>Deny List</h2>
-
-        <div id="table-wrapper">
-            <table aria-describedby="example_info" class="display dataTable" id="example" border="0"
-                   cellpadding="0" cellspacing="0">
-                <thead>
-                <tr role="row">
-                    <th aria-label="Rendering engine: activate to sort column descending"
-                        aria-sort="ascending"
-                        style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
-                        tabindex="0"
-                        role="columnheader" class="sorting_asc">
-                    </th>
-
-                    <th aria-label="Rendering engine: activate to sort column descending"
-                        aria-sort="ascending"
-                        style="width: 136px;" colspan="1" rowspan="1" aria-controls="example"
-                        tabindex="0"
-                        role="columnheader" class="sorting_asc">Term
-                    </th>
-
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-                    <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init" hidden="true"
-                                                       type="text"></th>
-                    <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
-                                                       type="text"></th>
-
-                </tr>
-                </tfoot>
-                <tbody aria-relevant="all" aria-live="polite" role="alert">
-
-                <?php
-
-                if (!empty($term_list)) {
-                    //$denial_reasons = config_item('denied_access_reason');
-
-                    foreach ($term_list as $row) {
-                        echo '
-				<tr>
-					<td>
-						<input type="checkbox" name="ip_removals[]" value="' . $row->term_season . '" />
-					</td>
-					<td>
-						' . $row->term_season . '
-					</td>
-
-                    ';
-                    }
-                }
-
-                ?>
-
-                </tbody>
-            </table>
-        </div>
-        <div id="decision_buttons">
-            <input type="submit" class="form_button" name="remove_selected" value="Remove Selected"
-                   style="margin-top:10px;"/>
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
+  <?php $this->load->view('administration/termshit') ?>
 
     </form>
 

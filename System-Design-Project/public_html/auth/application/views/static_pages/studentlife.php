@@ -3,7 +3,7 @@
     <div class="studentlife3">
 
 
-        <img src="img/life.jpg" alt="" />
+        <img src="img/life.jpg" width="500px" height="300px" alt="" />
 
     </div>
 

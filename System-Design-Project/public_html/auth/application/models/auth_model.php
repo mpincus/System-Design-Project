@@ -1653,6 +1653,22 @@ class Auth_model extends MY_Model
             // }
         return 1;
         }
+    function checkHoldStatus(){
+        $this->db->select('holdStatus');
+        $this->db->where('user_id', config_item('auth_user_id'));
+        //$this->db->where('holdStatus', $cname);
+        $query = $this->db->get(config_item('customer_profiles_table'));
+        if($query->row()->holdStatus == 1){
+            $this->load->vars(array('validation_errors' => '<li>You have a Financial Hold. <span class="redfield">YOU CANNOT REGISTER</span></li>'));
+        }
+        elseif($query->row()->holdStatus == 2){
+            $this->load->vars(array('validation_errors' => '<li>You have a GPA Hold. <span class="redfield">YOU CANNOT REGISTER</span></li>'));
+        }
+        elseif($query->row()->holdStatus == 3){
+            $this->load->vars(array('validation_errors' => '<li>You have a Health Hold. <span class="redfield">YOU CANNOT REGISTER</span></li>'));
+        }
+        return $query->row();
+    }
 
     protected function _set_student_schedule($ips, $stuff_table)
     {
@@ -1665,7 +1681,7 @@ class Auth_model extends MY_Model
     public function get_student_schedule($table){
 
 
-        $this->db->select('ID,term,year,courseName,timeslot,building,room,section,teacher');
+        $this->db->select('ID,term,year,courseName,timeslot,building,room,section,teacher,major');
         $this->db->from('section');
         $this->db->where( $table.'.user_id',config_item('auth_user_id'));
 
@@ -1679,7 +1695,7 @@ class Auth_model extends MY_Model
        // print_r($stuff);
         foreach($stuff as $row){
             foreach($stuff as $otherrow){
-                if(($otherrow['year'] == $row['year']) && ($otherrow['term'] == $row['term'])) {
+                if(($otherrow['year'] == $row['year']) && ($otherrow['term'] == $row['term']) &&( $otherrow['ID'] != $row['ID'])) {
                     $count++;
                     $year = $otherrow['year'];
                     $term = $otherrow['term'];
@@ -1700,7 +1716,7 @@ class Auth_model extends MY_Model
             $this->load->vars(array('validation_errors' => '<li>You have already registered for 4 courses. Please contact the administrator. <span class="redfield">CLASS NOT ADDED</span></li>'));
 
            $this->db->limit(1);
-            $this->db->select('student_courses.user_id, ID,term,year,courseName,timeslot,building,room,section,teacher');
+            $this->db->select('student_courses.user_id, ID,term,year,courseName,major,timeslot,building,room,section,teacher');
             $this->db->from('section');
             $this->db->where( $table.'.user_id',config_item('auth_user_id'));
             $this->db->where('section.year',$year);
@@ -1801,6 +1817,79 @@ class Auth_model extends MY_Model
             }
         }
     }
+    public function process_student_hold()
+    {
+        // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
+        $this->config->load('form_validation/administration/term');
+        $this->validation_rules = config_item('term_rules');
+
+        if ($this->validate()) {
+            // If form submission is adding to deny list
+            if ($this->input->post('add_term')) {
+                $studentuser = $_POST['student_user_name'];
+                $statustype = $_POST['hold_status'];
+
+                $this->db->select('user_id');
+                $this->db->from(config_item('user_table'));
+                $this->db->where('user_name', $studentuser);
+                $query = $this->db->get();
+                $user_id = $query->row();
+                //   print_r($user_id);
+                //exit();
+
+
+                // Make sure that the values we need were posted
+                if (!empty($user_id)) {
+                    $insert_data = array(
+                        //'user_id' => $user_id->user_id,
+                        'holdStatus' => $statustype
+                        //    'time' => time()
+                    );
+
+                    // Insert the denial
+                    $this->_insert_stuff_hold($insert_data, config_item('customer_profiles_table'), $user_id->user_id);
+
+                    // Show confirmation that denial was added
+                    $this->load->vars(array('confirm_add_term' => 1));
+
+                    // Kill set_value() since we won't need it
+                    $this->kill_set_value();
+                } // Necessary values were not available
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
+                }
+            } // If form submission is removing from deny list
+            else if ($this->input->post('remove_selected')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    // Remove the IPs
+                    $this->_remove_term($ips);
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
+            }
+        }
+    }
+
+    protected function _insert_stuff_hold($data, $stuff_table, $id)
+    {
+        //if ($data['IP_address'] == '0.0.0.0') {
+        //    return FALSE;
+        //}
+        $this->db->where('user_id', $id);
+        $this->db->update($stuff_table, $data);
+
+        // $this->_rebuild_deny_list();
+    }
 
     public function get_students_in_class(){
       $sql = "SELECT DISTINCT users.user_id, users.user_name, users.user_email, customer_profiles.first_name, customer_profiles.last_name, student_courses.cID, student_courses.grade
@@ -1886,6 +1975,69 @@ where cID = ?";
         $this->db->where('cID', $_POST['course']);
         $this->db->update($stuff_table, $ips);
         $this->db->query("SET FOREIGN_KEY_CHECKS=1");
+    }
+
+    public function process_assignmajor()
+    {
+        // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
+      //  $this->config->load('form_validation/administration/course');
+     //   $this->validation_rules = config_item('course_rules');
+
+       // if ($this->validate()) {
+            // If form submission is adding to deny list
+            if ($this->input->post('add_term')) {
+
+                    $studentuser = $_POST['student_user_name'];
+
+                $major = $_POST['major'];
+                $trueMajor = $this->getTrueVal('major', $major, config_item('major_table'));
+
+                $this->db->select('user_id');
+                $this->db->from(config_item('user_table'));
+                $this->db->where('user_name', $studentuser);
+                $query = $this->db->get();
+                $user_id = $query->row();
+
+                // Make sure that the values we need were posted
+                if (!empty($user_id)) {
+                    $insert_data = array(
+                        'major' => $trueMajor->major
+
+                        // 'time' => time()
+                    );
+
+                    // Insert the denial
+                    $this->_insert_stuff_hold($insert_data, config_item('customer_profiles_table'), $user_id->user_id);
+
+                    // Show confirmation that denial was added
+                    $this->load->vars(array('confirm_add_course' => 1));
+
+                    // Kill set_value() since we won't need it
+              //      $this->kill_set_value();
+                } // Necessary values were not available
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
+                }
+            } // If form submission is removing from deny list
+            else if ($this->input->post('remove_selected')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    // Remove the IPs
+                    $this->_remove_course($ips);
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
+            }
+       // }
     }
 
 //589798833
