@@ -1248,9 +1248,13 @@ class Auth_model extends MY_Model
         return FALSE;
     }
 
-    public function get_stuff_list($stuff_table)
+    public function get_stuff_list($stuff_table, $userid = false)
     {
+        if($userid){
+            $this->db->where('user_id', config_item('auth_user_id'));
+        }
         $query = $this->db->from($stuff_table)->get();
+
 
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -1606,7 +1610,7 @@ class Auth_model extends MY_Model
             if ($this->input->post('remove_selected')) {
                 // Get the IPs to remove
                 $insert_data = $_POST['ip_removals'];//('ip_removals[]');
-
+                $timeslot=false;
               //  echo "<script>console.log(".print_r($insert_data).");</script>";//;print_r($insert_data);
                     foreach ($insert_data as $cname){
                         $this->db->select();
@@ -1614,8 +1618,25 @@ class Auth_model extends MY_Model
                         $this->db->where('cID', $cname);
                         $query = $this->db->get($stuff_table);
                       //  print_r($query);
-                        if ($query->num_rows() > 0) {
+                        $sql="select * from section join student_courses on section.ID = student_courses.cID where user_id = ?";
+                        $conflict = $this->db->query($sql, $studentid);
+                        $theconflict = $conflict->result();
+                        $sql = "select timeslot from section where ID = ?";
+                        $test = $this->db->query($sql,$cname);
+                        $tester = $test->result();
+                        foreach ($theconflict as $row) {
+                            if($row->timeslot == $tester[0]->timeslot)
+                                $timeslot=true;
+                        }
+
+                        if($timeslot){
+                            $this->load->vars(array('validation_errors' => '<li>There is a timeslot conflict. <span class="redfield">CLASS NOT ADDED</span></li>'));
+                            return 0;
+                        }
+
+                       elseif ($query->num_rows() > 0) {
                             $this->load->vars(array('validation_errors' => '<li>You have already registered for this course. <span class="redfield">CLASS NOT ADDED</span></li>'));
+                           return 0;
 
                         }
                         else {
@@ -1643,7 +1664,7 @@ class Auth_model extends MY_Model
                 } // If there were no IPs posted
                 else {
                     // Show error message
-                    $this->load->vars(array('validation_errors' => '<li>You have already registered for this course. <span class="redfield">CLASS NOT ADDED</span></li>'));
+                    $this->load->vars(array('validation_errors' => '<li>eefgaagf have already registered for this course. <span class="redfield">CLASS NOT ADDED</span></li>'));
                 }
             }
         else if($this->input->post('drop_selected')){
@@ -1892,7 +1913,7 @@ class Auth_model extends MY_Model
     }
 
     public function get_students_in_class(){
-      $sql = "SELECT DISTINCT users.user_id, users.user_name, users.user_email, customer_profiles.first_name, customer_profiles.last_name, student_courses.cID, student_courses.grade
+      $sql = "SELECT DISTINCT users.user_id, users.user_name, users.user_email, customer_profiles.first_name, customer_profiles.last_name, student_courses.cID, student_courses.midterm, student_courses.final
 FROM `users`
 JOIN `customer_profiles` ON `customer_profiles`.user_id = `users`.user_id
 JOIN `student_courses` ON `student_courses`.user_id = `customer_profiles`.user_id
@@ -1913,8 +1934,9 @@ where cID = ?";
         if ($this->input->post('remove_selected')) {
             // Get the IPs to remove
             $insert_id = $_POST['ip_removals'];//('ip_removals[]');
-            $insert_grade = $_POST['grades'];
-            if(count($insert_id) != count($insert_grade)){
+            $insert_midterm = $_POST['midterms'];
+            $insert_final = $_POST['finals'];
+            if(count($insert_id) != count($insert_midterm)){
                 $this->load->vars(array('validation_errors' => '<li>Make sure you confirm the grade by selecting the corresponding checkbox></li>'));
                 return 0;
             }
@@ -1935,7 +1957,8 @@ where cID = ?";
 
                     $ips= array(
 
-                        'grade' => $insert_grade[$i]
+                        'midterm' => $insert_midterm[$i],
+                        'final' => $insert_final[$i]
                     );
                     $diditwork =  $this->_set_student_grade($cname, $ips, config_item('student_courses_table'));
 
@@ -2001,7 +2024,7 @@ where cID = ?";
                 // Make sure that the values we need were posted
                 if (!empty($user_id)) {
                     $insert_data = array(
-                        'major' => $trueMajor->major
+                        'majorm' => $trueMajor->major
 
                         // 'time' => time()
                     );

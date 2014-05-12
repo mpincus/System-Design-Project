@@ -165,7 +165,12 @@ if (config_item('deny_access') > 0) {
             <th aria-label="CSS grade: activate to sort column ascending" style="width: 123px;"
                 colspan="1"
                 rowspan="1" aria-controls="example" tabindex="0" role="columnheader"
-                class="sorting">Grade
+                class="sorting">Midterm
+            </th>
+            <th aria-label="CSS grade: activate to sort column ascending" style="width: 123px;"
+                colspan="1"
+                rowspan="1" aria-controls="example" tabindex="0" role="columnheader"
+                class="sorting">Final
             </th>
             <th></th>
 
@@ -186,6 +191,8 @@ if (config_item('deny_access') > 0) {
             <th colspan="1" rowspan="1"><input name="search_grade" value="Search grades" class="search_init"
                                                type="text"></th>
             <th colspan="1" rowspan="1"><input name="search_grade" value="Search grades" class="search_init"
+                                               type="text"></th>
+            <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init"
                                                type="text"></th>
             <th colspan="1" rowspan="1"><input name="search_engine" value="Search engines" class="search_init" hidden="true"
                                                type="text"></th>
@@ -223,7 +230,10 @@ if (config_item('deny_access') > 0) {
                         <td>'
                         . $row['user_email'] .
                         '</td>
-                          <td><input type="text" id="stuff" name="grades[]" value="' . $row['grade'].'">'.
+                          <td><input type="text" id="stuff" name="midterms[]" value="' . $row['midterm'].'">'.
+
+                        '</td>
+                        <td><input type="text" id="stuff" name="finals[]" value="' . $row['final'].'">'.
 
                         '</td>
                         <td>

@@ -28,7 +28,9 @@
 
 
         </div>
-        <div class="banners3">
+        <div class="banners3" style="padding-left: 30px;">
+            <?php $this->load->view('administration/viewholds'); ?>
+            <!--
             <h2>Student information</h2>
 
                 <li>Now Available: Online Parking Ticket. </li>
@@ -41,7 +43,7 @@
 </ul>
 
             </ul>
-
+-->
         </div>
         <br class="clear" />
     </div>
@@ -60,14 +62,18 @@
             <h2>Student Grades</h2>
             <br>
 
-            <select name="hello">
+           <!-- <select name="hello">
                 <option value="one">Select Another Term</option>
                 <option value="two">fall 2014</option>
                 <option value="three">Spring 2014</option>
                 <option value="four">Summer 2014</option>
-            </select>
+            </select> -->
+            <?php
+
+            $this->load->view('administration/userGrades');
+            ?>
         </div>
-        <div class="stulink3">
+        <div class="stulink3" style="padding-left: 30px;">
 
             <h2>Student Links</h2>
             <ul>

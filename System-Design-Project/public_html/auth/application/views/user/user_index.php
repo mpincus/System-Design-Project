@@ -12,7 +12,18 @@
  */
 ?>
 
-<h1>Admin Page</h1>
+<?php
+if($auth_level == 9)
+    echo '<h1>Admin Page</h1>';
+elseif($auth_level == 6)
+    echo '<h1>Staff Page</h1>';
+else{
+    echo '<h1>Student Page</h1>';
+    $this->load->view('static_pages/stu');
+}
+?>
+
+
     
 <?php
 /* End of file user_index.php */

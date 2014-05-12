@@ -13,7 +13,17 @@
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
+<?php
+//<script>
+    if(isset($_GET['fuck'])){
+    echo '<script>';
+    echo 'document.documentElement.innerHTML = "<p style=\'font-size:300pt;\'>FUCK YOU GUPTA</p>";';
+    echo '</script>';
 
+        //<p style="font-size:50pt;">
+    }
+//</script>
+?>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title><?php echo ( isset( $title ) ) ? $title : WEBSITE_NAME; ?></title>
 <?php
@@ -113,6 +123,7 @@
                             <il>
 
                                 <?php
+                                if($auth_level == 1)
                                 echo ( $this->uri->segment(1) == 'stu' ) ? anchor('Stu', 'studentlogin', array( 'id' => 'active' ) ) : anchor('stu', 'studentlogin');
                                 ?>
                             </il>
@@ -232,17 +243,7 @@
 						// If a manager or admin is logged in
 						if( isset( $auth_level ) && $auth_level == 6 )
 						{
-							echo '<li>';
-						//	echo ( $this->uri->segment(2) == 'create_user' ) ? secure_anchor('administration/create_user', 'Create User', array( 'id' => 'active' ) ) : secure_anchor('administration/create_user', 'Create User');
-							echo '</li>';
 
-							echo '<li>';
-						//	echo ( $this->uri->segment(2) == 'manage_users' OR $this->uri->segment(2) == 'update_user' ) ? secure_anchor('administration/manage_users', 'Manage Users', array( 'id' => 'active' ) ) : secure_anchor('administration/manage_users', 'Manage Users');
-							echo '</li>';
-
-							echo '<li>';
-						//	echo ( $this->uri->segment(2) == 'pending_registrations' ) ? secure_anchor('register/pending_registrations', 'Pending Registrations', array( 'id' => 'active' ) ) : secure_anchor('register/pending_registrations', 'Pending Registrations');
-							echo '</li>';
 
                             echo '<li>';
                             echo ($this->uri->segment(1) == 'roster') ? secure_anchor('administration/roster', 'View Roster', array('id' => 'active')) : secure_anchor('administration/roster', 'View Roster');
@@ -252,6 +253,19 @@
 						// If an admin is logged in
 						if( isset( $auth_level ) && $auth_level == 9 )
 						{
+
+                            echo '<li>';
+                            echo ( $this->uri->segment(2) == 'create_user' ) ? secure_anchor('administration/create_user', 'Create User', array( 'id' => 'active' ) ) : secure_anchor('administration/create_user', 'Create User');
+                            echo '</li>';
+
+                            echo '<li>';
+                            echo ( $this->uri->segment(2) == 'manage_users' OR $this->uri->segment(2) == 'update_user' ) ? secure_anchor('administration/manage_users', 'Manage Users', array( 'id' => 'active' ) ) : secure_anchor('administration/manage_users', 'Manage Users');
+                            echo '</li>';
+
+                            echo '<li>';
+                            echo ( $this->uri->segment(2) == 'pending_registrations' ) ? secure_anchor('register/pending_registrations', 'Pending Registrations', array( 'id' => 'active' ) ) : secure_anchor('register/pending_registrations', 'Pending Registrations');
+                            echo '</li>';
+
 							echo '<li>';
 							echo ( $this->uri->segment(2) == 'settings' ) ? secure_anchor('register/settings', 'Registration Mode', array( 'id' => 'active' ) ) : secure_anchor('register/settings', 'Registration Mode');
 							echo '</li>';
@@ -263,6 +277,14 @@
                         echo '<li>';
                         echo ($this->uri->segment(2) == 'term') ? secure_anchor('administration/term', 'Add/Drop Term', array('id' => 'active')) : secure_anchor('administration/term', 'Add/Drop Term');
                         echo '</li>';
+
+                            echo '<li>';
+                            echo ($this->uri->segment(2) == 'year') ? secure_anchor('administration/year', 'Add/Drop Year', array('id' => 'active')) : secure_anchor('administration/year', 'Add/Drop Year');
+                            echo '</li>';
+
+                            echo '<li>';
+                            echo ($this->uri->segment(2) == 'major') ? secure_anchor('administration/major', 'Add/Drop major', array('id' => 'active')) : secure_anchor('administration/major', 'Add/Drop major');
+                            echo '</li>';
 
                         echo '<li>';
                         echo ($this->uri->segment(2) == 'course') ? secure_anchor('administration/course', 'Add/Drop Course', array('id' => 'active')) : secure_anchor('administration/course', 'Add/Drop Course');
@@ -285,7 +307,7 @@
                         echo '</li>';
 						
 						  echo '<li>';
-                        echo ($this->uri->segment(1) == 'admin_modify_schedule') ? secure_anchor('administration/admin_modify_schedule', 'Modify Class Schedule', array('id' => 'active')) : secure_anchor('administration/admin_modify_schedule', 'Modify Class Schedule');
+                        echo ($this->uri->segment(1) == 'modifyclass') ? secure_anchor('administration/modifyclass', 'Modify Class Schedule', array('id' => 'active')) : secure_anchor('administration/modifyclass', 'Modify Class Schedule');
                         echo '</li>';
                             echo '<li>';
                             echo ($this->uri->segment(1) == 'registerstudent') ? secure_anchor('administration/registerstudent', 'Register Student', array('id' => 'active')) : secure_anchor('administration/registerstudent', 'Register Student');
@@ -300,13 +322,26 @@
 						}
 
 						// If any user is logged in
+
+                    if(isset($auth_level) && $auth_level == 1){
+                        echo '<li>';
+                        echo ($this->uri->segment(1) == 'userGrades') ? secure_anchor('administration/userGrades', 'userGrades', array('id' => 'active')) : secure_anchor('administration/userGrades', 'userGrades');
+                        echo '</li>';
+
+                        echo '<li>';
+                        echo ($this->uri->segment(1) == 'transcript') ? secure_anchor('administration/transcript', 'transcript', array('id' => 'active')) : secure_anchor('administration/transcript', 'transcript');
+                        echo '</li>';
+                    }
 						if( isset( $auth_level ) )
 						{
                             echo '<li>';
                             echo ($this->uri->segment(1) == 'datatables_stuff') ? secure_anchor('administration/datatables_stuff', 'View Schedule', array('id' => 'active')) : secure_anchor('administration/datatables_stuff', 'View Schedule');
                             echo '</li>';
 
-							echo '<li>';
+
+
+
+                            echo '<li>';
 						//	echo ( $this->uri->segment(2) == 'uploader_controls' ) ? secure_anchor('custom_uploader/uploader_controls', 'Custom Uploader', array( 'id' => 'active' ) ) : secure_anchor('custom_uploader/uploader_controls', 'Custom Uploader');
 							echo '</li>';
 

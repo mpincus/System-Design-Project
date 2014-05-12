@@ -851,6 +851,46 @@ class Administration extends MY_Controller
         }
     }
 
+    public function userGrades()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('customer')) {
+            if (config_item('deny_access') > 0) { //needed
+                $view_data['stuff_list'] = $this->auth_model->get_stuff_list(config_item('student_courses_table'), true);
+            }
+            $data = array(
+                'content' => $this->load->view('administration/userGrades', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
+    public function transcript()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('customer')) {
+            if (config_item('deny_access') > 0) { //needed
+                $view_data['stuff_list'] = $this->auth_model->get_stuff_list(config_item('student_courses_table'), true);
+                $view_data['major'] = $this->auth_model->get_stuff_list(config_item('customer_profiles_table'), true);
+                $view_data['stuff_list'] = $this->auth_model->get_stuff_list(config_item('student_courses_table'), true);
+            }
+            $data = array(
+                'content' => $this->load->view('administration/transcript', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+
+            $this->load->view($this->template, $data);
+        }
+    }
 
     /* public function multi_drop()
      {
