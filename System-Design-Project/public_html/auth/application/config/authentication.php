@@ -41,6 +41,7 @@ $config['disable_installer'] = TRUE;
 $config['levels_and_roles'] = array(
 	'1' => 'customer',
 	'6' => 'manager',
+   // '7' => 'advisor',
 	'9' => 'admin'
 );
 

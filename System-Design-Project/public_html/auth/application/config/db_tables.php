@@ -41,6 +41,7 @@ $config['room_table'] =         'room';
 $config['student_courses_table'] = 'student_courses';
 $config['year_table'] = 'year';
 $config['major_table'] = 'major';
+$config['advisement_table'] = 'advisement';
 
 /* End of file db_tables.php */
 /* Location: /application/config/db_tables.php */

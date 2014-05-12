@@ -392,6 +392,7 @@ table.tablesorter thead tr th.icon-column {
     float: left;
     width: 400px;
     padding: 20px;
+    padding-top: 0px;
 }
 
 .std-form .form-column-right {

@@ -892,6 +892,32 @@ class Administration extends MY_Controller
         }
     }
 
+    public function advise()
+    {
+        // Make sure admin is logged in
+        if ($this->require_role('admin')) {
+            if (config_item('deny_access') > 0) { //needed
+
+                if($this->tokens->match){
+                    $view_data['call'] = $this->auth_model->process_advisement();
+
+                }
+                $view_data['advisor_list'] = $this->auth_model->get_stuff_list(config_item('manager_profiles_table'), false);
+                $view_data['stuff_list'] = $this->auth_model->get_join_table();
+
+            }
+            $data = array(
+                'content' => $this->load->view('administration/advise', (isset($view_data)) ? $view_data : '', TRUE),
+                'javascripts' => array(
+                    'js/jquery.char-limiter-3.0.0.js',
+                    'js/default-char-limiters.js'
+                )
+            );
+
+            $this->load->view($this->template, $data);
+        }
+    }
+
     /* public function multi_drop()
      {
          $this->load->helper(array('url','form','html'));

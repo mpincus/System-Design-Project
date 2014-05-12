@@ -1327,15 +1327,19 @@ class Auth_model extends MY_Model
     /**
      * Add a record to the denied access table
      */
-    protected function _insert_stuff($data, $stuff_table)
+    protected function _insert_stuff($data, $stuff_table,$id='', $modifycondition=false)
     {
         //if ($data['IP_address'] == '0.0.0.0') {
         //    return FALSE;
         //}
+        if($modifycondition){
+            $this->db->where('teacherID',$id);
+            $this->db->update($stuff_table, $data);
+        }else{
 
         $this->db->set($data)
             ->insert($stuff_table);
-
+        }
         // $this->_rebuild_deny_list();
     }
 
@@ -2061,6 +2065,111 @@ where cID = ?";
                 }
             }
        // }
+    }
+
+    public function process_advisement()
+    {
+        // The form validation class doesn't allow for multiple config files, so we do it the old fashion way
+     //   $this->config->load('form_validation/administration/term');
+     //   $this->validation_rules = config_item('term_rules');
+
+     //   if ($this->validate()) {
+            // If form submission is adding to deny list
+            if ($this->input->post('add_term')) {
+                $startrange = $_POST['startrange'];
+                $endrange = $_POST['endrange'];
+                $teacher = $_POST['advisor'];
+               // $teacherID = $this->getInstructorVal('user_id',$teacher,config_item('manger_profiles_table'));
+                echo $startrange;
+                echo $endrange;
+                echo $teacher;
+               // echo $teacherID;
+
+                            //   print_r($user_id);
+              //  exit();
+
+
+                // Make sure that the values we need were posted
+                if (!empty($startrange)) {
+                    $insert_data = array(
+                        //'user_id' => $user_id->user_id,
+                        'teacherID' => $teacher,
+                        'startRange' => $startrange,
+                        'endRange' => $endrange
+                        //    'time' => time()
+                    );
+
+                    // Insert the denial
+                    $this->_insert_stuff($insert_data, config_item('advisement_table'));
+
+                    // Show confirmation that denial was added
+                    $this->load->vars(array('confirm_add_term' => 1));
+
+                    // Kill set_value() since we won't need it
+                //    $this->kill_set_value();
+                } // Necessary values were not available
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
+                }
+            } // If form submission is removing from deny list
+            else if($this->input->post('add_modify')){
+                $startrange = $_POST['mstartrange'];
+                $endrange = $_POST['mendrange'];
+                $teacher = $_POST['madvisor'];
+                // $teacherID = $this->getInstructorVal('user_id',$teacher,config_item('manger_profiles_table'));
+                echo $startrange;
+                echo $endrange;
+                echo $teacher;
+
+                if (!empty($startrange)) {
+                    $insert_data = array(
+                        //'user_id' => $user_id->user_id,
+                        //'teacherID' => $teacher,
+                        'startRange' => $startrange,
+                        'endRange' => $endrange
+                        //    'time' => time()
+                    );
+
+                    // Insert the denial
+                    $this->_insert_stuff($insert_data, config_item('advisement_table'), $teacher, true);
+
+                    // Show confirmation that denial was added
+                    $this->load->vars(array('confirm_add_term' => 1));
+
+                } // Necessary values were not available
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>An <span class="redfield">IP ADDRESS</span> is required.</li>'));
+                }
+            }
+            else if ($this->input->post('remove_selected')) {
+                // Get the IPs to remove
+                $ips = set_value('ip_removals[]');
+
+                // If there were IPs
+                if (!empty($ips)) {
+                    // Remove the IPs
+                    $this->_remove_term($ips);
+
+                    // Show confirmation of removal
+                    $this->load->vars(array('confirm_removal' => 1));
+                } // If there were no IPs posted
+                else {
+                    // Show error message
+                    $this->load->vars(array('validation_errors' => '<li>At least one <span class="redfield">IP ADDRESS</span> must be selected for removal.</li>'));
+                }
+            }
+     //   }
+    }
+
+    public function get_join_table(){
+        $sql = "select *
+from manager_profiles
+join advisement on advisement.teacherID = manager_profiles.user_id";
+        $query=$this->db->query($sql);
+        $info = $query->result();
+        return $info;
     }
 
 //589798833

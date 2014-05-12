@@ -1,7 +1,8 @@
+
 <div class="wrapper col7">
     <div id="banners">
-        <div id="banners1">
-            <h2>Banner self-Service</h2>
+        <div id="banners1" style="padding-left: 30px;">
+            <h1>Banner self-Service</h1>
             <img src="img/menud.gif" alt="">
                 <?php
                 echo ( $this->uri->segment(1) == 'banner' ) ? anchor('banner', 'Banner Self Service', array( 'id' => 'active' ) ) : anchor('banner', 'Banner Self Service');
@@ -14,8 +15,8 @@
 
         </div>
 
-        <div class="banners2">
-            <h2>Registration </h2>
+        <div class="banners2" style="padding-left: 30px;">
+            <h1>Registration </h1>
             <img src="img/menud.gif" alt=""> <?php
             echo ( $this->uri->segment(1) == 'registatus' ) ? anchor('registatus', 'Registration Status', array( 'id' => 'active' ) ) : anchor('registatus', 'Registration Status');
             ?>
@@ -31,7 +32,7 @@
         <div class="banners3" style="padding-left: 30px;">
             <?php $this->load->view('administration/viewholds'); ?>
             <!--
-            <h2>Student information</h2>
+            <h1>Student information</h1>
 
                 <li>Now Available: Online Parking Ticket. </li>
                  <ul>How to Access the new Online Parking </ul>
@@ -50,16 +51,16 @@
 </div><p></p>
 <div class="wrapper col8">
     <div id="stulink">
-        <div id="stulink1">
-            <h2>Financial Aid requierements</h2>
+        <div id="stulink1" style="padding-left: 30px;">
+            <h1>Financial Aid requierements</h1>
             <ul>Last day to submit Fafsa 5/08/2014</ul>
             <ul>Last day to submit eop application 5/08/2014</ul>
             <ul>Last day to submit Tap Application</ul>
         </div>
-        <div class="stulink2">
+        <div class="stulink2" style="padding-left: 30px;">
 
 
-            <h2>Student Grades</h2>
+            <h1>Student Grades</h1>
             <br>
 
            <!-- <select name="hello">
@@ -75,8 +76,8 @@
         </div>
         <div class="stulink3" style="padding-left: 30px;">
 
-            <h2>Student Links</h2>
-            <ul>
+            <h1>Student Adviser</h1>
+           <!-- <ul>
                 <p>Student last day to register May 18 2014</p>
                 <p>Last day for basketball try outs May 19 2014</p>
             </ul>
@@ -84,6 +85,8 @@
                 <p>Student immunization shot day May 19 2014</p>
                 <p></p>
             </ul>
+            -->
+            <?php $this->load->view('administration/userAdvisor'); ?>
 
 
         </div>

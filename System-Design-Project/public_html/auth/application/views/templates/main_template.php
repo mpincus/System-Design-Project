@@ -319,6 +319,10 @@
                             echo '<li>';
                             echo ($this->uri->segment(1) == 'assignMajor') ? secure_anchor('administration/assignMajor', 'Assign Major', array('id' => 'active')) : secure_anchor('administration/assignMajor', 'Assign Major');
                             echo '</li>';
+
+                            echo '<li>';
+                            echo ($this->uri->segment(1) == 'advise') ? secure_anchor('administration/advise', 'Assign Advisor', array('id' => 'active')) : secure_anchor('administration/advise', 'Assign Advisor');
+                            echo '</li>';
 						}
 
 						// If any user is logged in
