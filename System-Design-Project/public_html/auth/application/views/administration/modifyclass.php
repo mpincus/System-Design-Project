@@ -10,9 +10,12 @@
  * @license     BSD - http://www.opensource.org/licenses/BSD-3-Clause
  * @link        http://community-auth.com
  */
+error_reporting(0);
 ?>
 
     <h1>Deny Access</h1>
+<p>Select the course you wish to modify from the table below then hit the submit button. The fields will populate with
+your selection and select a new value in the appropriate dropdown</p>
     <link rel="stylesheet" type="text/css" href="DataTables/media/css/demo_page.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="DataTables/media/css/demo_table.css" media="screen" />
 
@@ -336,8 +339,7 @@ if (config_item('deny_access') > 0) {
             </div>
         </fieldset>
     </div>
-    <div id="'dt_example">
-    <div id="container">
+
     <div id="demo">
     <div id="example_wrapper" class="dataTables_wrapper" role="grid">
 
@@ -501,8 +503,7 @@ if (config_item('deny_access') > 0) {
 
     </div>
     </div>
-    </div>
-    </div>
+
 
     </form>
 

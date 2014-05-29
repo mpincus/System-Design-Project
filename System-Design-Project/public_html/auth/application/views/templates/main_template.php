@@ -339,7 +339,7 @@
 						if( isset( $auth_level ) )
 						{
                             echo '<li>';
-                            echo ($this->uri->segment(1) == 'datatables_stuff') ? secure_anchor('administration/datatables_stuff', 'View Schedule', array('id' => 'active')) : secure_anchor('administration/datatables_stuff', 'View Schedule');
+                            echo ($this->uri->segment(1) == 'datatables_stuff') ? secure_anchor('administration/datatables_stuff', 'View Schedule', array('id' => 'active')) : secure_anchor('administration/datatables_stuff', ($auth_level==1)?'<ul><li>View Schedule</li>    <li>Register</li>     <li>View Course Listing</li></ul>':'View Course Listing');
                             echo '</li>';
 
 

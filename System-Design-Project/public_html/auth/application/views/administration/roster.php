@@ -230,10 +230,11 @@ if (config_item('deny_access') > 0) {
                         <td>'
                         . $row['user_email'] .
                         '</td>
-                          <td><input type="text" id="stuff" name="midterms[]" value="' . $row['midterm'].'">'.
+                          <td><input type="text" id="stuff" name="midterms[]"  value="' . $row['midterm'].
+                        '"'.(($row['midterm']!='')?'readonly':'').'>'.
 
                         '</td>
-                        <td><input type="text" id="stuff" name="finals[]" value="' . $row['final'].'">'.
+                        <td><input type="text" id="stuff" name="finals[]" value="' . $row['final'].'"'.(($row['final']!='')?'readonly':'').'>'.
 
                         '</td>
                         <td>
